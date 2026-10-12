@@ -1,0 +1,21 @@
+{
+  "notice": "Synthetic independent examples",
+  "n": 5,
+  "error": "sample SD (ddof=1)",
+  "runs": {
+    "Baseline": [
+      69,
+      71,
+      73,
+      70,
+      72
+    ],
+    "Proposed": [
+      75,
+      79,
+      78,
+      80,
+      78
+    ]
+  }
+}

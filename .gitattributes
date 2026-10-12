@@ -1,0 +1,11 @@
+* text=auto
+*.pdf binary
+*.ai binary
+*.png binary
+*.jpg binary
+*.webp binary
+*.pptx binary
+*.ttf binary
+*.otf binary
+*.woff2 binary
+*.svg text eol=lf -whitespace

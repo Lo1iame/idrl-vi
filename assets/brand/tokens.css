@@ -1,0 +1,71 @@
+/* Generated from tokens.json. Edit the JSON, then run scripts/build-tokens.py. */
+@font-face{font-family:Inter;src:url("./fonts/InterVariable.ttf");font-weight:100 900;font-display:swap}
+@font-face{font-family:"Noto Sans CJK SC";src:url("./fonts/NotoSansCJKsc-Regular.otf");font-weight:400;font-display:swap}
+@font-face{font-family:"Noto Sans CJK SC";src:url("./fonts/NotoSansCJKsc-Bold.otf");font-weight:700;font-display:swap}
+:root, [data-theme="light"] {
+  --background: #f5f8fc;
+  --surface: #ffffff;
+  --surface-subtle: #edf3fa;
+  --foreground: #182a43;
+  --muted-foreground: #52637a;
+  --border: #dce4ef;
+  --control-border: #7b8a9b;
+  --primary: #236db9;
+  --primary-foreground: #ffffff;
+  --primary-hover: #1c5999;
+  --accent: #dff4fb;
+  --accent-foreground: #203663;
+  --focus: #236db9;
+  --success: #16734a;
+  --warning: #8a5200;
+  --destructive: #b5343b;
+}
+[data-theme="dark"] {
+  --background: #0e1726;
+  --surface: #162238;
+  --surface-subtle: #1d2e47;
+  --foreground: #edf4ff;
+  --muted-foreground: #a8b8cf;
+  --border: #344764;
+  --control-border: #687b94;
+  --primary: #69b8ff;
+  --primary-foreground: #0e1726;
+  --primary-hover: #93ccff;
+  --accent: #1b3e50;
+  --accent-foreground: #9bdcf2;
+  --focus: #69b8ff;
+  --success: #5fd1a0;
+  --warning: #f7c66b;
+  --destructive: #ff9298;
+}
+:root {
+  --brand-navy: #203663;
+  --brand-blue: #236db9;
+  --brand-cyan: #56c0e5;
+  --font-sans: Inter, Noto Sans CJK SC, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Consolas, monospace;
+  --radius-control: 6px;
+  --radius-card: 12px;
+  --radius-dialog: 16px;
+  --type-caption: 12px;
+  --type-small: 14px;
+  --type-body: 16px;
+  --type-heading3: 20px;
+  --type-heading2: 28px;
+  --type-heading1: 40px;
+  --type-display: 64px;
+  --motion-fast: 120ms;
+  --motion-normal: 180ms;
+  --motion-slow: 240ms;
+  --space-0: 0px;
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-48: 48px;
+  --space-64: 64px;
+  --space-96: 96px;
+}
+@media(prefers-reduced-motion:reduce){:root{--motion-fast:0ms;--motion-normal:0ms;--motion-slow:0ms}}

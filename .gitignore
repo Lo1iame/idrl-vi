@@ -1,0 +1,16 @@
+node_modules/
+dist/
+tmp/
+*.tsbuildinfo
+test-results/
+playwright-report/
+.scratch/presentation-build/
+.scratch/chart-venv/
+.chart-data-*/
+.scratch/
+.zcodeignore
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example
