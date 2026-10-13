@@ -15,6 +15,7 @@
 | `lockup-bilingual.svg` | 双语横向组合 |
 | `lockup-bilingual-reverse.svg` | 双语深色背景组合 |
 | `lockup-stacked.svg` | 图形、IDRL、中文及英文上下组合 |
+| `favicon-tile.svg` | 品牌 favicon / 应用图标方块（navy 底 + reverse 图形）。裸 reverse SVG 为透明底，白色字母在浅色浏览器标签栏不可见，故 favicon 一律使用此 tile；PNG 各尺寸由应用按需栅格化 |
 
 全部 SVG 文字为轮廓，无外部字体依赖。新组合不包含 Laboratory。
 图形与 IDRL 字标由历史 AI 文件第一页提取，保留 Bézier 曲线；数字颜色使用当前统一提案，未作印刷 ICC 匹配。
@@ -23,7 +24,7 @@ PNG 为透明背景，位于 `output/brand/`。深色底版本需要搭配深色
 ## 字体与变量
 
 - `fonts/`：Inter Variable、Noto Sans CJK SC Regular/Bold、原始 OFL 授权和下载来源。
-- `tokens.json`：唯一变量源；`tokens.css` 为含完整字体的生成结果，`tokens-values.css` 为 Web 使用的纯变量版本。不要仅修改 CSS。
+- `tokens.json`：唯一变量源；`tokens.css` 为含完整字体的生成结果，`tokens-values.css` 为 Web 使用的纯变量版本。不要仅修改 CSS。v0.2.0 新增图表类别色（`chart1..5`）、深色底 navy 适配色（`navyOnDark`）与浅色状态加深文字变体（`*Text`，供 15% 色底徽章使用）。
 - Logo 中文字样使用 Noto Sans CJK SC Bold，英文使用 Inter 默认字重；英文界面标题可用 700。
 - 字体与 SVG 均可离线使用，审核页面不请求外部 CDN。Web 示例采用 WOFF2 及当前文案的中文子集；新增文案运行 scripts/build-web-fonts.py。完整 OTF 保留用于设计导出，子集之外的中文依赖平台字体回退。
 
