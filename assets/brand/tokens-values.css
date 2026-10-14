@@ -43,6 +43,10 @@
   --success: #5fd1a0;
   --warning: #f7c66b;
   --destructive: #ff9298;
+  --primary-text: #69b8ff;
+  --success-text: #5fd1a0;
+  --warning-text: #f7c66b;
+  --destructive-text: #ff9298;
   --chart1: #69b8ff;
   --chart2: #8fb8dc;
   --chart3: #9bdcf2;
@@ -54,7 +58,7 @@
   --brand-blue: #236db9;
   --brand-cyan: #56c0e5;
   --brand-navyOnDark: #8fb8dc;
-  --font-sans: Inter, Noto Sans CJK SC, sans-serif;
+  --font-sans: Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', system-ui, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Consolas, monospace;
   --radius-control: 6px;
   --radius-card: 12px;

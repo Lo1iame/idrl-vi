@@ -39,23 +39,23 @@ Tailwind v4 `@theme inline`：
 ## 字体
 
 ```css
---font-sans: var(--font-inter), 'Inter', 'Noto Sans CJK SC', 'PingFang SC',
+--font-sans: var(--font-inter, 'Inter'), 'Noto Sans CJK SC', 'PingFang SC',
   'Hiragino Sans GB', 'Microsoft YaHei', system-ui, sans-serif;
 --font-mono: ui-monospace, SFMono-Regular, Consolas, 'Courier New', monospace;
 ```
 
-英文/数字用自托管 Inter（`next/font/local` 或 `@font-face` 加载 InterVariable.woff2）；中文见 DESIGN.md「字体」的回退栈与子集策略。
+英文/数字用自托管 Inter（`next/font/local` 或 `@font-face` 加载 InterVariable.woff2）。Next.js 使用已定义的 `--font-inter`；普通 `@font-face` 接入使用变量默认值 `Inter`，无需定义 Next.js 字体变量。中文见 DESIGN.md「字体」的回退栈与子集策略。
 
 ## 状态徽章配方（已过对比度审计）
 
 ```
 底：状态基色 15% 叠加所在 surface（bg-[color-mix(in_srgb,var(--success)_15%,var(--surface))]）
-文字：浅色用 --primary-text / --success-text / --warning-text / --destructive-text
-      深色直接用 --primary / --success / --warning / --destructive
+文字：两种主题均用 --primary-text / --success-text / --warning-text / --destructive-text
+      浅色为加深变体；深色已定义为对应基色。下游映射必须包含这些变量的两种主题值。
 描边（可选）：状态基色 30%
 ```
 
-徽章必须带文字标签，不能只靠颜色。警告横幅同源：`border: 状态色 30%`、`background: 状态色 5%`、标题文字用 `*Text` 变体。
+徽章必须带文字标签，不能只靠颜色。警告横幅同源：`border: 状态色 30%`、`background: 状态色 5%`、标题文字用当前主题的 `*Text` 变体。tokens v0.2.1 补齐深色变体，禁止沿用浅色 `warningText` 到深色横幅。
 
 ## 考勤/人员状态 → 功能色
 

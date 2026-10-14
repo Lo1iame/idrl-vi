@@ -43,16 +43,16 @@ for theme in ['light','dark']:
  for fg,bg,required in [('primaryForeground','primary',4.5),('focus','surface',3),('controlBorder','surface',3)]:
   r=ratio(t[fg],t[bg])
   checks.append({'kind':'solid','theme':theme,'foreground':fg,'background':bg,'ratio':round(r,2),'required':required,'pass':r>=required})
- # 状态徽章配方：底 = 状态基色 15% 叠 surface；文字 = 浅色用加深 *Text 变体，深色直接用基色。
- if theme=='light':
-  status={'primary':('primaryText','primary'),'success':('successText','success'),'warning':('warningText','warning'),'destructive':('destructiveText','destructive')}
- else:
-  status={'primary':('primary','primary'),'success':('success','success'),'warning':('warning','warning'),'destructive':('destructive','destructive')}
+ # 两种主题都有 *Text；深色文字变体与对应基色一致。
+ status={'primary':('primaryText','primary'),'success':('successText','success'),'warning':('warningText','warning'),'destructive':('destructiveText','destructive')}
  for name,(fg_key,base_key) in status.items():
   for surf in ['surface','background','surfaceSubtle']:
    bg=mix(t[base_key],t[surf],BADGE_TINT)
    r=ratio(t[fg_key],bg)
    checks.append({'kind':'badge','theme':theme,'foreground':fg_key,'background':f'{base_key} {int(BADGE_TINT*100)}% over {surf}','ratio':round(r,2),'required':4.5,'pass':r>=4.5})
+   banner_bg=mix(t[base_key],t[surf],0.05)
+   banner_ratio=ratio(t[fg_key],banner_bg)
+   checks.append({'kind':'banner','theme':theme,'foreground':fg_key,'background':f'{base_key} 5% over {surf}','ratio':round(banner_ratio,2),'required':4.5,'pass':banner_ratio>=4.5})
 navy=tokens['brand']['navy']
 for fg,alpha,required,label in [('#ffffff',1,4.5,'white on navy'),('#ffffff',0.7,4.5,'white70 on navy'),(tokens['brand']['cyan'],1,3,'cyan accent on navy')]:
  fg_eff=mix(fg,navy,alpha) if alpha<1 else fg

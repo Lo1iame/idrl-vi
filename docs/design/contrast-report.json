@@ -171,11 +171,29 @@
     "pass": true
   },
   {
+    "kind": "banner",
+    "theme": "light",
+    "foreground": "primaryText",
+    "background": "primary 5% over surface",
+    "ratio": 6.7,
+    "required": 4.5,
+    "pass": true
+  },
+  {
     "kind": "badge",
     "theme": "light",
     "foreground": "primaryText",
     "background": "primary 15% over background",
     "ratio": 5.49,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "kind": "banner",
+    "theme": "light",
+    "foreground": "primaryText",
+    "background": "primary 5% over background",
+    "ratio": 6.28,
     "required": 4.5,
     "pass": true
   },
@@ -189,11 +207,29 @@
     "pass": true
   },
   {
+    "kind": "banner",
+    "theme": "light",
+    "foreground": "primaryText",
+    "background": "primary 5% over surfaceSubtle",
+    "ratio": 5.99,
+    "required": 4.5,
+    "pass": true
+  },
+  {
     "kind": "badge",
     "theme": "light",
     "foreground": "successText",
     "background": "success 15% over surface",
     "ratio": 6.13,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "kind": "banner",
+    "theme": "light",
+    "foreground": "successText",
+    "background": "success 5% over surface",
+    "ratio": 7.08,
     "required": 4.5,
     "pass": true
   },
@@ -207,11 +243,29 @@
     "pass": true
   },
   {
+    "kind": "banner",
+    "theme": "light",
+    "foreground": "successText",
+    "background": "success 5% over background",
+    "ratio": 6.65,
+    "required": 4.5,
+    "pass": true
+  },
+  {
     "kind": "badge",
     "theme": "light",
     "foreground": "successText",
     "background": "success 15% over surfaceSubtle",
     "ratio": 5.55,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "kind": "banner",
+    "theme": "light",
+    "foreground": "successText",
+    "background": "success 5% over surfaceSubtle",
+    "ratio": 6.37,
     "required": 4.5,
     "pass": true
   },
@@ -225,11 +279,29 @@
     "pass": true
   },
   {
+    "kind": "banner",
+    "theme": "light",
+    "foreground": "warningText",
+    "background": "warning 5% over surface",
+    "ratio": 7.51,
+    "required": 4.5,
+    "pass": true
+  },
+  {
     "kind": "badge",
     "theme": "light",
     "foreground": "warningText",
     "background": "warning 15% over background",
     "ratio": 6.11,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "kind": "banner",
+    "theme": "light",
+    "foreground": "warningText",
+    "background": "warning 5% over background",
+    "ratio": 7.1,
     "required": 4.5,
     "pass": true
   },
@@ -243,11 +315,29 @@
     "pass": true
   },
   {
+    "kind": "banner",
+    "theme": "light",
+    "foreground": "warningText",
+    "background": "warning 5% over surfaceSubtle",
+    "ratio": 6.77,
+    "required": 4.5,
+    "pass": true
+  },
+  {
     "kind": "badge",
     "theme": "light",
     "foreground": "destructiveText",
     "background": "destructive 15% over surface",
     "ratio": 5.99,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "kind": "banner",
+    "theme": "light",
+    "foreground": "destructiveText",
+    "background": "destructive 5% over surface",
+    "ratio": 6.98,
     "required": 4.5,
     "pass": true
   },
@@ -261,11 +351,29 @@
     "pass": true
   },
   {
+    "kind": "banner",
+    "theme": "light",
+    "foreground": "destructiveText",
+    "background": "destructive 5% over background",
+    "ratio": 6.56,
+    "required": 4.5,
+    "pass": true
+  },
+  {
     "kind": "badge",
     "theme": "light",
     "foreground": "destructiveText",
     "background": "destructive 15% over surfaceSubtle",
     "ratio": 5.38,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "kind": "banner",
+    "theme": "light",
+    "foreground": "destructiveText",
+    "background": "destructive 5% over surfaceSubtle",
+    "ratio": 6.24,
     "required": 4.5,
     "pass": true
   },
@@ -434,108 +542,216 @@
   {
     "kind": "badge",
     "theme": "dark",
-    "foreground": "primary",
+    "foreground": "primaryText",
     "background": "primary 15% over surface",
     "ratio": 5.6,
     "required": 4.5,
     "pass": true
   },
   {
+    "kind": "banner",
+    "theme": "dark",
+    "foreground": "primaryText",
+    "background": "primary 5% over surface",
+    "ratio": 6.81,
+    "required": 4.5,
+    "pass": true
+  },
+  {
     "kind": "badge",
     "theme": "dark",
-    "foreground": "primary",
+    "foreground": "primaryText",
     "background": "primary 15% over background",
     "ratio": 6.4,
     "required": 4.5,
     "pass": true
   },
   {
+    "kind": "banner",
+    "theme": "dark",
+    "foreground": "primaryText",
+    "background": "primary 5% over background",
+    "ratio": 7.81,
+    "required": 4.5,
+    "pass": true
+  },
+  {
     "kind": "badge",
     "theme": "dark",
-    "foreground": "primary",
+    "foreground": "primaryText",
     "background": "primary 15% over surfaceSubtle",
     "ratio": 4.78,
     "required": 4.5,
     "pass": true
   },
   {
+    "kind": "banner",
+    "theme": "dark",
+    "foreground": "primaryText",
+    "background": "primary 5% over surfaceSubtle",
+    "ratio": 5.86,
+    "required": 4.5,
+    "pass": true
+  },
+  {
     "kind": "badge",
     "theme": "dark",
-    "foreground": "success",
+    "foreground": "successText",
     "background": "success 15% over surface",
     "ratio": 6.16,
     "required": 4.5,
     "pass": true
   },
   {
+    "kind": "banner",
+    "theme": "dark",
+    "foreground": "successText",
+    "background": "success 5% over surface",
+    "ratio": 7.63,
+    "required": 4.5,
+    "pass": true
+  },
+  {
     "kind": "badge",
     "theme": "dark",
-    "foreground": "success",
+    "foreground": "successText",
     "background": "success 15% over background",
     "ratio": 7.06,
     "required": 4.5,
     "pass": true
   },
   {
+    "kind": "banner",
+    "theme": "dark",
+    "foreground": "successText",
+    "background": "success 5% over background",
+    "ratio": 8.76,
+    "required": 4.5,
+    "pass": true
+  },
+  {
     "kind": "badge",
     "theme": "dark",
-    "foreground": "success",
+    "foreground": "successText",
     "background": "success 15% over surfaceSubtle",
     "ratio": 5.32,
     "required": 4.5,
     "pass": true
   },
   {
+    "kind": "banner",
+    "theme": "dark",
+    "foreground": "successText",
+    "background": "success 5% over surfaceSubtle",
+    "ratio": 6.57,
+    "required": 4.5,
+    "pass": true
+  },
+  {
     "kind": "badge",
     "theme": "dark",
-    "foreground": "warning",
+    "foreground": "warningText",
     "background": "warning 15% over surface",
     "ratio": 7.09,
     "required": 4.5,
     "pass": true
   },
   {
+    "kind": "banner",
+    "theme": "dark",
+    "foreground": "warningText",
+    "background": "warning 5% over surface",
+    "ratio": 9.08,
+    "required": 4.5,
+    "pass": true
+  },
+  {
     "kind": "badge",
     "theme": "dark",
-    "foreground": "warning",
+    "foreground": "warningText",
     "background": "warning 15% over background",
     "ratio": 8.21,
     "required": 4.5,
     "pass": true
   },
   {
+    "kind": "banner",
+    "theme": "dark",
+    "foreground": "warningText",
+    "background": "warning 5% over background",
+    "ratio": 10.33,
+    "required": 4.5,
+    "pass": true
+  },
+  {
     "kind": "badge",
     "theme": "dark",
-    "foreground": "warning",
+    "foreground": "warningText",
     "background": "warning 15% over surfaceSubtle",
     "ratio": 6.13,
     "required": 4.5,
     "pass": true
   },
   {
+    "kind": "banner",
+    "theme": "dark",
+    "foreground": "warningText",
+    "background": "warning 5% over surfaceSubtle",
+    "ratio": 7.73,
+    "required": 4.5,
+    "pass": true
+  },
+  {
     "kind": "badge",
     "theme": "dark",
-    "foreground": "destructive",
+    "foreground": "destructiveText",
     "background": "destructive 15% over surface",
     "ratio": 5.66,
     "required": 4.5,
     "pass": true
   },
   {
-    "kind": "badge",
+    "kind": "banner",
     "theme": "dark",
-    "foreground": "destructive",
-    "background": "destructive 15% over background",
-    "ratio": 6.51,
+    "foreground": "destructiveText",
+    "background": "destructive 5% over surface",
+    "ratio": 6.82,
     "required": 4.5,
     "pass": true
   },
   {
     "kind": "badge",
     "theme": "dark",
-    "foreground": "destructive",
+    "foreground": "destructiveText",
+    "background": "destructive 15% over background",
+    "ratio": 6.51,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "kind": "banner",
+    "theme": "dark",
+    "foreground": "destructiveText",
+    "background": "destructive 5% over background",
+    "ratio": 7.82,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "kind": "badge",
+    "theme": "dark",
+    "foreground": "destructiveText",
     "background": "destructive 15% over surfaceSubtle",
     "ratio": 4.9,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "kind": "banner",
+    "theme": "dark",
+    "foreground": "destructiveText",
+    "background": "destructive 5% over surfaceSubtle",
+    "ratio": 5.89,
     "required": 4.5,
     "pass": true
   },
