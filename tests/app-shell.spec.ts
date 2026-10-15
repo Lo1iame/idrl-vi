@@ -111,9 +111,9 @@ test('navigation component examples restore focus and support keyboard tooltips'
 for(const theme of ['light','dark']) test(`changelog ${theme}: verified history, localization and responsive accessibility`,async({page})=>{
   await page.addInitScript(theme=>localStorage.setItem('idrl-theme',theme),theme)
   await page.goto('/#changelog')
-  await expect(page.locator('.release')).toHaveCount(4)
-  await expect(page.locator('.release-meta h2').first()).toHaveText('v0.2.2')
-  await expect(page.locator('.release-meta time').first()).toHaveAttribute('datetime','2026-10-15')
+  await expect(page.locator('.release')).toHaveCount(5)
+  await expect(page.locator('.release-meta h2').first()).toHaveText('v0.3.0')
+  await expect(page.locator('.release-meta time').first()).toHaveAttribute('datetime','2026-10-16')
   expect((await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze()).violations).toEqual([])
   await page.screenshot({path:`output/ui/changelog-${theme}-desktop.png`,fullPage:true})
   await page.setViewportSize({width:390,height:844})

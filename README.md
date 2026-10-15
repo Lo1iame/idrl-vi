@@ -1,5 +1,7 @@
 # IDRL · 智能设计与鲁棒学习
 
+当前项目版本 **v0.3.0** · token **0.2.1** · 科研汇报模板 **v4**。更新记录见 [releases.ts](src/lib/releases.ts)。
+
 Intelligent Design and Robust Learning 的视觉识别与 UI 参考体系，为团队官网、科研工具和内部应用提供一致的设计约定与可复制源码。
 
 ## 其他应用从这里开始
