@@ -8,7 +8,10 @@
   "adoptionGuide": "docs/design/adoption.md",
   "componentInventory": "docs/design/component-inventory.md",
   "themeAttribute": "data-theme",
-  "themeValues": ["light", "dark"],
+  "themeValues": [
+    "light",
+    "dark"
+  ],
   "tokens": "assets/brand/tokens.json",
   "tokenCss": "assets/brand/tokens-values.css",
   "shadcnAliases": "assets/brand/shadcn-aliases.css",
@@ -20,20 +23,67 @@
   "presentationValidation": "output/research-template/validation-current.json",
   "foundationPreview": "output/brand/idrl-foundation-review.pdf",
   "uiEntry": "/#components",
-  "routes": ["website", "workspace", "assistant", "components", "changelog", "foundation"],
-  "notProvided": ["npm package", "shadcn registry", "Storybook", "authentication", "business backend", "server-side data table"],
+  "routes": [
+    "website",
+    "workspace",
+    "assistant",
+    "components",
+    "changelog",
+    "foundation"
+  ],
+  "notProvided": [
+    "npm package",
+    "shadcn registry",
+    "Storybook",
+    "authentication",
+    "business backend",
+    "server-side data table"
+  ],
   "export": {
     "files": [
-      "DESIGN.md", "CONTEXT.md", "package.json", "package-lock.json", "tsconfig.json", "src/vite-env.d.ts",
-      "assets/brand/reuse-manifest.json", "assets/brand/tokens.json", "assets/brand/tokens-values.css", "assets/brand/shadcn-aliases.css",
-      "assets/brand/fonts/InterVariable.woff2", "assets/brand/fonts/Inter-LICENSE.txt", "assets/brand/fonts/Noto-LICENSE.txt",
-      "src/components/app-shell.tsx", "src/components/brand.tsx", "src/lib/app-shell-config.ts", "src/lib/types.ts", "src/lib/utils.ts",
-      "src/styles.css", "src/design-refresh.css", "src/app-shell.css",
-      "docs/design/adoption.md", "docs/design/component-inventory.md", "docs/design/app-shell-integration.md", "docs/design/shadcn-mapping.md",
-      "docs/design/brand-foundation-page.md", "docs/design/scientific-charts.md", "docs/design/asset-build.md", "docs/design/reuse-consistency-2026-10-15.md",
-      "examples/adoption/app.tsx", "examples/adoption/reference.css", "examples/adoption/index.html", "examples/adoption/main.tsx",
-      "examples/adoption/vite.config.ts", "examples/adoption/tsconfig.json", "examples/adoption/README.md"
+      "DESIGN.md",
+      "CONTEXT.md",
+      "package.json",
+      "package-lock.json",
+      "tsconfig.json",
+      "src/vite-env.d.ts",
+      "assets/brand/reuse-manifest.json",
+      "assets/brand/tokens.json",
+      "assets/brand/tokens-values.css",
+      "assets/brand/shadcn-aliases.css",
+      "assets/brand/fonts/InterVariable.woff2",
+      "assets/brand/fonts/Inter-LICENSE.txt",
+      "assets/brand/fonts/Noto-LICENSE.txt",
+      "src/components/app-shell.tsx",
+      "src/components/brand.tsx",
+      "src/lib/app-shell-config.ts",
+      "src/lib/types.ts",
+      "src/lib/utils.ts",
+      "src/ui.css",
+      "src/ui-base.css",
+      "src/components/brand.css",
+      "src/app-shell.css",
+      "docs/design/adoption.md",
+      "docs/design/component-inventory.md",
+      "docs/design/app-shell-integration.md",
+      "docs/design/shadcn-mapping.md",
+      "docs/design/brand-foundation-page.md",
+      "docs/design/scientific-charts.md",
+      "docs/design/asset-build.md",
+      "docs/design/reuse-consistency-2026-10-15.md",
+      "examples/adoption/app.tsx",
+      "examples/adoption/reference.css",
+      "examples/adoption/index.html",
+      "examples/adoption/main.tsx",
+      "examples/adoption/vite.config.ts",
+      "examples/adoption/tsconfig.json",
+      "examples/adoption/README.md",
+      "docs/design/portable-ui.md"
     ],
-    "directories": ["assets/brand/logo", "src/components/ui"]
-  }
+    "directories": [
+      "assets/brand/logo",
+      "src/components/ui"
+    ]
+  },
+  "uiStyles": "src/ui.css"
 }

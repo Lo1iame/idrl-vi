@@ -1,0 +1,12 @@
+@import '../ui-base.css';
+.brand-wordmark{
+  width:124px;
+  height:auto;
+  display:block
+}
+.brand-theme-dark{display:none}
+[data-theme=dark] .brand-theme-light{display:none}
+[data-theme=dark] .brand-theme-dark{display:block}
+.brand-symbol{
+  width:44px
+}

@@ -1,6 +1,8 @@
 """Reproducible IDRL chart examples. All values are synthetic, not team results."""
 from pathlib import Path
 import json
+import argparse
+import runpy
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
@@ -9,16 +11,24 @@ from matplotlib import font_manager
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'output/scientific-charts'
+parser = argparse.ArgumentParser()
+parser.add_argument('--tokens', type=Path, default=ROOT/'assets/brand/tokens.json')
+parser.add_argument('--output', type=Path, default=OUT)
+args = parser.parse_args()
+OUT = args.output
+tokens = json.loads(args.tokens.read_text(encoding='utf-8'))
 OUT.mkdir(parents=True, exist_ok=True)
 for name in ['InterVariable.ttf', 'NotoSansCJKsc-Regular.otf']:
     font_manager.fontManager.addfont(str(ROOT / 'assets/brand/fonts' / name))
-plt.style.use(ROOT / 'assets/brand/charts/idrl.mplstyle')
+# Render directly from the selected tokens; the exported mplstyle follows the same mapping.
+chart_params = runpy.run_path(str(ROOT/'scripts/brand-styles.py'))['chart_params']
+plt.rcParams.update(chart_params(tokens))
 d = json.loads((ROOT / 'output/research-template/illustrative-data.json').read_text())
-NAVY, BLUE = '#203663', '#236db9'
+NAVY, BLUE = tokens['brand']['navy'], tokens['brand']['blue']
 
 def save(fig, ax, name):
     ax.legend(loc='upper center', bbox_to_anchor=(.5, 1.18), ncol=2)
-    fig.text(.12, .02, 'SYNTHETIC EXAMPLE — NOT RESEARCH RESULTS', fontsize=8, color='#52637a')
+    fig.text(.12, .02, 'SYNTHETIC EXAMPLE — NOT RESEARCH RESULTS', fontsize=8, color=tokens['light']['mutedForeground'])
     fig.subplots_adjust(left=.13, right=.97, top=.8, bottom=.20)
     for ext in ['svg', 'pdf', 'png']:
         fig.savefig(OUT / f'{name}.{ext}')

@@ -60,7 +60,7 @@ vi:check 仅额外需要 Python 标准库；可自动发现 .venv-assets 或设�
 
 - tokens.json 是唯一变量源；修改后运行 scripts/build-tokens.py，再做 vi:check。CSS 与 shadcn aliases 均自动生成。
 - 颜色数值变化升级 token 版本；组件 / 文档更新按 commit 同步，不混用 package 版本或 PPT 修订号。
-- src/fonts.css 只为本展示站加载中文子集；styles.css / design-refresh.css 为完整参考样式，含全局规则。
+- src/ui.css 是可复用公共样式入口；src/fonts.css、styles.css / design-refresh.css 只服务展示站，不进入 UI 接入快照。
 - 新资产在 assets/brand/logo/；logo/ 是历史源文件。字体与许可保留在 assets/brand/fonts/。
 - 历史验证见 docs/design/phase-2-validation.md；当前一致性检查范围见 [本轮报告](docs/design/reuse-consistency-2026-10-15.md)。
 

@@ -1,3 +1,4 @@
+import './breadcrumb.css'
 import { ChevronRight } from 'lucide-react'
 import { Fragment } from 'react'
 export type BreadcrumbItem = { label: string; href?: string }

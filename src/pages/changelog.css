@@ -1,0 +1,25 @@
+/* Version history is content, never a set of decorative metric cards. */
+.changelog-page { max-width: 1040px; padding: 40px; margin: auto; }
+.changelog-heading { padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+.changelog-heading h1 { font-size: 32px; margin-bottom: 14px; }
+.changelog-heading p { color: var(--muted-foreground); line-height: 1.7; max-width: 680px; }
+.release-list { list-style: none; padding: 0; }
+.release { display: grid; grid-template-columns: 170px minmax(0,1fr); gap: 32px; padding: 36px 0; border-bottom: 1px solid var(--border); }
+.release-meta h2 { font: 700 23px/1.4 Inter,sans-serif; }
+.release-meta time { display: block; margin-top: 10px; color: var(--muted-foreground); font-size: 13px; }
+.release-meta a { display: inline-block; margin-top: 16px; font-size: 12px; color: var(--primary); }
+.release-content h3 { font-size: 20px; margin-bottom: 20px; }
+.release-change { display: grid; grid-template-columns: 58px minmax(0,1fr); gap: 14px; margin-block: 14px; align-items: start; }
+.release-change p { font-size: 14px; line-height: 1.7; }
+.release-type { font-size: 12px; color: var(--primary-text); background: color-mix(in srgb,var(--primary) 12%,var(--surface)); padding: 3px 8px; border-radius: 4px; text-align: center; }
+.shell-specimen { padding: 24px; border: 1px solid var(--border); border-radius: 12px; margin-top: 24px; background: var(--surface); }
+.shell-specimen h2 { font-size: 22px; margin-bottom: 12px; }
+.shell-demo-actions { display: flex; flex-wrap: wrap; gap: 16px; margin-block: 24px; align-items: center; }
+.shell-usage-code { padding: 20px; border-radius: 6px; background: var(--surface-subtle); font-size: 13px; overflow-x: auto; margin-top: 20px; }
+@media(max-width:767px) {
+  .changelog-page { padding: 28px 20px; }
+  .release { grid-template-columns: 1fr; gap: 20px; padding-block: 28px; }
+  .release-meta { display: flex; gap: 14px; align-items: baseline; flex-wrap: wrap; }
+  .release-meta time,.release-meta a { margin-top: 0; }
+  .release-change { gap: 10px; }
+}

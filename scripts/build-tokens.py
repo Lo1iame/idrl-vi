@@ -1,7 +1,12 @@
 """Emit shared CSS and verify foreground/background contrast for review tokens."""
 from pathlib import Path
-import json, re, sys
-root=Path(__file__).resolve().parents[1]
+import argparse, json, re, sys
+parser=argparse.ArgumentParser()
+parser.add_argument('--root', type=Path, default=Path(__file__).resolve().parents[1])
+parser.add_argument('--ui-only', action='store_true')
+parser.add_argument('--check', action='store_true')
+args=parser.parse_args()
+root=args.root
 tokens=json.loads((root/'assets/brand/tokens.json').read_text())
 def kebab(s): return re.sub(r'([A-Z])',r'-\1',s).lower()
 css=['/* Generated from tokens.json. Edit the JSON, then run scripts/build-tokens.py. */']
@@ -80,6 +85,8 @@ for fg,alpha,required,label in [('#ffffff',1,4.5,'white on navy'),('#ffffff',0.7
  checks.append({'kind':'brandPanel','theme':'light','foreground':label,'background':'brand navy','ratio':round(r,2),'required':required,'pass':r>=required})
 outputs['docs/design/contrast-report.json'] = json.dumps(checks,indent=2)
 assert all(c['pass'] for c in checks), [c for c in checks if not c['pass']]
+if args.ui_only:
+ outputs={name:content for name,content in outputs.items() if name in ['assets/brand/tokens-values.css','assets/brand/shadcn-aliases.css']}
 if '--check' in sys.argv:
  stale = [name for name,content in outputs.items() if not (root/name).exists() or (root/name).read_text(encoding='utf-8') != content]
  if stale: raise SystemExit('Stale generated files: '+', '.join(stale)+'; run scripts/build-tokens.py')

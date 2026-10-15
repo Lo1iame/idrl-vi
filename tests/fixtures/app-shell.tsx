@@ -2,8 +2,7 @@ import { useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { AppShell } from '../../src/components/app-shell'
 import { idrlAppConfig } from '../../src/lib/app-navigation'
-import '../../src/styles.css'
-import '../../src/design-refresh.css'
+import '../../src/ui.css'
 const t=(zh:string,_en:string)=>zh
 function Fixture(){
   const [id,setId]=useState('app-a')

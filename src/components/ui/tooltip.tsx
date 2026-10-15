@@ -1,3 +1,4 @@
+import './tooltip.css'
 import * as Primitive from '@radix-ui/react-tooltip'
 import type { ReactElement } from 'react'
 export function Tooltip({ label, children, side = 'right', enabled = true }: { label: string; children: ReactElement; side?: 'top' | 'right' | 'bottom' | 'left'; enabled?: boolean }) {

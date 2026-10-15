@@ -1,0 +1,10 @@
+@import '../../ui-base.css';
+@import './primitives.css';
+.sheet-overlay { position: fixed; inset: 0; z-index: 80; background: #00000066; }
+.ui-sheet { position: fixed; inset: 0 auto 0 0; z-index: 81; width: min(320px,calc(100vw - 40px)); height: 100dvh; overflow-y: auto; padding: 24px; background: var(--surface); color: var(--foreground); border-right: 1px solid var(--border); animation: sheet-enter .18s ease-out; }
+.sheet-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.sheet-heading h2 { font-size: 18px; }
+.sheet-description { font-size: 12px; color: var(--muted-foreground); margin: 12px 0 24px; }
+.sheet-brand { display: inline-block; margin-bottom: 28px; }
+@media(prefers-reduced-motion:reduce) { .ui-sheet { animation: none; } }
+@keyframes sheet-enter { from { transform: translateX(-100%); } to { transform: translateX(0); } }

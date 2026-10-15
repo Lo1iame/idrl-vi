@@ -1,3 +1,4 @@
+import '../pages/changelog.css'
 import { useRef, useState } from 'react'
 import { Info, PanelLeftClose, PanelLeftOpen } from 'lucide-react'
 import { Button } from './ui/button'

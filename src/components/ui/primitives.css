@@ -1,0 +1,125 @@
+@import '../../ui-base.css';
+.button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:0 16px;
+  border:1px solid transparent;
+  border-radius:var(--radius-control);
+  font-weight:500;
+  white-space:nowrap; font-size: 14px; height: 42px; transition: border-color 180ms, transform 180ms
+}
+.button-primary{
+  background:var(--primary);
+  color:var(--primary-foreground);
+  border-color:var(--primary)
+}
+.button-primary:hover:not(:disabled){
+  background:var(--primary-hover)
+}
+.button-secondary{
+  background:var(--surface);
+  color:var(--foreground);
+  border-color:var(--control-border)
+}
+.button-secondary:hover:not(:disabled){
+  background:var(--surface-subtle)
+}
+.button-ghost{
+  background:transparent;
+  color:var(--foreground)
+}
+.button-ghost:hover:not(:disabled){
+  background:var(--surface-subtle)
+}
+.button-destructive{
+  background:var(--destructive);
+  color:var(--surface)
+}
+.button-sm{
+  padding:0 12px; height: 34px; font-size: 12px
+}
+.button-icon{
+  width:36px;
+  padding:0; height: 36px
+}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:12px;
+  line-height:1.5;
+  white-space:nowrap;
+  background:var(--surface-subtle);
+  color:var(--muted-foreground);
+  border-radius:5px;
+  padding:4px 7px
+}
+.badge-dot{
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:currentColor
+}
+.badge-success{
+  color:var(--success)
+}
+.badge-warning{
+  color:var(--warning)
+}
+.badge-danger{
+  color:var(--destructive)
+}
+.badge-info{
+  color:var(--primary)
+}
+.dialog-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(14,23,38,.5);
+  z-index:40
+}
+.dialog{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:min(480px,calc(100vw - 32px));
+  max-height:calc(100dvh - 40px);
+  overflow:auto;
+  background:var(--surface);
+  color:var(--foreground);
+  border:1px solid var(--border);
+  padding:30px;
+  border-radius:16px;
+  box-shadow:0 20px 90px rgba(0,0,0,.15);
+  z-index:41
+}
+.dialog-title{
+  font-size:22px;
+  margin-right:30px
+}
+.dialog>.muted{
+  font-size:12px;
+  line-height:1.8;
+  margin-top:12px
+}
+.dialog-close{
+  position:absolute;
+  top:16px;
+  right:16px
+}
+@media(max-width:600px){
+.dialog{
+  padding:24px
+}
+
+}
+@media(max-width:600px){
+.dialog-title{
+  font-size:20px
+}
+
+}
+.button:active:not(:disabled) { transform: translateY(1px); }

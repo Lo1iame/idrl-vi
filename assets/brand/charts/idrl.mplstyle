@@ -16,9 +16,9 @@ ytick.color: 52637a
 lines.linewidth: 1.6
 lines.markersize: 5
 legend.frameon: False
-figure.facecolor: white
-axes.facecolor: white
-savefig.facecolor: white
+figure.facecolor: ffffff
+axes.facecolor: ffffff
+savefig.facecolor: ffffff
 savefig.dpi: 300
 pdf.fonttype: 42
 ps.fonttype: 42

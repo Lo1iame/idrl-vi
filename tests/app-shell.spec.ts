@@ -24,6 +24,8 @@ test('desktop sidebar remembers its preference across pages and viewport changes
   await page.setViewportSize({width:1440,height:1000})
   await expect(layout).toHaveAttribute('data-sidebar','rail')
   await page.locator('.shell-sidebar').getByRole('link',{name:'实验工作台',exact:true}).click()
+  await expect(page.locator('.workspace-content')).toBeVisible()
+  await expect(page.locator('.workspace-content tbody tr')).toHaveCount(5)
   await page.screenshot({path:'output/ui/workspace-sidebar-rail.png',fullPage:true})
 })
 

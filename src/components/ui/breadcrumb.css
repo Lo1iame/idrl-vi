@@ -1,0 +1,7 @@
+@import '../../ui-base.css';
+.ui-breadcrumb { min-width: 0; }
+.ui-breadcrumb ol { display: flex; gap: 10px; align-items: center; margin: 0; padding: 0; list-style: none; font-size: 13px; color: var(--muted-foreground); }
+.ui-breadcrumb li { min-width: 0; }
+.ui-breadcrumb li:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--foreground); }
+.breadcrumb-divider { display: flex; flex-shrink: 0; }
+.ui-breadcrumb a:hover { color: var(--primary); }

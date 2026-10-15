@@ -1,3 +1,4 @@
+@import '../../ui-base.css';
 .ui-choice { display: flex; align-items: flex-start; gap: 12px; color: var(--foreground); font-size: 14px; }
 .ui-choice > input { width: 20px; height: 20px; flex-shrink: 0; margin: 2px 0 0; accent-color: var(--primary); cursor: pointer; }
 .ui-choice label { display: inline-flex; align-items: center; min-height: 24px; cursor: pointer; }
@@ -11,10 +12,5 @@
 .ui-choice > input:disabled, .ui-switch:disabled { opacity: .6; }
 .ui-choice:has(:disabled) label { color: var(--muted-foreground); }
 .ui-choice :disabled, .ui-choice:has(:disabled) label { cursor: not-allowed; }
-.form-preferences { display: grid; gap: 20px; margin: 0; min-width: 0; padding: 20px 0; border: 0; border-block: 1px solid var(--border); }
-.form-preferences legend { padding-right: 12px; font-size: 14px; font-weight: 700; }
-.form-summary { display: grid; gap: 8px; font-size: 14px; overflow-wrap: anywhere; }
-.form-summary h3 { font-size: 14px; }
-.form-summary p { margin: 0; white-space: pre-wrap; }
 @media (max-width: 767px) { .ui-choice label { min-height: 44px; } .ui-choice > input { margin-top: 12px; } .ui-switch { position: relative; } .ui-switch::after { content: ''; position: absolute; inset: -11px -1px; } }
 @media (prefers-reduced-motion: reduce) { .ui-switch > span { transition: none; } }

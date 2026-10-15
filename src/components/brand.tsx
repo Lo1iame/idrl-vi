@@ -1,3 +1,4 @@
+import './brand.css'
 import wordmark from '../../assets/brand/logo/lockup-idrl.svg'
 import reverseWordmark from '../../assets/brand/logo/lockup-idrl-reverse.svg'
 import reverse from '../../assets/brand/logo/symbol-color-reverse.svg'

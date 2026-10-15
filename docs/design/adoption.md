@@ -17,7 +17,7 @@
 
 ```sh
 npm ci
-npm run vi:check
+npm run vi:check:ui
 npm run vi:export
 ```
 
@@ -54,7 +54,11 @@ shadcn / Tailwind v4 详见 [shadcn-mapping.md](shadcn-mapping.md)。token 接�
 
 接入包保留 src/、assets/ 相对路径；公共组件不依赖 @ 别名。AppShell 显式传入自有 config；`examples/adoption/app.tsx` 是实际参与类型检查的示例。API 见 [组件清单](component-inventory.md) 与 [框架接入](app-shell-integration.md)。
 
-已有样式系统不要全量导入 styles.css / design-refresh.css，它们含全局标签与官网布局。按组件迁移样式，或先在隔离验证页使用完整参考样式确认外观，再隔离。`examples/adoption/reference.css` 仅用于新页面试接，中文默认回退。
+React 源码接入的公共样式入口为 `src/ui.css`，包含 token、控件与应用框架样式，不加载展示站布局或 Tailwind preflight。控件也会导入自身 CSS，复制时保留递归依赖。接入包不再包含 styles.css / design-refresh.css。
+
+宿主保留自己的 html/body reset、字体文件与页面背景；主题表面应使用配套的 `--surface` / `--foreground`。需要 IDRL 内容排版时显式使用 `className="idrl-ui"`；AppShell、DataTable 和弹窗已带此范围。公共样式不重置范围外普通标题、段落、按钮和表格；已有相同控件类名时仍需检查冲突，它不是 Shadow DOM 隔离。`examples/adoption/reference.css` 演示公共入口与宿主自己的 body 设置，中文默认回退。
+
+模块归属与验证范围见 [独立公共样式](portable-ui.md)。
 
 顺序：导航框架 → 按钮 / 字段 / 状态 → 表格 / 弹窗 → 内容布局 → AI 状态 → 可选动效。先完成一个含表单、列表、详情的代表页面，再推广。标准 a 链接可接原路由，保留可访问属性与抽屉关闭行为。
 
@@ -94,3 +98,7 @@ token 数值修改在本仓库 JSON 完成，升 token 版本并重生成；组�
 执行目标应用构建和业务测试，补迁移风险检查，交付前后截图和 docs/idrl-adoption.md。
 不得将未发布的 npm 包、registry、Storybook、服务器表格当可用能力。
 ```
+
+## 校验边界
+
+`vi:check:ui` 和 `vi:export` 只验证接入所需的源码、token、图标和依赖闭包，不要求仓库中的 PPT / PDF。`vi:check` 仍执行全仓库资产与规范审计。导出后可运行 `npm run vi:verify -- <快照目录>` 核对快照内每个文件的 SHA-256；该命令检测损坏或改动，不是来源签名。

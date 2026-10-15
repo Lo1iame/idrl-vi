@@ -49,7 +49,7 @@ export function AppShell({ t,active,children,config,breadcrumbs,headerActions }:
       </Tooltip>)}
     </div>)}
   </nav>}
-  return <div className="app-layout shell-layout" data-sidebar={mobile?'mobile':collapsed?'rail':'expanded'}>
+  return <div className="idrl-ui app-layout shell-layout" data-sidebar={mobile?'mobile':collapsed?'rail':'expanded'}>
     {!mobile && <aside className="sidebar shell-sidebar" id={sidebarId} aria-label={t('应用侧边栏','Application sidebar')}>
       <a className="sidebar-brand" href={config.homeHref} aria-label={config.name}>{collapsed?config.compactLogo:config.logo}</a>
       {!collapsed&&<div className="space-label"><div><strong>{config.name}</strong>{config.description&&<span>{config.description}</span>}</div></div>}

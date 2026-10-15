@@ -9,7 +9,7 @@
 - `src/app-shell.css`：导航、Tooltip、Sheet、Breadcrumb 及日志样式。
 - `src/components/ui/{button,tooltip,sheet,breadcrumb}.tsx`：公共交互组件。
 - 框架依赖 React、Lucide、Radix Dialog / Tooltip；Button 另用 Radix Slot、class-variance-authority 和项目 `cn` 工具。依赖版本以 package-lock.json 为准。
-- 复制时带上品牌变量、字体与 Brand 组件。本项目还使用 styles.css / design-refresh.css 中的按钮和公共样式；只复制布局文件不会得到完整样式。全局参考样式不可直接覆盖已有应用的 globals.css；详见接入指南。
+- 复制时带上品牌变量、字体与 Brand 组件及递归 CSS 依赖。公共入口为 src/ui.css；AppShell 自带 idrl-ui 排版范围，不依赖展示站 styles.css / design-refresh.css。宿主保留自己的文档 reset 与页面背景；详见接入指南。
 
 ## 配置与调用
 
@@ -79,12 +79,12 @@ const columns: DataColumn<Experiment>[] = [
   { id: 'name', header: '名称', cell: row => row.name, sortValue: row => row.name },
   { id: 'score', header: '得分', cell: row => row.score ?? '—', sortValue: row => row.score, numeric: true },
 ]
-// 用 useMemo 计算并稳定 filteredRows；搜索和业务筛选保留在页面层。
+// 搜索和业务筛选保留在页面层；useMemo 仅用于性能优化。
 <DataTable rows={filteredRows} columns={columns} rowKey={row => row.id}
-  caption="实验记录" t={t} empty={<p>没有匹配的记录</p>} />
+  filterKey={JSON.stringify([query, status])} caption="实验记录" t={t} empty={<p>没有匹配的记录</p>} />
 ```
 
-这段代码展示接入形态，Experiment、filteredRows 和 t 由应用提供。每行 ID 必须唯一。表格自行管理排序和分页；新集合、排序和每页条数变更会返回第一页。导出应使用 filteredRows 全集合，不从可见 DOM 抽取当前页。远程分页应另行实现服务端排序 / 筛选契约。
+这段代码展示接入形态，Experiment、filteredRows、query、status 和 t 由应用提供。每行 ID 必须唯一。表格自行管理排序和分页；行 ID 集合 / 顺序、filterKey、排序和每页条数变更会返回第一页。等价数组及相同行 ID 的数值更新保留页码；filterKey 应编码所有筛选条件，包括筛选变化后仍返回相同记录的情况。导出应使用 filteredRows 全集合，不从可见 DOM 抽取当前页。远程分页应另行实现服务端排序 / 筛选契约。
 
 ## 表单接入
 

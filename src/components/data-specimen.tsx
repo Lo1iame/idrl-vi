@@ -34,7 +34,7 @@ export function DataSpecimen({ t }: { t: Translate }) {
         <option value="all">{t('全部方法', 'All methods')}</option>{['Baseline', 'Adaptive', 'Robust'].map(value => <option key={value}>{value}</option>)}
       </Select>
     </div>
-    <DataTable rows={rows} columns={columns} rowKey={row => row.id} caption={t('组件表格演示，所有数据均为示例', 'Component table demo. All data is illustrative.')} t={t}
+    <DataTable filterKey={JSON.stringify([query.trim().toLowerCase(),method])} rows={rows} columns={columns} rowKey={row => row.id} caption={t('组件表格演示，所有数据均为示例', 'Component table demo. All data is illustrative.')} t={t}
       empty={<div className="empty-state"><Search size={24}/><h3>{t('没有匹配的记录', 'No matching records')}</h3><Button variant="secondary" onClick={() => { setQuery(''); setMethod('all') }}>{t('重置筛选', 'Reset filters')}</Button></div>}/>
   </section>
 }

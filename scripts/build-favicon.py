@@ -2,14 +2,21 @@
 from copy import deepcopy
 from pathlib import Path
 import json
+import argparse
 import sys
 import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 LOGOS = ROOT / 'assets/brand/logo'
+parser = argparse.ArgumentParser()
+parser.add_argument('--tokens', type=Path, default=ROOT / 'assets/brand/tokens.json')
+parser.add_argument('--logo-dir', type=Path, default=LOGOS)
+parser.add_argument('--check', action='store_true')
+args = parser.parse_args()
+LOGOS = args.logo_dir
 SVG = 'http://www.w3.org/2000/svg'
 ET.register_namespace('', SVG)
-tokens = json.loads((ROOT / 'assets/brand/tokens.json').read_text(encoding='utf-8'))
+tokens = json.loads(args.tokens.read_text(encoding='utf-8'))
 source = ET.parse(LOGOS / 'symbol-color.svg').getroot()
 _, _, width, height = map(float, source.get('viewBox').split())
 
