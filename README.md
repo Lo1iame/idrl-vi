@@ -9,7 +9,7 @@ Intelligent Design and Robust Learning 的视觉识别与 UI 设计体系。
 - 官网首屏与研究区域已加入 React Bits AnimatedContent 和 TiltedCard 适配动效，以及可重播 IDRL 标志组装与精细网格背景；支持减少动画偏好、键盘焦点和移动端降级，GSAP 按需加载。
 - 组件页包含可排序 / 分页 / 筛选的数据表格、导航框架、共享字段 / 多行输入 / 复选框 / 开关、表单校验、确认弹窗、色值复制、密度切换和键盘页签；官网可将问题草稿带到研究助手。
 - Agent 设计契约：DESIGN.md；名称术语：CONTEXT.md。
-- 科研汇报模板：`output/research-template/idrl-research-template-v2.pptx`，16 页可编辑页面；预览入口为同目录 `index.html`。
+- 科研汇报模板：`output/research-template/idrl-research-template-v3-final.pptx`，16 页可编辑页面；预览入口为同目录 `index.html`。
 - 科研图表规范：`docs/design/scientific-charts.md`；Matplotlib 样式位于 `assets/brand/charts/`，示例导出位于 `output/scientific-charts/`。
 
 ## 本地运行
@@ -61,3 +61,5 @@ python tests/test_font_build.py
 
 第一阶段已通过审核，第二阶段页面待审核。科研 PPT 与图表规范已交付首版，待审核；后续继续交付完整组件、registry、Storybook、海报与社交模板。
 
+
+品牌与 PPT 的可复现构建、环境预检及版本输出约定见 `docs/design/asset-build.md`。

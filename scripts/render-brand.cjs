@@ -4,10 +4,13 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const {pathToFileURL}=require('node:url');
 const {execFileSync}=require('node:child_process');
+const {pythonExecutable}=require('./asset-runtime.cjs');
 const root=path.resolve(__dirname,'..');
 (async()=>{
+ const python=pythonExecutable(['reportlab']);
  const out=path.join(root,'output/brand'); await fs.mkdir(out,{recursive:true});
- const browser=await chromium.launch({headless:true,...(process.env.BROWSER_CHANNEL?{channel:process.env.BROWSER_CHANNEL}:{})});
+ const channel=process.env.BROWSER_CHANNEL||(process.platform==='win32'?'msedge':undefined);
+ const browser=await chromium.launch({headless:true,...(channel?{channel}:{})});
  try {
   const page=await browser.newPage({viewport:{width:1440,height:960},deviceScaleFactor:2});
   const errors=[]; page.on('pageerror',e=>errors.push(e.message));
@@ -28,7 +31,7 @@ const root=path.resolve(__dirname,'..');
   await page.evaluate(()=>{document.querySelectorAll('.page').forEach(p=>p.style.display='');window.scrollTo(0,0)});
   const overflows=await page.evaluate(()=>Array.from(document.querySelectorAll('.page')).filter(p=>p.scrollHeight>p.clientHeight || (p.id!=='brand'&&p.scrollWidth>p.clientWidth)).map(p=>p.id));
   if(overflows.length)throw new Error('Page overflow: '+overflows.join(','));
-  execFileSync(process.env.PYTHON_BIN||'python',[path.join(root,'scripts/export-review.py')],{stdio:'inherit'});
+  execFileSync(python,[path.join(root,'scripts/export-review.py')],{stdio:'inherit',windowsHide:true});
   const logos=path.join(root,'assets/brand/logo');
   for(const name of (await fs.readdir(logos)).filter(x=>x.endsWith('.svg'))){
    await sharp(path.join(logos,name),{density:216}).resize({width:name.startsWith('symbol')?1024:2400}).png().toFile(path.join(out,name.replace('.svg','.png')));

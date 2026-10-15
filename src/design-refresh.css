@@ -506,6 +506,12 @@ tbody tr:hover { background: var(--background); }
  .identity-copy h1 { font-size: 42px; }
  .specimen .form-actions { flex-wrap: wrap; }
 }
+@media(max-width:359px) {
+ .brand-values { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+ .brand-values .value-statement { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 16px; }
+ .brand-values .value-index { margin-bottom: 0; }
+ .brand-values .value-english { overflow-wrap: anywhere; }
+}
 @media(prefers-reduced-motion:reduce) {
  *,*::before,*::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
 }

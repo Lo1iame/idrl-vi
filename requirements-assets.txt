@@ -1,0 +1,6 @@
+brotli==1.2.0
+charset-normalizer==3.5.2
+fonttools==4.67.0
+pillow==12.3.0
+pypdf==6.20.1
+reportlab==5.0.1

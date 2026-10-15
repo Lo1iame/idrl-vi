@@ -52,7 +52,7 @@ export function DataTable<T>({ rows, columns, rowKey, caption, empty, t }: {
       <table><caption className="sr-only">{caption}</caption>
         <thead><tr>{columns.map(column => <th key={column.id} scope="col" className={column.numeric ? 'numeric' : undefined}
           aria-sort={column.sortValue ? sort?.id === column.id ? sort.descending ? 'descending' : 'ascending' : 'none' : undefined}>
-          {column.sortValue ? <button className="table-sort" onClick={() => changeSort(column.id)}>{column.header}
+          {column.sortValue ? <button type="button" className="table-sort" onClick={() => changeSort(column.id)}>{column.header}
             {sort?.id !== column.id ? <ArrowUpDown size={14}/> : sort.descending ? <ArrowDown size={14}/> : <ArrowUp size={14}/>}
           </button> : column.header || <span className="sr-only">{t('操作', 'Actions')}</span>}
         </th>)}</tr></thead>

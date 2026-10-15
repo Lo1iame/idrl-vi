@@ -1,0 +1,16 @@
+{
+  "file": "idrl-research-template-v3-final.pptx",
+  "sha256": "c1d10733bb85ef0423192e5c8719b7c2443577a308549b0fc7df5dff2d81eaa3",
+  "slides": 16,
+  "nativeTables": 4,
+  "nativeCharts": 3,
+  "embeddedWorkbooks": 3,
+  "packageIntegrity": "pass",
+  "fontPolicyPassed": true,
+  "artifactToolImportPassed": true,
+  "finalDeckRenderedPages": 16,
+  "visualReviewPages": 16,
+  "nativePowerPointEditTestThisRevision": false,
+  "headerIdentity": "IDRL acronym lockup; full names on cover/end",
+  "historicalSource": "idrl-research-template-v2.pptx"
+}

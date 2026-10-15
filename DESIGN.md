@@ -113,7 +113,7 @@
 - 路径：`/#website` 官网概念、`/#workspace` 实验工作台、`/#assistant` 研究助手、`/#components` 基础组件展示。
 - 组件源码：`src/components/ui/button.tsx`、`badge.tsx`、`dialog.tsx`；应用框架为 `src/components/app-shell.tsx`。技术依赖已在 package-lock.json 锁定。
 - Button 支持 default、secondary、ghost、destructive 变体及 sm、icon 尺寸；使用 asChild 可保留链接语义。图标按钮必须提供 aria-label。
-- Dialog 基于 Radix 管理焦点与 Esc 关闭；没有使用 Radix Trigger 的受控调用需提供 returnFocusId，或由调用页面显式恢复焦点。
+- Dialog 基于 Radix 管理焦点与 Esc 关闭；没有使用 Radix Trigger 的受控调用需提供 returnFocusId / returnFocusRef，或由调用页面显式恢复焦点；多个入口优先记录实际触发元素。
 - 页面使用 `tokens-values.css` 和 Web 字体；视觉基础稿使用包含完整字体的 `tokens.css`。两份 CSS 均由 tokens.json 生成，禁止直接改生成文件。
 - 工作台记录只存在于页面会话，导航离开该页或刷新会恢复固定演示数据。导出仅包含当前筛选结果。
 - 研究助手读取固定 demo-data，演示流式输出、停止、操作确认、工具成功／失败、重试和报告下载。没有连接真实模型、训练任务、用户身份或存储。
@@ -166,3 +166,10 @@
 - `src/components/ui/choice.tsx` 提供 Checkbox（原生 input 属性）与受控 Switch（checked / onCheckedChange）。Checkbox 适用于可选项，Switch 适用于即时布尔设置。均有 label、可选 description、disabled 与键盘焦点；Switch 为 button，不自动参与 FormData，调用方从受控状态读取值。
 - 当前表单提交仍由页面负责；组件预览采用提交后错误与首个无效字段聚焦，工作台新建表单采用浏览器 required / min / max / step 校验。没有引入校验库或远程保存能力。
 - 使用时复制对应 field.css / choice.css 与品牌 tokens；保留语义错误文字色 destructiveText。组件页提供多行输入、计数、复选框、开关、禁用项、摘要变化和重置演示。
+
+## 2026-10-15 审计修复约定
+
+- 表格列排序必须使用 type="button"，不得提交外层表单。受控详情弹窗关闭后返回实际入口。
+- 官网在 320px 中英文视口均须重排而非整页横向滚动；小于 360px 的品牌价值区使用单列。
+- PPT 页眉使用 IDRL 字标组合，完整双语组合只用于满足最小文字尺寸的区域。修订模板为 output/research-template/idrl-research-template-v3-final.pptx。
+- 品牌 / PPT 导出通过 npm run brand:check / brand:build 与 deck:check / deck:build 执行；依赖与运行时说明见 docs/design/asset-build.md。

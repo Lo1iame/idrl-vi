@@ -46,3 +46,13 @@
 数据与工具全部为本地模拟。未测试模型服务、业务后台、真实训练、认证或持久化，这些均未接入。
 自动无障碍检查不等同于完整 WCAG 认证；完整屏幕阅读器、最终组件状态和跨浏览器人工验收将在后续阶段完成。
 当前中文 Web 字体是预览文案子集；新文案需重建字体，原始字体及授权仍保留。
+
+## 2026-10-15：项目审计修复
+
+- 数据表格排序不再提交外层 form；详情弹窗按实际触发按钮恢复焦点；官网补齐 320px 中英文重排。
+- 新增 4 项浏览器回归、2 项资产运行时检查和 1 项当前 PPT 包 / 页眉尺寸检查；字体原有 5 项检查保留。
+- 品牌环境由 requirements-assets.txt / sharp 锁定；brand:check / brand:build 已完成 5 页审核图、PDF 与 logo PNG 导出。
+- deck:check / deck:build 可发现当前运行时与完整技能目录，导出 v3-final，保留 v2。最终文件通过校验、重新导入渲染 16 页并逐页检查；校验摘要位于 output/research-template/validation-v3.json。
+- 构建说明与 Windows 渲染 worker 生命周期见 docs/design/asset-build.md。没有执行 PowerPoint / Google Slides 原生编辑与印刷打样。
+
+本批最终验证：40 项浏览器回归、2 项运行时测试、6 项 Python 检查及生产构建通过；依赖漏洞审计为 0。

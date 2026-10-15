@@ -2,15 +2,22 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-const root = process.cwd();
-const runtime = process.env.IDRL_RUNTIME || 'C:/Users/z/.cache/codex-runtimes/codex-primary-runtime/dependencies';
-const skill = process.env.IDRL_PRESENTATIONS_SKILL || 'C:/Users/z/.codex/plugins/cache/openai-primary-runtime/presentations/26.1007.11041/skills/presentations';
-const { Presentation, PresentationFile } = await import(pathToFileURL(path.join(runtime, 'node/node_modules/@oai/artifact-tool/dist/artifact_tool.mjs')).href);
+import assetRuntime from './asset-runtime.cjs';
+const { root, presentationEnvironment } = assetRuntime;
+if (!process.send) throw new Error('Run npm run deck:build; this module is the isolated rendering worker.');
+const { runtime, skill, python } = presentationEnvironment();
+const revision = process.env.IDRL_DECK_REVISION || 'v3-final';
+if (!/^[a-zA-Z0-9][a-zA-Z0-9-]*$/.test(revision)) throw new Error('IDRL_DECK_REVISION must contain only letters, numbers and hyphens.');
+const finalPath = path.join(root, 'output/research-template', `idrl-research-template-${revision}.pptx`);
+try { await fs.access(finalPath); throw new Error(`Output already exists: ${finalPath}. Set IDRL_DECK_REVISION to a new revision; existing decks are preserved.`); }
+catch (error) { if (error.code !== 'ENOENT') throw error; }
+const { Presentation, PresentationFile, FileBlob } = await import(pathToFileURL(path.join(runtime, 'node/node_modules/@oai/artifact-tool/dist/artifact_tool.mjs')).href);
 const { finalizePresentation, applyPresentationChartFont } = await import(pathToFileURL(path.join(skill, 'container_tools/artifact_tool_utils.mjs')).href);
 const out = path.join(root, 'output/research-template');
-const tmp = path.join(root, '.scratch/presentation-build');
+const tmp = path.join(root, '.scratch/presentation-build', revision);
+const previewDir = path.join(tmp, 'preview');
 await fs.mkdir(out, { recursive: true });
-await fs.mkdir(tmp, { recursive: true });
+await fs.mkdir(previewDir, { recursive: true });
 const p = Presentation.create({ slideSize: { width: 1280, height: 720 } });
 const C = { navy:'#203663', blue:'#236db9', cyan:'#56c0e5', ink:'#182a43', muted:'#52637a', rule:'#dce4ef', pale:'#edf3fa', white:'#ffffff' };
 const font = 'Noto Sans CJK SC';
@@ -21,7 +28,7 @@ function text(s,t,x,y,w,h,size=28,color=C.ink,bold=false,latin=false) {
 }
 function rect(s,x,y,w,h,fill) { return s.shapes.add({geometry:'rect',position:{left:x,top:y,width:w,height:h},fill,line:{fill:'none',width:0}}); }
 async function logo(s,reverse=false,x=1060,y=45,w=148,h=60) {
-  s.images.add({blob:new Uint8Array(await fs.readFile(path.join(root,'output/brand',reverse?'lockup-bilingual-reverse.png':'lockup-bilingual.png'))),contentType:'image/png',alt:'IDRL 智能设计与鲁棒学习',fit:'contain',position:{left:x,top:y,width:w,height:h}});
+  s.images.add({blob:new Uint8Array(await fs.readFile(path.join(root,'output/brand',reverse?'lockup-idrl-reverse.png':'lockup-idrl.png'))),contentType:'image/png',alt:'IDRL',fit:'contain',position:{left:x,top:y,width:w,height:h}});
 }
 async function slide(title,sub='',dark=false) {
   const s=p.slides.add(); s.background.fill=dark?C.navy:C.white;
@@ -102,11 +109,19 @@ s=await slide('', '',true);
 text(s,'讨论与交流',72,255,1100,103,68,C.white,true);
 text(s,'智能设计与鲁棒学习',77,406,1100,58,30,'#dce4ef');
 text(s,'Intelligent Design and Robust Learning',77,481,1100,45,24,'#9bdcf2',false,true);
-for(let i=0;i<p.slides.items.length;i++) { const sl=p.slides.items[i];sl.speakerNotes.text='IDRL 科研汇报模板。方括号为待替换内容；所有数值为合成示例，不代表团队成果。';await fs.writeFile(path.join(out,`slide-${String(i+1).padStart(2,'0')}.png`),new Uint8Array(await (await p.export({slide:sl,format:'png',scale:1})).arrayBuffer())); }
+for (const sl of p.slides.items) sl.speakerNotes.text='IDRL 科研汇报模板。方括号为待替换内容；所有数值为合成示例，不代表团队成果。';
 await (await PresentationFile.exportPptx(p)).save(path.join(tmp,'candidate.pptx'));
-const result=await finalizePresentation({workspaceDir:root,candidatePath:path.join(tmp,'candidate.pptx'),finalPath:path.join(out,'idrl-research-template-v2.pptx'),pythonExecutable:path.join(runtime,'python/python.exe'),integrityValidatorPath:path.join(skill,'container_tools/inspect_presentation_package_integrity.py'),layoutValidatorPath:path.join(skill,'container_tools/inspect_presentation_layout_geometry.py'),layoutArgs:['--expected-slide-size-emu','12192000,6858000','--validate-heading-fit',...[5,7,8,11].flatMap(n=>['--require-native-table-slide',String(n)])],requiredNativeTableOwnerSlides:[5,7,8,11],requiredNativeChartOwnerSlides:[9,10,12],materializeLiteralChartWorkbooks:true,fontPolicy:{basis:'design',families:['Inter',font]},verifyArtifactToolImport:true,receiptPath:path.join(tmp,'validation-v2.json')});
-console.log(JSON.stringify(result));
-
-
-
-
+const result=await finalizePresentation({workspaceDir:root,candidatePath:path.join(tmp,'candidate.pptx'),finalPath,pythonExecutable:python,explicitTotalSlideCount:16,integrityValidatorPath:path.join(skill,'container_tools/inspect_presentation_package_integrity.py'),layoutValidatorPath:path.join(skill,'container_tools/inspect_presentation_layout_geometry.py'),layoutArgs:['--expected-slide-size-emu','12192000,6858000','--validate-heading-fit',...[5,7,8,11].flatMap(n=>['--require-native-table-slide',String(n)])],requiredNativeTableOwnerSlides:[5,7,8,11],requiredNativeChartOwnerSlides:[9,10,12],materializeLiteralChartWorkbooks:true,fontPolicy:{basis:'design',families:['Inter',font]},verifyArtifactToolImport:true,receiptPath:path.join(tmp,'validation.json')});
+const finalized = await PresentationFile.importPptx(await FileBlob.load(finalPath));
+for (let i=0;i<finalized.slides.items.length;i++) {
+  const preview = await finalized.export({slide:finalized.slides.items[i],format:'png',scale:1});
+  await fs.writeFile(path.join(previewDir,`slide-${String(i+1).padStart(2,'0')}.png`),new Uint8Array(await preview.arrayBuffer()));
+}
+for (const name of await fs.readdir(previewDir)) await fs.copyFile(path.join(previewDir,name),path.join(out,name));
+const indexPath = path.join(out, 'index.html');
+const index = await fs.readFile(indexPath, 'utf8');
+await fs.writeFile(indexPath, index.replace(/idrl-research-template-[a-zA-Z0-9-]+\.pptx/g, path.basename(finalPath)));
+// Signal completion only after the finalizer and all preview writes succeed.
+// The parent verifies the checksum, then terminates this native rendering worker.
+process.send({ kind: 'complete', finalPath, sha256: result.finalSha256, receiptPath: result.receiptPath, slideCount: result.packageIntegrity.slide_count, nativeTables: result.nativeTableArithmetic.native_table_count, nativeCharts: result.nativeChartValidation.detectedChartCount });
+await new Promise(() => { setInterval(() => {}, 60000); });

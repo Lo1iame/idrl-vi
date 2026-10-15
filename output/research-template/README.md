@@ -1,6 +1,6 @@
-# IDRL 科研汇报模板 v2
+# IDRL 科研汇报模板 v3
 
-打开 `idrl-research-template-v2.pptx`，复制所需页面并替换内容。浏览 `index.html` 可预览全部 16 页。
+打开 `idrl-research-template-v3-final.pptx`，复制所需页面并替换内容。浏览 `index.html` 可预览全部 16 页。
 
 先安装 `assets/brand/fonts/` 中的 Inter 与 Noto Sans CJK SC。模板保持原 logo 比例，使用已确认品牌色和中英文名称。
 
@@ -13,8 +13,8 @@
 - 公式为文本示例，复杂公式建议在 PowerPoint 内插入数学公式。
 - 当前按页面复制使用，尚未交付自定义母版或 POTX。
 
-生成源为 `scripts/build-research-deck.mjs`，使用 Codex bundled artifact-tool。指定 `IDRL_RUNTIME`、`IDRL_PRESENTATIONS_SKILL` 和 `RUNTIME_NODE_MODULES` 可迁移运行环境。新修订需修改最终文件名，finalizer 不覆盖现有版本。
+页眉使用小尺寸 IDRL 字标，完整名称在封面 / 结束页以可读尺寸呈现。v2 保留作历史版本。
 
-验证：16 页均已重新导入并渲染检查；结构、字体策略、4 张原生表格、3 张原生图表及工作簿数据引用检查通过。本机 PowerPoint 已通过打开、另存测试副本和重新打开 16 页检查；尚未验证逐项编辑图表数据，也未验证 Google Slides。完整校验记录位于 `.scratch/presentation-build/validation-v2.json`。
+使用 `npm run deck:check` 和 `npm run deck:build`，完整环境准备与修订输出约定见 `docs/design/asset-build.md`。已存在的输出不会覆盖；后续设置 IDRL_DECK_REVISION 为新修订名。
 
-
+本轮验证：16 页、4 张原生表格、3 张原生图表及工作簿数据引用通过校验，最终文件已重新导入、渲染并逐页检查。未在本轮 PowerPoint / Google Slides 中执行打开与逐项编辑测试。校验收据位于 `.scratch/presentation-build/v3-final/validation.json`；可提交的摘要见本目录 validation-v3.json。
