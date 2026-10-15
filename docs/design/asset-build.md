@@ -40,15 +40,15 @@ npm run deck:build
 
 `deck:check` 不生成文件。`deck:build` 使用 bundled Node 的独立渲染 worker，完成 PPTX 导出、结构 / 原生对象 / 字体校验、最终文件重新导入及全部预览渲染后，才发送带 SHA-256 的完成结果。父进程核对校验和再回收 worker，避开当前 Windows 原生图形运行时的退出阶段崩溃；没有收到完成结果、校验不匹配或超时均返回失败。不要直接运行 build-research-deck.mjs，它是 worker 入口。
 
-默认输出 `output/research-template/idrl-research-template-v3-final.pptx`；已有文件会在生成前拒绝覆盖。后续修订使用新的文件名：
+默认输出 `output/research-template/idrl-research-template-v4.pptx`；已有文件会在生成前拒绝覆盖。后续修订使用新的文件名：
 
 ```powershell
-$env:IDRL_DECK_REVISION = 'v4'
+$env:IDRL_DECK_REVISION = 'v5'
 npm run deck:build
 Remove-Item Env:IDRL_DECK_REVISION
 ```
 
-最终 PPTX 校验后才更新画廊链接及预览；校验收据保留在 `.scratch/presentation-build/<修订>/validation.json`。v2 保留作历史参考。此轮 v3 改用小尺寸 IDRL 字标作为页眉，完整英文名称在封面、完整中英文名称在结束页保持可读尺寸。
+最终 PPTX 校验后才更新画廊链接及预览；校验收据保留在 `.scratch/presentation-build/<修订>/run-*/validation.json`。v2 / v3 保留作历史参考。v4 参照品牌审核稿建立分层版式，仍用小尺寸 IDRL 字标作为页眉，并在封面 / 结束页保留可读的完整名称。
 
 ## 回归检查
 
@@ -60,3 +60,7 @@ npm test
 ```
 
 资产检查包括技能缓存选择与显式覆盖失败；Python 检查包含字体输入以及当前画廊 PPT 的 16 页、4 张表格、3 张图表 / 工作簿和页眉 logo 尺寸约束。自动结构检查不代表已在本轮 PowerPoint / Google Slides 中逐项编辑，也不替代印刷打样。
+
+## v4 的 PDF 与检查摘要
+
+构建器从最终 PPTX 重新导入并渲染预览，再通过 export-deck-preview.py 合成为同名 PDF，供免安装字体的版式审核。PDF 为栅格预览，不是可编辑或矢量印刷版本。当前版本校验摘要自动写入 output/research-template/validation-current.json；每次构建使用独立 run-* 临时目录，保留历史收据并避免缓存冲突。

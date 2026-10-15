@@ -1,0 +1,20 @@
+{
+  "file": "idrl-research-template-v4.pptx",
+  "sha256": "b985c64a8cea89f6b94055bb14321b248e4454f2604dc342ac791b10d2899875",
+  "slides": 16,
+  "nativeTables": 4,
+  "nativeCharts": 3,
+  "embeddedWorkbooks": 3,
+  "packageIntegrity": "pass",
+  "fontPolicyPassed": true,
+  "artifactToolImportPassed": true,
+  "finalDeckRenderedPages": 16,
+  "nativePowerPointEditTestThisRevision": false,
+  "pdf": "idrl-research-template-v4.pdf",
+  "pdfRepresentation": "Raster review from finalized slide previews",
+  "visualReviewPages": 16,
+  "styleReference": "idrl-foundation-review.pdf",
+  "historicalSource": "idrl-research-template-v3-final.pptx",
+  "headerIdentity": "IDRL acronym lockup; complete names on cover/end",
+  "previewScale": 2
+}

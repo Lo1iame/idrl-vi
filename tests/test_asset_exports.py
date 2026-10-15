@@ -16,7 +16,7 @@ class AssetExportTests(unittest.TestCase):
         index = (ROOT / 'output/research-template/index.html').read_text(encoding='utf-8')
         name = re.search(r'href="(idrl-research-template-[\w.-]+\.pptx)"', index).group(1)
         deck_path = ROOT / 'output/research-template' / name
-        receipt = json.loads((deck_path.parent / 'validation-v3.json').read_text(encoding='utf-8'))
+        receipt = json.loads((deck_path.parent / 'validation-current.json').read_text(encoding='utf-8'))
         self.assertEqual(receipt['file'], name)
         self.assertEqual(receipt['sha256'], hashlib.sha256(deck_path.read_bytes()).hexdigest())
         with ZipFile(deck_path) as deck:
@@ -30,14 +30,39 @@ class AssetExportTests(unittest.TestCase):
                 slide = ET.fromstring(deck.read(name))
                 table_count += len(slide.findall('.//a:tbl', NS))
                 pictures = slide.findall('.//p:pic', NS)
-                self.assertEqual(len(pictures), 1)
-                extent = pictures[0].find('./p:spPr/a:xfrm/a:ext', NS)
+                headers = []
+                for picture in pictures:
+                    extent = picture.find('./p:spPr/a:xfrm/a:ext', NS)
+                    if extent is not None and abs(int(extent.get('cx')) / int(extent.get('cy')) - 600 / 180) < .001:
+                        headers.append(extent)
+                # Decorative brand geometry is permitted; the small header must remain readable.
+                self.assertEqual(len(headers), 1)
+                extent = headers[0]
                 width, height = int(extent.get('cx')), int(extent.get('cy'))
                 # The small header uses the 600:180 acronym lockup, not the 850:180 bilingual lockup.
                 self.assertAlmostEqual(width / height, 600 / 180, places=3)
                 # The actual symbol is 228/600 of the lockup width; at least 10 mm in print.
                 self.assertGreaterEqual(width / 36000 * 228 / 600, 10)
             self.assertEqual(table_count, 4)
+
+    def test_derived_callouts_match_the_synthetic_source(self):
+        index = (ROOT / 'output/research-template/index.html').read_text(encoding='utf-8')
+        name = re.search(r'href="(idrl-research-template-[\w.-]+\.pptx)"', index).group(1)
+        data = json.loads((ROOT / 'output/research-template/illustrative-data.json').read_text())
+        with ZipFile(ROOT / 'output/research-template' / name) as deck:
+            scores = ET.fromstring(deck.read('ppt/slides/slide9.xml'))
+            labels = [node.text for node in scores.findall('.//a:t', NS)]
+            for baseline, proposed in zip(data['baseline'], data['proposed']):
+                self.assertIn(f'+{proposed - baseline}', labels)
+            robustness = ET.fromstring(deck.read('ppt/slides/slide12.xml'))
+            self.assertIn(str(data['robustNew'][-1] - data['robustBase'][-1]), [node.text for node in robustness.findall('.//a:t', NS)])
+
+    def test_current_pdf_preview_has_all_slides(self):
+        from pypdf import PdfReader
+        receipt = json.loads((ROOT / 'output/research-template/validation-current.json').read_text())
+        pdf = PdfReader(ROOT / 'output/research-template' / receipt['pdf'])
+        self.assertEqual(len(pdf.pages), 16)
+        self.assertFalse(pdf.is_encrypted)
 
 
 if __name__ == '__main__':

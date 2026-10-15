@@ -1,20 +1,17 @@
-# IDRL 科研汇报模板 v3
+# IDRL 科研汇报模板 v4
 
-打开 `idrl-research-template-v3-final.pptx`，复制所需页面并替换内容。浏览 `index.html` 可预览全部 16 页。
+当前使用 idrl-research-template-v4.pptx；同名 PDF 为免安装字体的版式审核预览，index.html 提供完整 16 页画廊。v2 / v3 保留作历史参考。
 
-先安装 `assets/brand/fonts/` 中的 Inter 与 Noto Sans CJK SC。模板保持原 logo 比例，使用已确认品牌色和中英文名称。
+参照 idrl-foundation-review.pdf，采用品牌页眉、清晰的标题 / 导语、深浅面板、重点色块和可读留白。封面 / 章节 / 结束页用深 navy；证据页保持明亮，任务结果和鲁棒性页附合成数据差值。
 
-页面顺序：封面、结构、章节、问题、相关工作、方法流程、公式、实验设置、主结果、学习曲线、消融、鲁棒性、定性分析、结论、参考资源、讨论。
+- 16 页内容顺序保持：封面、结构、章节、问题、相关工作、方法、公式、设置、主结果、学习曲线、消融、鲁棒性、定性分析、结论、资源、讨论。
+- 保留 4 张原生表格、3 张原生图表及数据工作簿；方法流程与文本可编辑。
+- 所有数值与差值均为合成示例，不代表团队成果。差值从 illustrative-data.json 的同一份数据计算。
+- 方括号与“插入实验图像”为有意保留的模板内容，使用时替换。
+- 公式为可编辑文本，不是原生数学公式对象。当前仍按页面复制使用，没有交付自定义母版 / POTX。
 
-- 文字、4 张表格及方法流程均可编辑。
-- 3 张图表附带数据工作簿；在 PowerPoint 中使用“编辑数据”替换数值。
-- 图表为合成示例，`illustrative-data.json` 提供完整数据；替换前不能当作真实成果使用。
-- 方括号与“插入实验图像”是有意保留的模板内容，发布前替换。
-- 公式为文本示例，复杂公式建议在 PowerPoint 内插入数学公式。
-- 当前按页面复制使用，尚未交付自定义母版或 POTX。
+打开 PPT 前安装 assets/brand/fonts/ 的 InterVariable.ttf、NotoSansCJKsc-Regular.otf、NotoSansCJKsc-Bold.otf。字体未嵌入 PPT；PDF 由最终幻灯片 PNG 合成，用于视觉审核，不是矢量印刷稿。
 
-页眉使用小尺寸 IDRL 字标，完整名称在封面 / 结束页以可读尺寸呈现。v2 保留作历史版本。
+通过 npm run deck:check / deck:build 重建；已存在的输出不会覆盖，下一版设置 IDRL_DECK_REVISION=v5。环境说明见 docs/design/asset-build.md。每次使用独立构建目录，避免覆盖旧校验收据。
 
-使用 `npm run deck:check` 和 `npm run deck:build`，完整环境准备与修订输出约定见 `docs/design/asset-build.md`。已存在的输出不会覆盖；后续设置 IDRL_DECK_REVISION 为新修订名。
-
-本轮验证：16 页、4 张原生表格、3 张原生图表及工作簿数据引用通过校验，最终文件已重新导入、渲染并逐页检查。未在本轮 PowerPoint / Google Slides 中执行打开与逐项编辑测试。校验收据位于 `.scratch/presentation-build/v3-final/validation.json`；可提交的摘要见本目录 validation-v3.json。
+当前包结构、字体、图表工作簿引用与重新导入检查通过，16 页最终渲染已逐页视觉检查。validation-current.json 为自动生成的技术摘要；validation-v4.json 记录本轮视觉检查。没有在本轮 PowerPoint / Google Slides 本体逐项编辑验证。

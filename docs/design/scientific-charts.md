@@ -46,7 +46,7 @@
 
 ## 本仓库的可复用资产
 
-- `output/research-template/idrl-research-template-v3-final.pptx`：16 页可编辑汇报模板，含 3 张原生图表、4 张原生表格。
+- `output/research-template/idrl-research-template-v4.pptx`：16 页可编辑汇报模板，含 3 张原生图表、4 张原生表格。
 - `output/research-template/illustrative-data.json`：PPT 图表的完整合成数据。
 - `assets/brand/charts/idrl.mplstyle`：Matplotlib 样式。
 - `scripts/build-scientific-charts.py`：导出比较柱图、学习曲线、鲁棒性曲线与重复运行误差图；输出到 `output/scientific-charts/`。
@@ -56,3 +56,5 @@
 
 PPTX 中的图表及数据工作簿可编辑；方法框图为可编辑形状与文字。公式页目前是文本公式示例，不是原生数学公式对象。Logo 使用原始资产导出的图片，保持比例。模板按页面复制使用，尚未制作自定义 PowerPoint 母版或 POTX。打开前安装仓库中的字体；跨软件打开后需复核换行与图表布局。
 
+
+v4 使用深浅面板区分信息层次；任务差值及鲁棒性末端差值由同一份合成数据计算，不表示真实研究结论。

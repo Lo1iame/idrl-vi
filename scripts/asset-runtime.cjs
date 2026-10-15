@@ -47,8 +47,8 @@ function presentationEnvironment() {
   const python = process.env.IDRL_PYTHON || process.env.PYTHON_BIN || path.join(runtime, process.platform === 'win32' ? 'python/python.exe' : 'python/bin/python3');
   const node = path.join(runtime, process.platform === 'win32' ? 'node/bin/node.exe' : 'node/bin/node');
   requireFiles(runtime, [path.relative(runtime, node)], 'Bundled Node runtime');
-  const check = spawnSync(python, ['-c', 'import PIL, pypdf'], { encoding: 'utf8', timeout: 10000, windowsHide: true });
-  if (check.error || check.status !== 0) throw new Error('Presentation Python must provide PIL and pypdf. Check IDRL_RUNTIME / IDRL_PYTHON.');
+  const check = spawnSync(python, ['-c', 'import PIL, pypdf, reportlab'], { encoding: 'utf8', timeout: 10000, windowsHide: true });
+  if (check.error || check.status !== 0) throw new Error('Presentation Python must provide PIL, pypdf and reportlab. Check IDRL_RUNTIME / IDRL_PYTHON.');
   return { runtime, skill, python, node };
 }
 

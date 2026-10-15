@@ -173,3 +173,10 @@
 - 官网在 320px 中英文视口均须重排而非整页横向滚动；小于 360px 的品牌价值区使用单列。
 - PPT 页眉使用 IDRL 字标组合，完整双语组合只用于满足最小文字尺寸的区域。修订模板为 output/research-template/idrl-research-template-v3-final.pptx。
 - 品牌 / PPT 导出通过 npm run brand:check / brand:build 与 deck:check / deck:build 执行；依赖与运行时说明见 docs/design/asset-build.md。
+
+## 科研汇报版式 v4
+
+- 参考 idrl-foundation-review.pdf 的层次：品牌页眉 / 分隔线、主标题 / 导语、内容面板、页脚信息。大标题、分组标题、正文和注释通过字号、字重、颜色与留白区分。
+- 封面、章节和结束页可用深 navy 底与低对比度品牌几何辅助图形；内容和图表页保持明亮。面板用于真实内容分组，重点结论最多一个主色块，不增加多层嵌套装饰。
+- 方法流程保持可编辑形状；表格与图表保持原生对象，重点行可以使用品牌蓝。数字强调须对应实际数据；示例差值仍须明确标为合成示例。
+- 当前科研模板为 output/research-template/idrl-research-template-v4.pptx，附同名 PDF 栅格审核版。PPT 字体为 Inter / Noto Sans CJK SC，打开前需安装；字体没有嵌入 PPT。
