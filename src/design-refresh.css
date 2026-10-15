@@ -247,13 +247,6 @@ tbody tr:hover { background: var(--background); }
 .density-switch[aria-checked=true] > span:first-child { background: var(--primary); border-color: var(--primary); }
 .density-switch[aria-checked=true] > span:first-child::after { transform: translateX(12px); background: var(--primary-foreground); }
 .specimen-form { display: flex; flex-direction: column; gap: 22px; margin-top: 24px; }
-.field-group { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
-.field-group label { font-size: 14px; font-weight: 500; }
-.ui-input { width: 100%; min-width: 0; height: 44px; padding: 0 12px; background: var(--surface); border: 1px solid var(--control-border); border-radius: 6px; color: var(--foreground); font-size: 14px; }
-.ui-input::placeholder { color: var(--muted-foreground); }
-.ui-input[aria-invalid=true] { border-color: var(--destructive); }
-.field-error { color: var(--destructive); font-size: 12px; }
-.field-help { color: var(--muted-foreground); font-size: 12px; }
 .specimen-form.is-compact { gap: 14px; }
 .specimen-form.is-compact .ui-input { height: 36px; }
 .specimen-form .form-actions { margin-top: 0; }

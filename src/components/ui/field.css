@@ -1,0 +1,13 @@
+.field-group { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.field-group label { font-size: 14px; font-weight: 500; }
+.ui-input { width: 100%; min-width: 0; height: 44px; padding: 0 12px; background: var(--surface); border: 1px solid var(--control-border); border-radius: 6px; color: var(--foreground); font-size: 14px; }
+.ui-input::placeholder { color: var(--muted-foreground); }
+.ui-input[aria-invalid=true] { border-color: var(--destructive); }
+.field-error { color: var(--destructive); font-size: 12px; }
+.field-help { color: var(--muted-foreground); font-size: 12px; }
+.ui-textarea { height: auto; min-height: 112px; padding: 10px 12px; line-height: 1.6; resize: vertical; }
+.field-group .field-error { color: var(--destructive-text); }
+.field-required::before { content: ' *'; }
+.field-group .field-help, .field-group .field-error { margin: 0; line-height: 1.6; }
+.ui-input:disabled { opacity: .6; cursor: not-allowed; }
+.specimen-form.is-compact .ui-textarea { height: auto; min-height: 88px; }

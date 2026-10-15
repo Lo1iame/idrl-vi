@@ -158,3 +158,11 @@
 - 每页 5 / 10 / 20 条；数据集合变更、切换排序与每页条数返回第一页。调用方须用 useMemo 保持 rows 引用稳定，避免无关重渲染重置页码。
 - 搜索和业务筛选由页面持有；工作台导出完整筛选结果，与当前分页无关。手机允许表格内部横向滚动，不扩大页面。
 - 当前不包含服务端分页、行选择、列显隐、虚拟化和加载 / 错误请求状态；大数据或远程数据应用应单独设计请求与状态契约，不对单页远程结果进行客户端全局排序。
+
+### 表单字段与选择控件
+
+- `src/components/ui/field.tsx` 提供 Input、Select、Textarea 和 FormField。FormField 用 label、description、error、required 生成标签、帮助与错误 ID；通过 render prop 将 id / required / aria-invalid / aria-describedby 传给唯一的原生控件。可传 id 以支持错误后的明确焦点定位。帮助与错误同时保留，不仅用颜色表示校验结果。
+- Textarea 保持可纵向调整；说明文案按需设置 maxLength，并显示可读计数。不要用 placeholder 替代标签。
+- `src/components/ui/choice.tsx` 提供 Checkbox（原生 input 属性）与受控 Switch（checked / onCheckedChange）。Checkbox 适用于可选项，Switch 适用于即时布尔设置。均有 label、可选 description、disabled 与键盘焦点；Switch 为 button，不自动参与 FormData，调用方从受控状态读取值。
+- 当前表单提交仍由页面负责；组件预览采用提交后错误与首个无效字段聚焦，工作台新建表单采用浏览器 required / min / max / step 校验。没有引入校验库或远程保存能力。
+- 使用时复制对应 field.css / choice.css 与品牌 tokens；保留语义错误文字色 destructiveText。组件页提供多行输入、计数、复选框、开关、禁用项、摘要变化和重置演示。

@@ -86,6 +86,20 @@ const columns: DataColumn<Experiment>[] = [
 
 这段代码展示接入形态，Experiment、filteredRows 和 t 由应用提供。每行 ID 必须唯一。表格自行管理排序和分页；新集合、排序和每页条数变更会返回第一页。导出应使用 filteredRows 全集合，不从可见 DOM 抽取当前页。远程分页应另行实现服务端排序 / 筛选契约。
 
+## 表单接入
+
+```tsx
+<FormField id="description" label="说明" required description="最多 160 字符" error={errors.description}>
+  {field => <Textarea {...field} maxLength={160} value={description}
+    onChange={event => setDescription(event.target.value)} />}
+</FormField>
+<Checkbox label="包含随机种子" checked={includeSeed}
+  onChange={event => setIncludeSeed(event.target.checked)} />
+<Switch label="附带方法说明" checked={showMethod} onCheckedChange={setShowMethod} />
+```
+
+调用方提供受控状态、校验与提交逻辑；FormField 的属性必须展开到原生控件。复制 field.tsx / field.css 与 choice.tsx / choice.css，并带上 utils 与 tokens。自定义 aria-describedby 时应合并字段提供的 ID。Switch 不产生原生表单字段，提交时从 checked 状态读取；需要 FormData 的选项可使用带 name 的 Checkbox。
+
 ## 验收命令
 
 ```sh

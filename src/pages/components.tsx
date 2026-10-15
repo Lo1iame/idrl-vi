@@ -5,7 +5,8 @@ import { DataSpecimen } from '../components/data-specimen'
 import { FrameworkSpecimen } from '../components/framework-specimen'
 import { Button } from '../components/ui/button'
 import { Badge } from '../components/ui/badge'
-import { Input, Select } from '../components/ui/field'
+import { Checkbox, Switch } from '../components/ui/choice'
+import { FormField, Input, Select, Textarea } from '../components/ui/field'
 import { Dialog } from '../components/ui/dialog'
 import type { Translate } from '../lib/types'
 import designGuideUrl from '../../DESIGN.md?url'
@@ -19,11 +20,13 @@ export function Components({ t }: { t: Translate }) {
   const [notice, setNotice] = useState('')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [compact, setCompact] = useState(false)
+  const [includeSeed, setIncludeSeed] = useState(true)
+  const [showMethod, setShowMethod] = useState(false)
   const invalidName = validated && !name.trim()
   const invalidDescription = validated && !description.trim()
 
   function reset() {
-    setName(''); setDescription(''); setStatus('all'); setValidated(false)
+    setName(''); setDescription(''); setStatus('all'); setValidated(false); setIncludeSeed(true); setShowMethod(false)
     setNotice(t('表单已重置。', 'Form reset.'))
   }
   function submit(event: FormEvent) {
@@ -61,10 +64,33 @@ export function Components({ t }: { t: Translate }) {
               <div className="component-row specimen-secondary"><Button variant="secondary" className="focus-example" onClick={() => setNotice(t('使用 Tab 移动焦点，Enter 或空格执行操作。', 'Use Tab to move focus; Enter or Space to activate.'))}>{t('键盘焦点', 'Keyboard focus')}</Button><Button variant="secondary" size="icon" aria-label={t('打开新增示例', 'Open add example')} onClick={() => setDialogOpen(true)}><Plus size={20} /></Button><span className="muted">{t('图标操作', 'Icon action')}</span></div>
             </div>
           </section>
-          <section className="specimen"><div className="specimen-title"><h2>{t('输入与反馈', 'Input & feedback')}</h2><button type="button" role="switch" aria-checked={compact} aria-label={t('紧凑表单', 'Compact form')} className="density-switch" onClick={() => setCompact(!compact)}><span /><span className="density-label">{t('紧凑', 'Compact')}</span></button></div><p className="muted">{t('试着保存空表单，查看错误提示与焦点定位。', 'Save an empty form to explore validation and focus management.')}</p>
+          <section className="specimen" aria-label={t('表单组件示例', 'Form component example')}><div className="specimen-title"><h2>{t('输入与反馈', 'Input & feedback')}</h2><Switch checked={compact} onCheckedChange={setCompact} label={t('紧凑表单', 'Compact form')}/></div><p className="muted">{t('试着保存空表单，查看错误提示与焦点定位。', 'Save an empty form to explore validation and focus management.')}</p>
             <form noValidate onSubmit={submit} className={`specimen-form ${compact ? 'is-compact' : ''}`}>
-              <div className="form-columns"><div className="field-group"><label htmlFor="example-name">{t('实验名称', 'Experiment name')} <span aria-hidden="true">*</span></label><Input id="example-name" required maxLength={80} value={name} onChange={e => setName(e.target.value)} placeholder={t('输入实验名称', 'Enter an experiment name')} aria-invalid={invalidName} aria-describedby={invalidName ? 'name-error' : undefined} />{invalidName && <p id="name-error" className="field-error">{t('请输入实验名称。', 'Enter an experiment name.')}</p>}</div><div className="field-group"><label htmlFor="example-status">{t('实验状态', 'Experiment status')}</label><Select id="example-status" value={status} onChange={e => setStatus(e.target.value)}><option value="all">{t('全部状态', 'All statuses')}</option><option value="completed">{t('已完成', 'Completed')}</option><option value="running">{t('运行中', 'Running')}</option><option value="failed">{t('失败', 'Failed')}</option></Select></div></div>
-              <div className="field-group"><label htmlFor="example-description">{t('实验说明', 'Experiment description')} <span aria-hidden="true">*</span></label><Input id="example-description" required maxLength={160} value={description} onChange={e => setDescription(e.target.value)} placeholder={t('简要描述这次实验', 'Briefly describe this experiment')} aria-invalid={invalidDescription} aria-describedby={invalidDescription ? 'description-error' : 'description-help'} />{invalidDescription ? <p id="description-error" className="field-error">{t('请输入实验说明。', 'Enter an experiment description.')}</p> : <p id="description-help" className="field-help">{t('必填。仅用于当前页面的本地交互预览。', 'Required. Used only in this local page preview.')}</p>}</div>
+              <div className="form-columns">
+                <FormField id="example-name" label={t('实验名称', 'Experiment name')} required error={invalidName ? t('请输入实验名称。', 'Enter an experiment name.') : undefined}>
+                  {field => <Input {...field} maxLength={80} value={name} onChange={e => setName(e.target.value)} placeholder={t('输入实验名称', 'Enter an experiment name')}/>}
+                </FormField>
+                <FormField id="example-status" label={t('实验状态', 'Experiment status')}>
+                  {field => <Select {...field} value={status} onChange={e => setStatus(e.target.value)}><option value="all">{t('全部状态', 'All statuses')}</option><option value="completed">{t('已完成', 'Completed')}</option><option value="running">{t('运行中', 'Running')}</option><option value="failed">{t('失败', 'Failed')}</option></Select>}
+                </FormField>
+              </div>
+              <FormField id="example-description" label={t('实验说明', 'Experiment description')} required
+                description={t(`必填。仅用于当前页面的本地交互预览。${description.length} / 160 字符`, `Required. Local page preview only. ${description.length} / 160 characters`)}
+                error={invalidDescription ? t('请输入实验说明。', 'Enter an experiment description.') : undefined}>
+                {field => <Textarea {...field} rows={3} maxLength={160} value={description} onChange={e => setDescription(e.target.value)} placeholder={t('简要描述这次实验', 'Briefly describe this experiment')}/>}
+              </FormField>
+              <fieldset className="form-preferences"><legend>{t('摘要选项', 'Summary options')}</legend>
+                <Checkbox label={t('包含随机种子', 'Include random seed')} description={t('在下方摘要中显示示例随机种子。', 'Show the demo random seed in the summary below.')} checked={includeSeed} onChange={event => setIncludeSeed(event.target.checked)}/>
+                <Switch label={t('附带方法说明', 'Include method notes')} description={t('在下方摘要中显示方法说明。', 'Show method notes in the summary below.')} checked={showMethod} onCheckedChange={setShowMethod}/>
+                <Checkbox label={t('团队同步', 'Team sync')} description={t('演示环境未连接团队服务。', 'No team service connected in this demo.')} disabled/>
+              </fieldset>
+              <div className="form-summary" role="region" aria-label={t('配置摘要预览', 'Configuration summary preview')}>
+                <h3>{t('配置摘要预览', 'Configuration summary preview')}</h3>
+                <p>{name.trim() || t('未命名实验', 'Untitled experiment')}</p>
+                {description.trim() && <p className="muted">{description}</p>}
+                {includeSeed && <p>{t('示例随机种子：42', 'Demo random seed: 42')}</p>}
+                {showMethod && <p>{t('方法说明：比较不同设置下的鲁棒表现。', 'Method notes: compare robustness across settings.')}</p>}
+              </div>
               <div className="form-actions"><Button variant="ghost" onClick={reset}><RotateCcw size={15} />{t('重置', 'Reset')}</Button><Button type="submit">{t('保存预览配置', 'Save preview settings')}</Button></div>
             </form>
           </section>
