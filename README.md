@@ -39,6 +39,7 @@ npm run dev
 | /#workspace | 表格、筛选、创建与导出 |
 | /#assistant | 流式、停止、确认、失败重试及报告下载 |
 | /#components | 公共组件预览及接入文档 |
+| /#foundation | 五页历史品牌审核稿、放大查看与 PDF 预览下载 |
 | /#changelog | 本设计系统已提交更新 |
 | /examples/adoption/ | 不依赖展示站页面的接入验证示例 |
 

@@ -1,4 +1,4 @@
-import { FlaskConical, PanelsTopLeft, Sparkles, History } from 'lucide-react'
+import { FlaskConical, PanelsTopLeft, Sparkles, History, Palette } from 'lucide-react'
 import { Brand } from '../components/brand'
 import { Badge } from '../components/ui/badge'
 import type { Translate } from './types'
@@ -13,6 +13,7 @@ export function idrlAppConfig(t: Translate): AppShellConfig {
         {id:'assistant',label:t('研究助手','Research assistant'),href:'#assistant',icon:Sparkles},
       ]},
       {id:'system',label:t('设计系统','Design system'),items:[
+        {id:'foundation',label:t('品牌基础','Brand foundation'),href:'#foundation',icon:Palette},
         {id:'components',label:t('设计组件','Design components'),href:'#components',icon:PanelsTopLeft},
         {id:'changelog',label:t('更新日志','Changelog'),href:'#changelog',icon:History},
       ]},

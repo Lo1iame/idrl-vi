@@ -20,7 +20,7 @@
   "presentationValidation": "output/research-template/validation-current.json",
   "foundationPreview": "output/brand/idrl-foundation-review.pdf",
   "uiEntry": "/#components",
-  "routes": ["website", "workspace", "assistant", "components", "changelog"],
+  "routes": ["website", "workspace", "assistant", "components", "changelog", "foundation"],
   "notProvided": ["npm package", "shadcn registry", "Storybook", "authentication", "business backend", "server-side data table"],
   "export": {
     "files": [
@@ -30,7 +30,7 @@
       "src/components/app-shell.tsx", "src/components/brand.tsx", "src/lib/app-shell-config.ts", "src/lib/types.ts", "src/lib/utils.ts",
       "src/styles.css", "src/design-refresh.css", "src/app-shell.css",
       "docs/design/adoption.md", "docs/design/component-inventory.md", "docs/design/app-shell-integration.md", "docs/design/shadcn-mapping.md",
-      "docs/design/scientific-charts.md", "docs/design/asset-build.md", "docs/design/reuse-consistency-2026-10-15.md",
+      "docs/design/brand-foundation-page.md", "docs/design/scientific-charts.md", "docs/design/asset-build.md", "docs/design/reuse-consistency-2026-10-15.md",
       "examples/adoption/app.tsx", "examples/adoption/reference.css", "examples/adoption/index.html", "examples/adoption/main.tsx",
       "examples/adoption/vite.config.ts", "examples/adoption/tsconfig.json", "examples/adoption/README.md"
     ],

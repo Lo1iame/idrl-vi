@@ -22,6 +22,7 @@
 
 | 来源 | 使用方式 |
 | --- | --- |
+| `src/pages/foundation.tsx` | 历史品牌审核画廊与 PDF；不作为实时 VI 手册，默认接入包不包含 |
 | `src/pages/workspace.tsx` | 筛选、创建 / 导出交互参考；替换演示数据，保留目标 API |
 | `src/pages/assistant.tsx` | AI 状态与确认模式；不是模型 SDK、真实工具或后端 |
 | `src/pages/components.tsx` | 组件交互与状态预览 |

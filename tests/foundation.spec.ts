@@ -1,0 +1,78 @@
+import { test, expect } from '@playwright/test'
+import AxeBuilder from '@axe-core/playwright'
+
+test('foundation is reachable, labels historical boards and restores gallery focus',async({page,request})=>{
+  await page.emulateMedia({reducedMotion:'reduce'})
+  await page.goto('/#website')
+  await expect(page.locator('footer').getByRole('link',{name:'查看品牌基础',exact:true})).toHaveAttribute('href','#foundation')
+  await page.locator('.identity-hero').getByRole('link',{name:'品牌基础',exact:true}).click()
+  await expect(page).toHaveURL(/#foundation$/)
+  await expect(page.getByRole('heading',{name:'品牌基础',exact:true})).toBeVisible()
+  await expect(page.locator('.shell-sidebar').getByRole('link',{name:'品牌基础',exact:true})).toHaveAttribute('aria-current','page')
+  await expect(page.getByRole('complementary',{name:'审核稿版本说明'})).toContainText('历史审核材料')
+  await expect(page.getByRole('list',{name:'五页品牌审核稿'}).getByRole('listitem')).toHaveCount(5)
+  await expect(page.getByRole('navigation',{name:'现行设计资料'}).getByRole('link')).toHaveCount(3)
+  const first=page.getByRole('button',{name:'放大查看：品牌理念',exact:true})
+  await first.click()
+  const dialog=page.getByRole('dialog')
+  await expect(dialog).toHaveAccessibleName('01 / 05 · 品牌理念')
+  await expect(dialog.getByRole('button',{name:'上一页',exact:true})).toBeDisabled()
+  for(let i=0;i<4;i++)await dialog.getByRole('button',{name:'下一页',exact:true}).click()
+  await expect(dialog).toHaveAccessibleName('05 / 05 · 数字视觉基础')
+  await expect(dialog.getByRole('button',{name:'下一页',exact:true})).toBeDisabled()
+  await page.keyboard.press('Escape')
+  await expect(first).toBeFocused()
+
+  const download=page.getByRole('link',{name:'下载 PDF',exact:true})
+  const pdf=await request.get((await download.getAttribute('href'))!)
+  expect(pdf.ok()).toBe(true)
+  expect((await pdf.body()).subarray(0,5).toString()).toBe('%PDF-')
+  const [file]=await Promise.all([page.waitForEvent('download'),download.click()])
+  expect(file.suggestedFilename()).toBe('idrl-foundation-review.pdf')
+  await expect(page.locator('#foundation-pdf-reader object')).toHaveCount(0)
+  await page.getByRole('button',{name:'展开页内预览',exact:true}).click()
+  await expect(page.locator('#foundation-pdf-reader object')).toHaveAttribute('type','application/pdf')
+  await page.getByRole('button',{name:'收起页内预览',exact:true}).click()
+  await expect(page.locator('#foundation-pdf-reader object')).toHaveCount(0)
+})
+
+for(const theme of ['light','dark'])test(`foundation ${theme}: images, accessibility, languages and narrow layouts`,async({page})=>{
+  await page.addInitScript(theme=>localStorage.setItem('idrl-theme',theme),theme)
+  await page.goto('/#foundation')
+  await page.evaluate(()=>document.fonts.ready)
+  // Load all five lazy boards before checking the full-page gallery.
+  for(const image of await page.locator('.foundation-thumbnail img').all()) {
+    await image.scrollIntoViewIfNeeded()
+    await expect.poll(()=>image.evaluate((img:HTMLImageElement)=>img.complete&&img.naturalWidth>0)).toBe(true)
+  }
+  await expect(page.getByRole('heading',{name:'品牌基础',exact:true})).toBeVisible()
+  expect((await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze()).violations).toEqual([])
+  await page.evaluate(()=>window.scrollTo(0,0))
+  await page.screenshot({path:`output/ui/foundation-${theme}-desktop.png`,fullPage:true})
+  for(const width of [320,390,768,1024]) {
+    await page.setViewportSize({width,height:900})
+    await expect.poll(()=>page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
+  }
+  await page.setViewportSize({width:390,height:844})
+  await page.evaluate(()=>window.scrollTo(0,0))
+  await page.screenshot({path:`output/ui/foundation-${theme}-mobile.png`,fullPage:true})
+  await page.getByRole('button',{name:'放大查看：标志与组合',exact:true}).click()
+  expect((await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze()).violations).toEqual([])
+  await expect.poll(()=>page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
+  await page.screenshot({path:`output/ui/foundation-${theme}-mobile-preview.png`})
+  await page.getByRole('button',{name:'放大细节',exact:true}).click()
+  const imageRegion=page.getByRole('region',{name:'原稿图像区域',exact:true})
+  await expect.poll(()=>imageRegion.evaluate(element=>element.scrollWidth>element.clientWidth)).toBe(true)
+  await imageRegion.focus()
+  await page.keyboard.press('ArrowRight')
+  await expect.poll(()=>imageRegion.evaluate(element=>element.scrollLeft)).toBeGreaterThan(0)
+  await page.getByRole('button',{name:'适合窗口',exact:true}).click()
+  await page.keyboard.press('Escape')
+  await page.getByRole('button',{name:'切换语言',exact:true}).click()
+  await expect(page.getByRole('heading',{name:'Brand foundation',exact:true})).toBeVisible()
+  for(const width of [320,768,1440]) {
+    await page.setViewportSize({width,height:900})
+    await expect.poll(()=>page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
+  }
+  await expect(page.getByText('Original boards are in Chinese',{exact:false})).toBeVisible()
+})

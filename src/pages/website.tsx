@@ -37,6 +37,7 @@ export function Website({ t }: { t: Translate }) {
         <p className="identity-description">{t('以设计探索可能，以学习构建可靠。', 'Explore through design. Build reliability through learning.')}</p>
         <div className="identity-actions">
           <Button asChild><a href="#assistant">{t('体验研究助手', 'Try the research assistant')}<ArrowUpRight size={17} /></a></Button>
+          <Button variant="secondary" asChild><a href="#foundation">{t('品牌基础', 'Brand foundation')}<ArrowUpRight size={17}/></a></Button>
           <a className="quiet-link" href="#workspace">{t('查看实验示例', 'Explore experiments')}<ArrowRight size={17} /></a>
         </div>
       </AnimatedContent>
@@ -81,6 +82,6 @@ export function Website({ t }: { t: Translate }) {
     </section>
 
     <section className="website-closing"><AnimatedContent className="closing-copy" distance={48} duration={.9}><h2>{t('继续探索。','Keep exploring.')}</h2><p>{t('从研究想法，到可用工具。','From research ideas to useful tools.')}</p></AnimatedContent><AnimatedContent className="closing-action" distance={32} delay={.12}><a className="tools-link" href="#workspace">{t('打开工作台','Open workspace')}<ArrowUpRight size={28}/></a></AnimatedContent></section>
-    <footer className="identity-footer"><div><Brand /><p>智能设计与鲁棒学习<br/><span lang="en">Intelligent Design and Robust Learning</span></p></div><div><span>{t('本地品牌界面示例', 'Local brand interface concept')}</span><a href="#components">{t('探索设计组件', 'Explore design components')}<ArrowUpRight size={15} /></a></div></footer>
+    <footer className="identity-footer"><div><Brand /><p>智能设计与鲁棒学习<br/><span lang="en">Intelligent Design and Robust Learning</span></p></div><div><span>{t('本地品牌界面示例', 'Local brand interface concept')}</span><a href="#foundation">{t('查看品牌基础', 'Explore brand foundation')}<ArrowUpRight size={15} /></a><a href="#components">{t('探索设计组件', 'Explore design components')}<ArrowUpRight size={15} /></a></div></footer>
   </div>
 }

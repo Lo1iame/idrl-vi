@@ -82,3 +82,9 @@
 - npm run build 验证构建，npm test 验证交互，npm run test:assets 与 Python 回归验证资产；重建见 [asset-build.md](docs/design/asset-build.md)。
 - 至少检查中英文、深浅主题、320 / 390 / 768 / 1024 / 1440px、导航、键盘 / 焦点、减少动画、长文案、业务异常、数据导出；保留同数据前后截图及测试证据。
 - 自动 axe / 对比度检查不代替屏幕阅读器和跨浏览器人工验收。历史记录保留在 docs/design/，本轮证据见接入一致性报告。
+
+## 品牌基础展示
+
+- /#foundation 提供五页 v0.1 审核稿画廊与 PDF 预览下载，入口在侧栏、官网首屏操作区和页脚。标注为历史材料，不把原稿中的阶段计划、数量或日期当成当前事实。
+- 原稿保持原始语言和配色；界面可中英文 / 深浅主题切换。现行 DESIGN.md、设计组件与应用接入指南始终可访问。
+- 展示约定见 [brand-foundation-page.md](docs/design/brand-foundation-page.md)；默认 UI 接入快照不包含该页面与审核二进制材料。
