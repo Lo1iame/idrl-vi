@@ -1,6 +1,7 @@
 node_modules/
 .venv-assets/
 dist/
+output/adoption-kit/
 tmp/
 *.tsbuildinfo
 test-results/

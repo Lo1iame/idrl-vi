@@ -1,182 +1,84 @@
 # IDRL Design
 
-状态：视觉基础 v0.1 已于 2026-10-12 通过审核；第二阶段可运行界面示例 v0.2 待审核。tokens v0.2.1（2026-10-13）新增图表类别色、深色底 navy 适配色与浅色状态文字变体，依据首个真实落地应用（idrl-portal v0.11.0）的接入反馈补充。v0.2.1 修复通用字体接入与深色横幅文字，并验证字体子集输入。
+现行设计契约，更新于 2026-10-15。视觉基础 v0.1 已审核；UI 为源码复用阶段，尚未整体通过最终视觉与无障碍人工验收。token 版本 **0.2.1** 与 package 版本、PPT 修订号分别管理。本次整理未改变品牌数值。
 
-## 开始前
+## 事实来源与阅读顺序
 
-1. 阅读本文、`CONTEXT.md` 和 `docs/design/brand-brief.md`。
-2. 使用 `assets/brand/tokens.json` 的语义变量；CSS 为 `assets/brand/tokens.css`。
-3. Logo 仅使用 `assets/brand/logo/` 的新组合。`logo/` 为历史源文件，名称包含旧文字，不直接用于新材料。
-4. 当前提供官网、数据工作台、AI 交互及基础组件的可运行示例。完整组件库、registry 和 Storybook 尚未实现；不得把规划中的组件写成可安装依赖。
+1. 名称以 [CONTEXT.md](CONTEXT.md) 为准；本文定义跨应用规则。
+2. 颜色、字体栈、间距、圆角、字号和基础动效以 [tokens.json](assets/brand/tokens.json) 为唯一来源。生成 CSS 不手改；运行 `scripts/build-tokens.py --check` 检查漂移。
+3. 下游从 [接入与重构指南](docs/design/adoption.md) 开始；实际能力与限制见 [组件清单](docs/design/component-inventory.md)。
+4. 当前资产与版本见 [reuse-manifest.json](assets/brand/reuse-manifest.json)。历史审计、验证及审核稿保留当时事实，不作为当前能力清单。
+5. 规范与实现冲突须记录并修正，不默默将示例特殊布局提升为全局标准。
 
-## 名称与语气
+## 品牌名称与内容
 
-- 中文：智能设计与鲁棒学习。
-- 英文：Intelligent Design and Robust Learning。
-- 缩写：IDRL。任何新 logo、页面标题、页脚及宣传名称都不得附加 Laboratory（含中文的「实验室」展开，如「智能数据研究实验室」）；「IDRL + Portal/Workbench 等通用产品词」可以使用。
-- 语气严谨、探索、开放。研究成果、实验状态和 AI 执行结果描述必须具体，不虚构指标。
+- 中文：**智能设计与鲁棒学习**；英文：**Intelligent Design and Robust Learning**；缩写：**IDRL**。
+- 新名称、logo、标题、页脚不得在完整名称后添加 Laboratory 或“实验室”。可使用 IDRL Portal / Workbench 等产品词。
+- 语气严谨、探索、开放。示例数据、合成图表、模拟 AI 状态须明确标识；发布前替换为已确认资料，不虚构研究成果与执行成功。
+- 展示站的业务文案、演示导航、训练记录和模拟服务不属于通用 VI。
 
-## Logo
+## Logo 与辅助图形
 
-- 新资产从 AI 源文件第一页的真实 Bézier 路径提取，保留核心图形和原有几何 IDRL 字标；新中英文组合文字转为路径。
-- 横向组合用于页眉和横幅；双语组合用于对外介绍；上下组合用于封面。仅图形用于已出现完整名称的导航与头像。
-- 白／浅背景用彩色版本。深海军蓝背景用 `lockup-bilingual-reverse.svg`；图形原深蓝色块映射为低饱和浅蓝 `#8fb8dc`（已 token 化为 `brand.navyOnDark`，深色底图表等非 logo 场景同样使用此值），文字保持白色，避免局部纯白抢夺视觉焦点。单色用 navy 或 white 图形。
-- favicon / 应用图标一律使用 `assets/brand/logo/favicon-tile.svg`（navy 方块 + reverse 图形）：裸 reverse SVG 为透明底，白色字母在浅色浏览器标签栏不可见，裸彩色 SVG 的 navy 色块在深色标签栏不可见。PNG 各尺寸由应用按需栅格化（参考 idrl-portal 的 `scripts/generate-favicons.mjs`）。
-- 不拉伸、不旋转、不加描边、不自行拼出缩写字标，不把品牌图形当操作图标。
-- 图形左右的净空至少为图形高度的 1/4。建议图形最小宽度 32px、印刷 10mm；小于此尺寸需另做简化符号及实测。
-- 完整名称组合的最小宽度以其中最小文字不低于屏幕 12px、印刷 7pt 为约束。SVG 自带留白不能替代外部净空。
+- 仅使用 `assets/brand/logo/`；`logo/` 为保留原样的历史来源。
+- 浅底用彩色；深底用 symbol-color-reverse.svg、lockup-idrl-reverse.svg 或 lockup-bilingual-reverse.svg。原 navy 图块映射为 brand.navyOnDark（#8fb8dc），文字保持白色；禁止滤镜整体变白。
+- Brand 默认随 data-theme 切换；固定 navy 面板显式 dark。背景而非整页主题决定使用哪个版本。
+- 导航用横向字标，对外用双语组合，封面用上下组合。仅图形用于完整身份已出现的场合；favicon 用 favicon-tile.svg。
+- 保留原几何，不拉伸、旋转、加描边、自行重绘字标；不把 logo 当操作图标。
+- 图形净空至少为高度 1/4；建议最小宽屏幕 32px、印刷 10mm。完整名称最小文字至少屏幕 12px、印刷 7pt；SVG 内部留白不代替外部净空。
+- 辅助图形延续既有斜向与六边形语言。research-form.webp 为 AI 生成的品牌概念图，不是 logo 或研究结果。
 
-## 颜色与主题
+## 语义颜色与主题
 
-- 品牌 navy `#203663`、blue `#236db9`、cyan `#56c0e5` 为已审核的数字端统一值；不声称与旧 PNG 或 CMYK 值完全等同。
-- 主操作使用 `primary` / `primaryForeground`。普通文字使用 `foreground`，辅助文字使用 `mutedForeground`。
-- Cyan 用于图形、装饰和浅色强调底，不用于白底小号正文或白字按钮。
-- 错误、警告、成功分别使用 `destructive`、`warning`、`success`，配文字和图标，不能只靠颜色表达。
-- **状态徽章配方**（对比度已审计）：底 = 状态基色 15% 叠加所在 surface，文字 = 两种主题均用 `primaryText` / `successText` / `warningText` / `destructiveText`（浅色为加深变体，深色变体与基色一致）。基色作小号文字叠在同色 tint 底上在浅色主题不满足 4.5:1，禁止。警告横幅同源：30% 描边、5% 底、当前主题的 `*Text` 标题，禁止在深色底继承浅色文字值。
-- **图表类别色**：`chart1..5`（浅：blue → navy → cyan → success → warning；深色用各自的深色适配值，navy 深色用 `navyOnDark`）。多于三组优先分面；系列区分仍须叠加线型/标记/标签。类别色不作连续量色标。
-- 分隔线用 `border`；需要独立辨认的输入框边界用 `controlBorder`。
-- 深色主题有独立语义值，不直接反转颜色。图表系列要加线型、标记或标签。
-- `contrast-report.json` 仅证明所列色对的数值通过；完整组件仍需键盘、焦点、结构、动态状态等验收。
-- 旧方案 CMYK 值仅作为印刷历史参考。最终印刷须指定 ICC 配置、打样，不能机械地将 HEX 换算成标准 CMYK。
+- 品牌 navy #203663、blue #236db9、cyan #56c0e5 为审核后的数字值，不是印刷 CMYK / ICC 标准。
+- 页面用 background，内容用 surface / surfaceSubtle，文字用 foreground / mutedForeground，操作用 primary / primaryForeground，分隔用 border，控件边界用 controlBorder，焦点用 focus。
+- 状态用 success / warning / destructive 并配文字或图标；cyan 不用于白底小号正文及白字按钮。
+- 徽章：基色 15% 混合所在 surface，文字用对应 *Text。横幅可用 5% 底、30% 边界及 *Text。深浅主题均映射状态文字，禁止在深底继承浅色文字值。
+- 原生主题协议为根元素 data-theme="light|dark"。系统偏好由宿主解析为属性；已有 .dark 的应用同步 data-theme，详见 shadcn 接入文档。不整体反色。
+- 图表用 chart1…5，叠加线型、标记或标签；多于三组优先分面。类别色不作连续量色标。
+- contrast-report.json 只覆盖所列色对，不代表整个应用获得 WCAG 认证。
 
-## 字体、布局与视觉密度
+## 字体、排版与布局
 
-- 英文和数字用 Inter，中文用 Noto Sans CJK SC；字体文件与 OFL 授权位于 `assets/brand/fonts/`。代码用平台等宽字体。
-- **应用回退栈（官方写法）**：`Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', system-ui, sans-serif`。本地装有 Noto Sans CJK SC 时优先命中，否则回退系统黑体——各平台字形有轻微差异，属可接受范围。
-- 中文 webfont 子集只覆盖构建时传入的文案。静态内容应用用 `scripts/build-web-fonts.py --crawl-dir <应用源码目录>`（或 `--text-file`）生成自身子集；脚本先验证输入目录和文案，错误路径或空内容会终止而不覆盖字体；支持 `.js/.jsx` 文案。**动态内容应用（用户名、数据库文案等）不要用子集**，直接走回退栈，后续需要时再引入 unicode-range 分片方案。
-- 正文 16px / 1.6，内部工具可用 14px / 1.5；标签 14px，辅助文字至少 12px。正文用 400，强调用 700。
-- 数字指标与表格使用 tabular-nums。长英文名称允许换行，不强行压窄字体。
-- Web 示例采用 Inter WOFF2 和当前文案的中文 WOFF2 子集；新增文案后运行 `scripts/build-web-fonts.py`（支持 `--crawl-dir` / `--text-file` 传入应用自身文案）。原始字体保留用于 logo、PPT 与印刷资产。
-- 采用 4px 基础间距，常用 8、12、16、24、32、48、64。控件圆角 6px、卡片 12px、弹窗 16px。
-- 官网／宣传材料：大留白、明确标题层级、局部放大几何图形。内部应用：中性背景、紧凑但清楚的内容层次、少量品牌强调。
-- 不在高密度内容后叠加图形纹样。几何辅助图形从既有 logo 斜向与六边形语言延展，避免另造无关符号。
-- 界面默认内容最大宽 1280px、左右留白 24px；手机 16px。工作台可铺满宽度；数据表手机可局部横向滚动。
+- 英文 / 数字 Inter，中文 Noto Sans CJK SC；官方回退栈为 font.sans。代码 font.mono，数字与表格 tabular-nums。
+- 自托管 Inter WOFF2。动态中文默认用系统回退，不导入本项目文案专用子集；静态应用用 build-web-fonts.py --crawl-dir / --text-file 为自身文案生成子集。保留 OFL 授权。
+- 正文 16px / 1.6，工具 14px / 1.5–1.6；辅助文字至少 12px。正文 400，强调 700；长名称自然换行。
+- 4px 间距基础，常用 8 / 12 / 16 / 24 / 32 / 48 / 64；控件 / 卡片 / 弹窗圆角 6 / 12 / 16px。
+- 官网编辑式排版、大标题与留白：参考内容净宽 1280px、外宽 1376px、桌面两侧 48px、手机 24px。应用可铺满，桌面内容留白 24–40px、手机 16px。这是场景预设，不要求所有页面同宽。
+- 指标可用连续摘要区；卡片用于独立任务与内容分组。不在高密度内容后叠纹样，不增加无意义编号、装饰坐标或多层容器。
 
-## 组件与 AI 交互契约
+## 应用框架与组件
 
-### 2026-10-12 前端审美重构
+- 默认 React / TypeScript 源码接入，依赖以 package-lock.json 为准；展示站 Vite + Tailwind v4。不要求现有应用换框架；Next.js / SSR 须验证客户端边界与路由。
+- AppShell **必须显式传 AppShellConfig**：应用 ID、身份、真实链接、导航分组由宿主提供。公共组件不引入演示配置；类型位于 src/lib/app-shell-config.ts。
+- ≥1024px 为 240px 展开栏，可折为 72px；768–1023px 默认轨道、临时展开；<768px 模态抽屉。桌面偏好按应用 ID 隔离，其他断点不覆盖。
+- 轨道保留可访问名称、当前项与 Tooltip；抽屉支持焦点约束、Esc / 遮罩关闭、焦点恢复和跨断点清理。
+- Button：default / secondary / ghost / destructive，default / sm / icon；链接用 asChild，图标提供名称。一屏主任务通常一个主操作。
+- FormField 提供 label / description / error / required，将 render prop 展开到唯一原生控件。提交后给具体错误并聚焦首个错误；保留业务校验。
+- Checkbox 是原生 input；Switch 是受控 button，不自动进入 FormData。Textarea 可纵向调整。
+- DataTable 仅处理小规模完整本地集合排序 / 分页；页面持有筛选，rows 用 useMemo 稳定引用，rowKey 唯一。缺失值 null 始终置后；导出完整筛选集合。远程表格保留服务端排序 / 筛选 / 分页。
+- Dialog / Sheet 基于 Radix；受控 Dialog 提供实际入口 ref / ID 恢复焦点；排序按钮 type="button"。
+- 控件需要可访问名称、键盘、焦点、禁用态及适用的 loading / empty / error / success；公共组件没有自动提供所有业务请求状态。
+- 当前**没有已发布 npm 包、registry、Storybook 或完整组件库**；shadcn 映射不表示支持 shadcn CLI 安装。
 
-- 官网采用科研品牌的现代排版：大标题、非对称图文、独立展示的原始矢量图形。研究方向用有层次的列表，不使用三张等宽功能卡片。
-- 取消无意义的编号、坐标、装饰网格与重复眉题。保留真实的导航、说明和演示标识，不虚构研究成果。
-- 工作台指标以一个连续摘要区呈现；卡片仅用于图表、记录表和独立操作。主要表格和对话正文使用 14px，辅助说明至少 12px。
-- AI 助手以对话为主画布，来源与模拟控制作为轻量侧栏；输入区和待确认操作保持清晰边界。已有流式、停止、失败、确认与下载流程必须保留。
-- 本次继续使用已确认的 Inter / Noto Sans CJK SC 和品牌颜色。沿用 Lucide 作为已安装的图标体系，不额外混入其他图标库。
-- 品牌辅助图 `assets/brand/images/research-form.webp` 为 AI 生成的蓝色折叠平面概念图，不替代 logo，也不表示实际研究成果。生成说明见同目录 README。
-- 审美布局规则位于 `src/design-refresh.css`，基础控件状态位于 `src/styles.css`；颜色仍来自已有语义 tokens。手机在 768px 以下折叠官网图文，应用布局在 768–1023px 使用图标轨道，768px 以下通过模态导航抽屉切换功能。
-- 官网界面最大宽度 1376px（内容净宽 1280px、两侧 48px）；手机两侧 24px。应用与组件页面手机两侧 16px。
+## AI 与动效
 
-- 技术方向：React、TypeScript、Tailwind、shadcn 源码体系；配套 IDRL registry 和 Storybook。版本在组件阶段锁定。
-- 用语义变量，不在页面里复制品牌 HEX；优先复用组件，新增变体需补文档和状态示例。
-- 官网需要 SEO／SSR 时使用 Next.js；内部应用与科研工具默认 Vite。共享组件不依赖 Next.js 服务端能力。
-- 控件必须有可访问名称、键盘操作、清晰焦点、禁用态；表单必须有标签、帮助文字和明确错误。
-- 主按钮一屏主区域通常仅一个；次要操作用次级按钮或文字链接。图标按钮需 accessible name。
-- 覆盖默认、hover、focus、disabled，以及适用的 loading、empty、error、success 状态。
-- AI 消息区分用户、助手、工具；执行状态区分待运行、运行中、等待确认、成功、失败、取消。
-- 流式输出允许停止；工具调用与来源可展开；待确认操作必须展示对象、动作和后果。
-- 不将请求已发送显示为任务已成功，不把模型推测显示为已验证事实。示例数据必须标明为示例。
-- 加载／状态变化不得仅依赖动画；遵守 prefers-reduced-motion，状态更新提供适当的辅助技术通知。
+- 区分用户、助手、工具；状态区分待运行、运行中、等待确认、成功、失败、取消。流式可停止，来源 / 工具详情可展开，确认须展示对象、动作、后果。
+- 请求已发不等于成功，模型推测不等于事实；重构保留真实 API、权限和错误处理。
+- 内部工具用简短状态过渡。官网可用单次入场、细网格和 logo 重播；组装约 1.7 秒，结束恢复原始路径。手机降低幅度，触屏关闭倾斜 / 指针跟随。
+- 减少动画或加载失败时直接显示内容；焦点进入结束包裹动画；卸载释放观察器、时间线和 requestAnimationFrame。正文可读性不依赖动画完成。
+- React Bits 适配限当前官网集成，附原始许可；默认接入包排除该目录与 GSAP 动效集成代码，不将重型官网效果搬进工具页。
 
-## 检查与交付
+## 科研材料
 
-- 目标为适用的 WCAG 2.2 AA，功能阶段验证键盘、屏幕阅读器、深浅主题、中英文、手机布局。
-- 先完成 logo／视觉基础审核，再制作官网、数据工作台、AI 交互示例，最后扩展组件、PPT、海报、社交模板及最终规范。
-- 本阶段预览为 `docs/design/foundation.html`；PDF 与 PNG 在 `output/brand/`。它们是视觉审核稿，不是组件实现或完整 VI 手册。
-- 运行 `scripts/build-brand.py` 重建矢量资产；`scripts/build-tokens.py` 生成 CSS 和对比度报告；`scripts/render-brand.cjs` 导出审核稿。
+- 当前模板 output/research-template/idrl-research-template-v4.pptx：16:9、16 页、4 个原生表格、3 个图表及工作簿；v2 / v3 为历史版本。
+- 层次参照基础审核 PDF：页眉 / 分隔线、标题 / 导语、内容面板、页脚；封面 / 章节 / 结束可用 navy，图表内容页保持明亮。强调须对应数据。
+- 同名 PDF 为栅格审核版；PPT 可编辑但未嵌入 Inter / Noto Sans CJK SC，需安装字体。不是 POTX 母版，公式是文本示例。
+- 图表规范见 [scientific-charts.md](docs/design/scientific-charts.md)，样式在 assets/brand/charts/；印刷另做 ICC 配置与打样。
 
-## 落地应用与 token 同步
+## 同步与验收
 
-- **idrl-portal**（智能设计与鲁棒学习门户，Next.js 16 + Tailwind v4 + shadcn/ui）：v0.11.0 起完整采用本 VI，是该规范的首个真实落地案例。其 `app/globals.css` 的「tokens.json → shadcn 变量」映射已提炼为 `docs/design/shadcn-mapping.md`，作为 IDRL registry 的第一块参考实现。
-- **token 同步**：下游应用复制 `assets/brand/tokens.json` 与 `tokens-values.css` 作为快照（如 portal 的 `public/brand/`）。本仓库 token 变更后升版本号并在 DESIGN.md 状态行注明；下游通过 diff 快照同步。下游不得修改快照数值，确有缺口先回本仓库补 token。
-
-## 可运行示例与 Agent 接入
-
-### IDRL 应用框架
-
-- 工作台、研究助手、组件与更新日志页面共用可配置 AppShell；应用身份及分组单层导航来自 AppShellConfig，不在布局内写业务导航。面包屑和顶部操作按页面传入。
-- ≥1024px 默认展开、可折叠为 72px 图标轨道；768–1023px 默认轨道，可临时展开；<768px 使用模态抽屉。桌面偏好按应用 ID 保存，断点变化和平板 / 手机交互不覆盖该偏好。
-- 折叠导航保留可访问名称、当前项和 Tooltip；抽屉支持焦点约束、Esc / 遮罩关闭和焦点恢复。高密度应用不继承官网装饰动效。
-- 更新日志数据来自 src/lib/releases.ts，按版本 / 日期 / 新增 / 改进 / 修复记录已提交变更；下游复用模板并维护独立数据。
-- 首批新增 Tooltip、Sheet 和 Breadcrumb，组件页提供交互示例；接入说明见 docs/design/app-shell-integration.md。第二批新增客户端 DataTable：支持列排序、分页、每页条数与空状态，工作台和组件页共享；其他表单控件在后续批次推进。
-
-### 设计稿落地与交互增强
-
-- 2026-10-12：将 `output/design-concepts/` 参考稿落实为可运行页面。官网使用居中首屏、深蓝理念区、研究图文、可输入的助手预览和收尾入口；不把生成的整页图片当页面实现。
-- 官网 `ResearchLauncher` 通过 sessionStorage 传递问题草稿到助手；只填入输入框，由用户发送。页面功能不依赖外部模型。
-- 三个应用页面共用 AppShell，主题与语言工具位于应用顶栏；手机提供完整页面导航。官网在页眉提供主题与语言切换。
-- 组件页提供预览／规范页签、可确认弹窗、颜色复制、表单校验与密度切换。页签支持左右方向键和 Home / End；表单提交后聚焦第一个错误字段。
-- `src/components/ui/field.tsx` 提供 Input、Select，透传原生属性与 ref。字段标签、必填语义、aria-invalid 和错误描述由调用方明确提供。错误在用户提交后展示。
-- 组件页配置仅保留在当前挂载页面的 React 状态；表单提交与确认均为本地演示。复制失败时呈现可手动复制的色值。
-- 研究助手采用单一对话画布，来源可展开查看固定记录；保留工具确认、停止、失败重试与下载流程。得分摘要来自已有演示数据。
-- 组件使用规范通过 Vite 的资产 URL 引用 DESIGN.md，生产构建同样包含该文件。
-
-- 启动：`npm ci`，然后 `npm run dev`。构建：`npm run build`。交互验证：`npm test`（本机使用 Edge；其他环境通过 BROWSER_CHANNEL 指定可用浏览器，或调整 Playwright 配置）。
-- 路径：`/#website` 官网概念、`/#workspace` 实验工作台、`/#assistant` 研究助手、`/#components` 基础组件展示。
-- 组件源码：`src/components/ui/button.tsx`、`badge.tsx`、`dialog.tsx`；应用框架为 `src/components/app-shell.tsx`。技术依赖已在 package-lock.json 锁定。
-- Button 支持 default、secondary、ghost、destructive 变体及 sm、icon 尺寸；使用 asChild 可保留链接语义。图标按钮必须提供 aria-label。
-- Dialog 基于 Radix 管理焦点与 Esc 关闭；没有使用 Radix Trigger 的受控调用需提供 returnFocusId / returnFocusRef，或由调用页面显式恢复焦点；多个入口优先记录实际触发元素。
-- 页面使用 `tokens-values.css` 和 Web 字体；视觉基础稿使用包含完整字体的 `tokens.css`。两份 CSS 均由 tokens.json 生成，禁止直接改生成文件。
-- 工作台记录只存在于页面会话，导航离开该页或刷新会恢复固定演示数据。导出仅包含当前筛选结果。
-- 研究助手读取固定 demo-data，演示流式输出、停止、操作确认、工具成功／失败、重试和报告下载。没有连接真实模型、训练任务、用户身份或存储。
-- 所有示例内容须保留标识；官网研究方向与文案是设计示例，真实发布前需用已确认资料替换。
-- 自动检查覆盖核心交互、浏览器主题／语言偏好、手机页面溢出和两种主题下的 axe 规则；不替代完整屏幕阅读器与最终 WCAG 人工验收。
-- 第二阶段视觉截图位于 `output/ui/`。审核通过后扩展完整组件、registry、Storybook 及 VI 应用模板。
-
-## 官网动效
-
-- 首屏之外，理念区编号与标签、研究工具流程及收尾入口使用单次错峰入场。工具预览保持真实可输入，准备状态由非空问题决定；键盘焦点进入时立即结束包裹动效。流程说明是有序列表，不表示后台执行进度。移动端流程纵向排列，所有内容在减少动画模式下直接可见。
-
-- 网格对细指针位置产生局部蓝色高亮；logo 重播触发一次 1.7 秒扩散轮廓。跟随更新经 requestAnimationFrame 合并，不持续运行渲染循环；离开、减少动画偏好变化与卸载时取消更新及脉冲。触屏保留静态网格。研究方向悬停仅增加蓝色边线与浅色背景，不将说明条目伪装成按钮。
-
-- 官网首屏与研究区域使用 React Bits AnimatedContent、TiltedCard 的本地适配，源码和许可在 `src/components/react-bits/`，GSAP 仅在官网组件挂载后按需加载。
-- 官网首屏采用 IDRL 六块原始 SVG 路径的单次组装动画，细网格背景借鉴 pi.dev 的品牌展示方式；支持按钮点击 / Enter / Space 重播，深浅主题分别引用原始彩色与 reverse 路径。只有动画过程允许几何块平移，结束后恢复原始图形，不改变静态 logo 资产。桌面总时长约 1.7 秒，手机减少幅度和时长；减少动画模式直接显示静态标志。标题与正文保持清晰。
-- 首屏图片从 0.35 透明度与 72px 位移进入，研究方向错峰进入（800–1100ms）；手机区块位移至多 8px、300ms。细指针悬停主视觉产生至多 10°/14° 倾斜，离开复位；触屏与减少动画模式关闭透视。
-- `prefers-reduced-motion` 和动画库加载失败时立即显示内容；可交互区块键盘焦点进入时结束动效；卸载时释放观察器与时间线。禁止循环播放或将正文显示依赖于动画完成。
-- 适配组件仅作为当前网站集成代码；发布独立组件库 / registry 时须排除这些第三方组件，或先确认对应授权。
-
-## 科研汇报与图表
-
-- 深色界面必须引用专用 reverse logo，禁止通过 brightness / invert 滤镜将彩色 logo 整体变白；IDRL 字标使用 `lockup-idrl-reverse.svg`。
-
-- 复用 `output/research-template/idrl-research-template-v2.pptx` 的 16:9 页面；按需复制页面，保留原生图表和表格的编辑性。
-- 图表遵循 `docs/design/scientific-charts.md`；可复用样式为 `assets/brand/charts/idrl.mplstyle`。
-- 原始数据、图例映射、轴单位和不确定性定义优先于装饰；不能根据模板中的合成数据撰写研究结论。
-- PPT 当前为可复制页面模板，尚非自定义母版 / POTX；公式为文本示例。所有示例标记在替换为真实资料前必须保留。
-
-## 官方参考
-
-- Inter 字体与许可：https://github.com/rsms/inter
-- Noto CJK 字体与许可：https://github.com/notofonts/noto-cjk
-- shadcn registry：https://ui.shadcn.com/docs/registry/getting-started
-- shadcn MCP：https://ui.shadcn.com/docs/mcp
-- Tailwind theme variables：https://tailwindcss.com/docs/theme
-
-
-### 数据表格
-
-- `src/components/ui/data-table.tsx` 为小规模本地数据集合提供客户端排序和分页。调用方传入完整筛选结果 `rows`、稳定行标识 `rowKey`、列定义 `columns`、表格名称 `caption`、空状态 `empty` 与翻译函数 `t`。复制组件时同时带上 data-table.css、Button、Select、utils 和品牌 tokens。
-- 列定义使用 `cell` 渲染；只有提供 `sortValue` 的列可排序。得分按数值比较，缺失值使用 null，升降序均置后。列标题按钮支持键盘，表头使用 aria-sort 通知方向。
-- 每页 5 / 10 / 20 条；数据集合变更、切换排序与每页条数返回第一页。调用方须用 useMemo 保持 rows 引用稳定，避免无关重渲染重置页码。
-- 搜索和业务筛选由页面持有；工作台导出完整筛选结果，与当前分页无关。手机允许表格内部横向滚动，不扩大页面。
-- 当前不包含服务端分页、行选择、列显隐、虚拟化和加载 / 错误请求状态；大数据或远程数据应用应单独设计请求与状态契约，不对单页远程结果进行客户端全局排序。
-
-### 表单字段与选择控件
-
-- `src/components/ui/field.tsx` 提供 Input、Select、Textarea 和 FormField。FormField 用 label、description、error、required 生成标签、帮助与错误 ID；通过 render prop 将 id / required / aria-invalid / aria-describedby 传给唯一的原生控件。可传 id 以支持错误后的明确焦点定位。帮助与错误同时保留，不仅用颜色表示校验结果。
-- Textarea 保持可纵向调整；说明文案按需设置 maxLength，并显示可读计数。不要用 placeholder 替代标签。
-- `src/components/ui/choice.tsx` 提供 Checkbox（原生 input 属性）与受控 Switch（checked / onCheckedChange）。Checkbox 适用于可选项，Switch 适用于即时布尔设置。均有 label、可选 description、disabled 与键盘焦点；Switch 为 button，不自动参与 FormData，调用方从受控状态读取值。
-- 当前表单提交仍由页面负责；组件预览采用提交后错误与首个无效字段聚焦，工作台新建表单采用浏览器 required / min / max / step 校验。没有引入校验库或远程保存能力。
-- 使用时复制对应 field.css / choice.css 与品牌 tokens；保留语义错误文字色 destructiveText。组件页提供多行输入、计数、复选框、开关、禁用项、摘要变化和重置演示。
-
-## 2026-10-15 审计修复约定
-
-- 表格列排序必须使用 type="button"，不得提交外层表单。受控详情弹窗关闭后返回实际入口。
-- 官网在 320px 中英文视口均须重排而非整页横向滚动；小于 360px 的品牌价值区使用单列。
-- PPT 页眉使用 IDRL 字标组合，完整双语组合只用于满足最小文字尺寸的区域。修订模板为 output/research-template/idrl-research-template-v3-final.pptx。
-- 品牌 / PPT 导出通过 npm run brand:check / brand:build 与 deck:check / deck:build 执行；依赖与运行时说明见 docs/design/asset-build.md。
-
-## 科研汇报版式 v4
-
-- 参考 idrl-foundation-review.pdf 的层次：品牌页眉 / 分隔线、主标题 / 导语、内容面板、页脚信息。大标题、分组标题、正文和注释通过字号、字重、颜色与留白区分。
-- 封面、章节和结束页可用深 navy 底与低对比度品牌几何辅助图形；内容和图表页保持明亮。面板用于真实内容分组，重点结论最多一个主色块，不增加多层嵌套装饰。
-- 方法流程保持可编辑形状；表格与图表保持原生对象，重点行可以使用品牌蓝。数字强调须对应实际数据；示例差值仍须明确标为合成示例。
-- 当前科研模板为 output/research-template/idrl-research-template-v4.pptx，附同名 PDF 栅格审核版。PPT 字体为 Inter / Noto Sans CJK SC，打开前需安装；字体没有嵌入 PPT。
+- 下游记录来源 commit、token 版本、复制文件和本地适配。品牌值不私改，业务扩展用应用命名空间；更新先 diff，不覆盖业务。
+- npm run vi:check 检查生成文件与复用清单；npm run vi:export 输出带 SHA-256 与依赖清单的源码快照，不是安装包。
+- npm run build 验证构建，npm test 验证交互，npm run test:assets 与 Python 回归验证资产；重建见 [asset-build.md](docs/design/asset-build.md)。
+- 至少检查中英文、深浅主题、320 / 390 / 768 / 1024 / 1440px、导航、键盘 / 焦点、减少动画、长文案、业务异常、数据导出；保留同数据前后截图及测试证据。
+- 自动 axe / 对比度检查不代替屏幕阅读器和跨浏览器人工验收。历史记录保留在 docs/design/，本轮证据见接入一致性报告。

@@ -1,6 +1,7 @@
 import { useState, type FormEvent, type KeyboardEvent } from 'react'
 import { ArrowUpRight, Check, Copy, Plus, RotateCcw, CheckCircle2, Info } from 'lucide-react'
 import { AppShell } from '../components/app-shell'
+import { idrlAppConfig } from '../lib/app-navigation'
 import { DataSpecimen } from '../components/data-specimen'
 import { FrameworkSpecimen } from '../components/framework-specimen'
 import { Button } from '../components/ui/button'
@@ -9,6 +10,8 @@ import { Checkbox, Switch } from '../components/ui/choice'
 import { FormField, Input, Select, Textarea } from '../components/ui/field'
 import { Dialog } from '../components/ui/dialog'
 import type { Translate } from '../lib/types'
+import tokens from '../../assets/brand/tokens.json'
+import adoptionGuideUrl from '../../docs/design/adoption.md?url'
 import designGuideUrl from '../../DESIGN.md?url'
 
 export function Components({ t }: { t: Translate }) {
@@ -48,7 +51,7 @@ export function Components({ t }: { t: Translate }) {
     setTab(next); document.getElementById(`tab-${next}`)?.focus()
   }
 
-  return <AppShell active="components" t={t}>
+  return <AppShell config={idrlAppConfig(t)} active="components" t={t}>
     <div className="library-page">
       <header className="library-heading"><div><h1>{t('基础组件', 'UI foundations')}</h1><p className="muted">{t('统一研究工具的交互语言。', 'A shared interaction language for research tools.')}</p></div><Badge tone="info">{t('交互预览', 'Interactive preview')}</Badge></header>
       <div className="library-tabs" role="tablist" aria-label={t('组件文档', 'Component documentation')}>
@@ -96,11 +99,11 @@ export function Components({ t }: { t: Translate }) {
           </section>
         </div>
         <aside className="library-aside">
-          <section className="specimen"><h2>{t('品牌颜色', 'Brand colors')}</h2><p className="muted">{t('点击复制色值，界面开发优先使用语义变量。', 'Copy a value. Prefer semantic tokens in application code.')}</p><div className="color-list">{[{ name: 'IDRL Navy', value: '#203663', css: 'var(--brand-navy)' }, { name: 'IDRL Blue', value: '#236db9', css: 'var(--brand-blue)' }, { name: 'IDRL Cyan', value: '#56c0e5', css: 'var(--brand-cyan)' }].map(color => <button key={color.name} className="color-swatch" onClick={() => copy(color.value)} aria-label={t(`复制 ${color.name} ${color.value}`, `Copy ${color.name} ${color.value}`)}><span className="color-chip" style={{ background: color.css }} /><span><strong>{color.name}</strong><span>{color.value}</span></span><Copy size={14} /></button>)}</div></section>
+          <section className="specimen"><h2>{t('品牌颜色', 'Brand colors')}</h2><p className="muted">{t('点击复制色值，界面开发优先使用语义变量。', 'Copy a value. Prefer semantic tokens in application code.')}</p><div className="color-list">{[{ name: 'IDRL Navy', value: tokens.brand.navy, css: 'var(--brand-navy)' }, { name: 'IDRL Blue', value: tokens.brand.blue, css: 'var(--brand-blue)' }, { name: 'IDRL Cyan', value: tokens.brand.cyan, css: 'var(--brand-cyan)' }].map(color => <button key={color.name} className="color-swatch" onClick={() => copy(color.value)} aria-label={t(`复制 ${color.name} ${color.value}`, `Copy ${color.name} ${color.value}`)}><span className="color-chip" style={{ background: color.css }} /><span><strong>{color.name}</strong><span>{color.value}</span></span><Copy size={14} /></button>)}</div></section>
           <section className="specimen"><h2>{t('状态与语义', 'States & semantics')}</h2><p className="muted">{t('颜色与文字共同表达状态。', 'Color and text communicate state together.')}</p><div className="status-specimens"><Badge tone="success"><Check size={13} />{t('已完成', 'Completed')}</Badge><Badge tone="info">{t('运行中', 'Running')}</Badge><Badge tone="warning">{t('等待确认', 'Awaiting confirmation')}</Badge><Badge tone="danger">{t('失败', 'Failed')}</Badge><Badge>{t('已取消', 'Cancelled')}</Badge></div></section>
         </aside>
       </div> : <section className="usage-guide" id="panel-guide" role="tabpanel" aria-labelledby="tab-guide" tabIndex={0}><h2>{t('从共享组件开始', 'Start with shared components')}</h2><p>{t('按钮、输入框、状态与弹窗共用语义颜色、焦点和主题规则。', 'Buttons, inputs, badges, and dialogs share semantic colors, focus behavior, and theme rules.')}</p><pre><code>{`import { Button } from '@/components/ui/button'\nimport { Input } from '@/components/ui/field'\n\n<label htmlFor="name">实验名称</label>\n<Input id="name" required />\n<Button type="submit">保存</Button>`}</code></pre><div className="usage-rules"><article><h3>{t('操作层级', 'Action hierarchy')}</h3><p>{t('主操作使用品牌蓝；取消与返回使用次要样式。提交期间禁用重复操作。', 'Use primary blue for the main action and secondary styles for cancel or back. Prevent duplicate submissions.')}</p></article><article><h3>{t('表单与键盘', 'Forms & keyboard')}</h3><p>{t('每个字段都有标签。提交后显示具体错误，并将焦点移到第一个无效字段。', 'Label every field. After submission, show specific errors and focus the first invalid field.')}</p></article><article><h3>{t('主题与状态', 'Themes & states')}</h3><p>{t('使用语义变量；状态包含可读文字。支持深浅主题与减少动态效果偏好。', 'Use semantic tokens and readable status text. Support both themes and reduced motion.')}</p></article></div><a className="quiet-link" href={designGuideUrl} target="_blank" rel="noreferrer">{t('阅读 DESIGN.md', 'Read DESIGN.md')}<ArrowUpRight size={16} /></a></section>}
-      <footer className="library-footer"><span><Info size={16} />{t('本地交互预览，完整组件库持续完善。', 'Local interactive preview. The full library is still evolving.')}</span><div><a href="#workspace">{t('查看工作台示例', 'Explore workspace')}<ArrowUpRight size={15} /></a><a href="#assistant">{t('查看 AI 交互示例', 'Explore AI interactions')}<ArrowUpRight size={15} /></a></div></footer>
+      <p className="muted"><a className="quiet-link" href={adoptionGuideUrl} target="_blank" rel="noreferrer">{t('其他应用接入与重构指南 ↗', 'Application adoption and migration guide ↗')}</a></p><footer className="library-footer"><span><Info size={16} />{t('本地交互预览，完整组件库持续完善。', 'Local interactive preview. The full library is still evolving.')}</span><div><a href="#workspace">{t('查看工作台示例', 'Explore workspace')}<ArrowUpRight size={15} /></a><a href="#assistant">{t('查看 AI 交互示例', 'Explore AI interactions')}<ArrowUpRight size={15} /></a></div></footer>
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen} returnFocusId="component-primary-action" title={t('确认示例操作', 'Confirm example action')} description={t('此操作仅更新当前组件页的预览提示。', 'This action updates the preview notice on this page.')}><div className="form-actions dialog-actions"><Button variant="secondary" onClick={() => setDialogOpen(false)}>{t('取消', 'Cancel')}</Button><Button onClick={() => { setDialogOpen(false); setNotice(t('示例操作已确认。', 'Example action confirmed.')) }}>{t('确认操作', 'Confirm action')}</Button></div></Dialog>
     </div>
   </AppShell>

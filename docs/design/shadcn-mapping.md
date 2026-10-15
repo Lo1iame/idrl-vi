@@ -1,62 +1,92 @@
-# IDRL tokens → shadcn/ui + Tailwind CSS v4 映射
+# IDRL tokens → shadcn / Tailwind v4
 
-状态：v0.1（从 idrl-portal v0.11.0 的实际落地中提炼，作为 IDRL registry 的第一块参考实现）。适用于「React + Tailwind CSS v4 + shadcn/ui 源码」形态的应用；官网等非 shadcn 场景直接用 `tokens-values.css`。
+当前 token 版本见 assets/brand/tokens.json；本文件描述映射，不宣称提供 shadcn registry 或安装包。既有应用保持自己的组件，用 IDRL 主题替换旧颜色定义。
 
-## 原则
+## 生成文件与顺序
 
-1. `assets/brand/tokens.json` 是唯一数值来源；应用侧只做**映射**，不发明新值。
-2. 深色主题用 VI 的独立深色语义值（`.dark` 类或 `[data-theme="dark"]`），不做整体颜色反转。
-3. 深色底 logo 一律用 `-reverse` 专用资产（建议封装组件在 CSS 层切换），禁止滤镜变白。
+1. 引入 tokens-values.css（无字体请求）。
+2. 引入 shadcn-aliases.css（由 scripts/build-tokens.py 生成，不手改）。
+3. 保留原应用 @theme inline，补齐以下映射，删除冲突的旧 :root / .dark 值。
+4. 主题管理器在 html 上同步 data-theme="light|dark"；若保留 .dark，则同时设置两者，首屏初始化也同步。仅 .dark 不会启用本 VI 的深色 tokens 与 Brand。
 
-## 语义变量映射（globals.css `:root` / `.dark`）
+所有 @import 放在普通 CSS 规则前。支持同一页面局部 data-theme 边界，aliases 在主题边界重新声明，避免继承时解析为父主题颜色。
 
-| shadcn 变量 | VI token | 说明 |
-| --- | --- | --- |
-| `--background` / `--foreground` | `background` / `foreground` | |
-| `--card`、`--popover`（+ `-foreground`） | `surface` / `foreground` | |
-| `--primary` / `--primary-foreground` | `primary` / `primaryForeground` | |
-| `--secondary`、`--muted` | `surfaceSubtle` | |
-| `--accent` / `--accent-foreground` | `accent` / `accentForeground` | |
-| `--destructive`（+ `-foreground`） | `destructive`（深色文字用 `background` 值） | |
-| `--border` | `border` | |
-| `--input` | `controlBorder` | 需要独立辨认的控件边界 |
-| `--ring` | `focus` | |
-| `--chart-1..5` | `chart1..5` | 图表类别色，按序使用 |
-| `--sidebar-*` | 见下 | 侧栏：surface 底、surfaceSubtle 激活、激活文字用 primary |
+| shadcn 变量 | 来源 |
+| --- | --- |
+| background / foreground / primary / primary-foreground / accent / accent-foreground / border | 同名 VI CSS 变量 |
+| card / popover，及其 foreground | surface / foreground |
+| secondary / muted，及其 foreground | surfaceSubtle / foreground 或 mutedForeground |
+| destructive / destructive-foreground | destructive / primaryForeground |
+| input / ring | controlBorder / focus |
+| chart-1…5 | chart1…5 |
+| sidebar / sidebar-foreground | surface / foreground |
+| sidebar-primary / foreground | primary / primaryForeground |
+| sidebar-accent / foreground | surfaceSubtle / primaryText |
+| sidebar-border / ring | border / focus |
+| radius | radiusControl（6px） |
 
-另需补充 shadcn 没有的变量：`--primary-hover`（`primaryHover`）、`--success` / `--warning`（功能色），并在 `@theme inline` 中暴露为 `text-success` 等工具类；品牌三主色以 `--color-brand-navy/blue/cyan` 暴露，仅用于图形装饰。
+基色、状态文字、primary-hover 等变量已由 tokens-values.css 提供，无须在应用重写 HEX。destructive-foreground 使用当前主题 primaryForeground：浅色为白，深色为深底色。
 
-## 圆角
+## Tailwind v4 参考映射
 
-Tailwind v4 `@theme inline`：
-
-```css
---radius-md: var(--radius);        /* 控件 6px：Button/Input/Select = rounded-md */
---radius-xl: 0.75rem;              /* 卡片 12px：Card = rounded-xl */
-/* 弹窗 16px = Tailwind 默认 rounded-2xl（1rem），Dialog/AlertDialog 手动改用 */
-```
-
-## 字体
+把所需项合并到既有 @theme inline，不复制出第二套竞争定义：
 
 ```css
---font-sans: var(--font-inter, 'Inter'), 'Noto Sans CJK SC', 'PingFang SC',
-  'Hiragino Sans GB', 'Microsoft YaHei', system-ui, sans-serif;
---font-mono: ui-monospace, SFMono-Regular, Consolas, 'Courier New', monospace;
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-success-text: var(--success-text);
+  --color-warning-text: var(--warning-text);
+  --color-destructive-text: var(--destructive-text);
+  --color-primary-text: var(--primary-text);
+  --color-brand-navy: var(--brand-navy);
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-cyan: var(--brand-cyan);
+  --radius-md: var(--radius-control);
+  --radius-xl: var(--radius-card);
+  --radius-2xl: var(--radius-dialog);
+}
 ```
 
-英文/数字用自托管 Inter（`next/font/local` 或 `@font-face` 加载 InterVariable.woff2）。Next.js 使用已定义的 `--font-inter`；普通 `@font-face` 接入使用变量默认值 `Inter`，无需定义 Next.js 字体变量。中文见 DESIGN.md「字体」的回退栈与子集策略。
+控件 rounded-md，卡片 rounded-xl，弹窗 rounded-2xl；原有 shadcn 其他尺寸公式按需求核对，不假设所有组件自动更新。字体通过 body { font-family: var(--font-sans) } 接入；Next.js 自托管字体可设置自有字体变量后使用 token 的中文回退序列。不要声明 --font-sans: var(--font-sans) 这种循环。
 
-## 状态徽章配方（已过对比度审计）
+## 状态与 SVG
 
-```
-底：状态基色 15% 叠加所在 surface（bg-[color-mix(in_srgb,var(--success)_15%,var(--surface))]）
-文字：两种主题均用 --primary-text / --success-text / --warning-text / --destructive-text
-      浅色为加深变体；深色已定义为对应基色。下游映射必须包含这些变量的两种主题值。
-描边（可选）：状态基色 30%
-```
+徽章底为状态基色 15% 混合 surface，文字使用当前主题 *Text；横幅用 5% 底、30% 边界、*Text 标题。颜色必须配文字 / 图标。类别色只用于图表系列，不作文字语义色。
 
-徽章必须带文字标签，不能只靠颜色。警告横幅同源：`border: 状态色 30%`、`background: 状态色 5%`、标题文字用当前主题的 `*Text` 变体。tokens v0.2.1 补齐深色变体，禁止沿用浅色 `warningText` 到深色横幅。
+SVG 的 fill / stroke 可以引用 CSS 变量；继承与主题作用域需正确，优先统一使用 style / CSS 类。此前“展示属性不支持 var()”的说明不准确，已更正。
 
-## 考勤/人员状态 → 功能色
-
-present→success、absent→destructive、trip→primary、leave→warning。同一状态全应用同色；SVG 展示属性（fill/stroke attribute）不支持 `var()`，需经 `style` 或 CSS 类传递。
+[完整接入步骤](adoption.md) · [设计契约](../../DESIGN.md)

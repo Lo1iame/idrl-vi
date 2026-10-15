@@ -1,7 +1,7 @@
 import { Slot } from '@radix-ui/react-slot'
 import { cva, type VariantProps } from 'class-variance-authority'
 import type { ButtonHTMLAttributes, Ref } from 'react'
-import { cn } from '@/lib/utils'
+import { cn } from '../../lib/utils'
 export const buttonVariants = cva('button', {
   variants: { variant: {default:'button-primary',secondary:'button-secondary',ghost:'button-ghost',destructive:'button-destructive'},size:{default:'',sm:'button-sm',icon:'button-icon'} },
   defaultVariants: {variant:'default',size:'default'},

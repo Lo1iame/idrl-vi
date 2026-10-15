@@ -1,65 +1,66 @@
 # IDRL · 智能设计与鲁棒学习
 
-Intelligent Design and Robust Learning 的视觉识别与 UI 设计体系。
+Intelligent Design and Robust Learning 的视觉识别与 UI 参考体系，为团队官网、科研工具和内部应用提供一致的设计约定与可复制源码。
 
-## 当前交付
+## 其他应用从这里开始
 
-- 已审核的视觉基础：logo 中英文组合、品牌三蓝色、字体、间距、深浅主题变量。
-- 已按视觉稿更新的可运行界面：官网、实验工作台、研究助手、基础组件。
-- 官网首屏与研究区域已加入 React Bits AnimatedContent 和 TiltedCard 适配动效，以及可重播 IDRL 标志组装与精细网格背景；支持减少动画偏好、键盘焦点和移动端降级，GSAP 按需加载。
-- 组件页包含可排序 / 分页 / 筛选的数据表格、导航框架、共享字段 / 多行输入 / 复选框 / 开关、表单校验、确认弹窗、色值复制、密度切换和键盘页签；官网可将问题草稿带到研究助手。
-- Agent 设计契约：DESIGN.md；名称术语：CONTEXT.md。
-- 科研汇报模板：`output/research-template/idrl-research-template-v4.pptx`，16 页可编辑页面，参照品牌审核稿增强深浅底、内容分组和重点信息层次；预览入口为同目录 `index.html`。
-- 科研图表规范：`docs/design/scientific-charts.md`；Matplotlib 样式位于 `assets/brand/charts/`，示例导出位于 `output/scientific-charts/`。
+1. 阅读 [DESIGN.md](DESIGN.md) 与 [CONTEXT.md](CONTEXT.md)：品牌规则与名称。
+2. 阅读 [接入与重构指南](docs/design/adoption.md)：接入深度、迁移步骤、验收清单及可直接交给 agent 的任务书。
+3. 参考 [组件能力清单](docs/design/component-inventory.md)、[AppShell 接入](docs/design/app-shell-integration.md)、[shadcn 映射](docs/design/shadcn-mapping.md)。
+4. 运行 `npm run vi:check`，再运行 `npm run vi:export` 获得带来源 commit、依赖和 SHA-256 的独立源码快照。运行示例见 [examples/adoption](examples/adoption/README.md)。
+
+已有 shadcn 应用优先接 token / logo；需要工作台时再复制框架与组件。保留原业务、API、权限、路由和框架，不直接覆盖全局 CSS，不复制展示站模拟数据。中文动态内容使用官方回退栈，不使用展示站专用子集。
+
+## 当前交付与边界
+
+| 交付 | 入口 | 状态 |
+| --- | --- | --- |
+| Logo、品牌三蓝色、字体与语义主题 | [assets/brand](assets/brand/README.md) | 视觉基础已审核；token 0.2.1 |
+| 设计契约与接入资产索引 | [DESIGN.md](DESIGN.md)、[reuse-manifest.json](assets/brand/reuse-manifest.json) | 现行规范，支持自动一致性检查 |
+| 官网、工作台、助手、组件、日志 | src/pages/ | 可运行展示；真实业务均为本地模拟 |
+| 应用框架与 UI 控件 | [能力清单](docs/design/component-inventory.md) | 源码复用，尚非完整组件库 |
+| 科研汇报模板 | [PPT v4](output/research-template/idrl-research-template-v4.pptx)、[PDF](output/research-template/idrl-research-template-v4.pdf) | 16 页分层设计；原生表格 / 图表可编辑；字体未嵌入 |
+| 科研图表规范 | [scientific-charts.md](docs/design/scientific-charts.md) | 样式与合成示例；不代表真实研究结果 |
+
+UI 最终视觉、完整屏幕阅读器及跨浏览器人工验收尚未全部完成。没有已发布 npm 包、registry、Storybook、认证、业务后端或服务端表格。v2 / v3 PPT 与历史报告保留作参考，当前材料以 reuse-manifest 为准。
 
 ## 本地运行
 
-使用符合 Vite 要求的 Node.js（建议当前支持的 LTS）。
+使用满足 package-lock 所锁定 Vite 版本要求的 Node.js 与 npm：
 
 ```sh
 npm ci
 npm run dev
 ```
 
-在开发服务器打开以下路由：
-
 | 路由 | 内容 |
 | --- | --- |
-| `/#website` | 官网概念与品牌表达 |
-| `/#workspace` | 演示实验、筛选、表单与导出 |
-| `/#assistant` | 流式输出、确认、模拟工具与报告下载 |
-| `/#components` | 当前共用的基础组件 |
-| `/#changelog` | 设计系统版本、日期与分类变更 |
+| /#website | 官网品牌与动效示例 |
+| /#workspace | 表格、筛选、创建与导出 |
+| /#assistant | 流式、停止、确认、失败重试及报告下载 |
+| /#components | 公共组件预览及接入文档 |
+| /#changelog | 本设计系统已提交更新 |
+| /examples/adoption/ | 不依赖展示站页面的接入验证示例 |
+
+## 验证与重建
 
 ```sh
+npm run vi:check
 npm run build
+npm run vi:example:build
+npm run test:vi
+npm run test:assets
 npm test
 ```
 
-字体子集脚本的回归检查（需要 fontTools 和 Brotli）：
+vi:check 仅额外需要 Python 标准库；可自动发现 .venv-assets 或设置 IDRL_PYTHON。字体 / 文档资产回归与品牌 / PPT 重建环境见 [asset-build.md](docs/design/asset-build.md)。浏览器测试默认使用本机 Edge，其他环境设置 BROWSER_CHANNEL 或配置 Playwright Chromium；截图在 output/ui/。
 
-```sh
-python tests/test_font_build.py
-```
+## 维护与同步
 
-该检查在临时目录生成字体，验证错误输入不会覆盖现有子集，以及 JavaScript / JSX 文案能正确纳入子集。
+- tokens.json 是唯一变量源；修改后运行 scripts/build-tokens.py，再做 vi:check。CSS 与 shadcn aliases 均自动生成。
+- 颜色数值变化升级 token 版本；组件 / 文档更新按 commit 同步，不混用 package 版本或 PPT 修订号。
+- src/fonts.css 只为本展示站加载中文子集；styles.css / design-refresh.css 为完整参考样式，含全局规则。
+- 新资产在 assets/brand/logo/；logo/ 是历史源文件。字体与许可保留在 assets/brand/fonts/。
+- 历史验证见 docs/design/phase-2-validation.md；当前一致性检查范围见 [本轮报告](docs/design/reuse-consistency-2026-10-15.md)。
 
-测试默认使用本机 Edge。其他环境可设置 BROWSER_CHANNEL 为已安装的 Chrome，或安装 Playwright Chromium 并调整配置。截图输出到 output/ui/。
-
-## 内容与资产
-
-应用框架现已支持桌面折叠、平板图标轨道和手机抽屉导航；通过 `AppShellConfig` 配置应用名称、导航和品牌节点。复制接入步骤见 `docs/design/app-shell-integration.md`，本轮决策与验收范围见 `docs/design/workbench-evolution.md`。
-
-- `logo/`：历史源文件，保留原样。新材料使用 `assets/brand/logo/`。
-- `assets/brand/tokens.json`：变量源；用 `scripts/build-tokens.py` 生成 CSS。
-- `assets/brand/fonts/`：原始字体、Web 字体和 OFL 授权。用 `scripts/build-web-fonts.py` 更新当前文案的中文子集。
-- `docs/design/`：设计简报、基础视觉预览与数值对比度报告。
-- `src/components/`：可复制的基础组件和布局；当前尚非完整组件库。
-- `output/brand/`：第一阶段 logo PNG 和五页视觉审核 PDF。
-
-这些页面用于设计审核。实验数据和 AI 流程均为本地模拟；官网研究内容为示例，不表示已验证的团队成果。无模型调用、认证、业务后台或持久存储。工作台记录在离开页面或刷新后重置。
-
-第一阶段已通过审核，第二阶段页面待审核。科研 PPT 与图表规范已交付首版，待审核；后续继续交付完整组件、registry、Storybook、海报与社交模板。
-
-
-品牌与 PPT 的可复现构建、环境预检及版本输出约定见 `docs/design/asset-build.md`。
+所有页面为设计审核示例：无外部模型、认证、训练服务或持久化业务数据；工作台离页 / 刷新即恢复演示记录。React Bits / GSAP 官网适配与演示导航默认不进入 UI 接入快照。

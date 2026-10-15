@@ -4,11 +4,11 @@ import { Button } from './ui/button'
 import { Tooltip } from './ui/tooltip'
 import { Sheet } from './ui/sheet'
 import { Breadcrumb, type BreadcrumbItem } from './ui/breadcrumb'
-import { idrlAppConfig, type AppShellConfig } from '../lib/app-navigation'
+import type { AppShellConfig } from '../lib/app-shell-config'
 import type { Translate } from '../lib/types'
 import '../app-shell.css'
 export const AppToolsContext = createContext<ReactNode>(null)
-export type { AppShellConfig } from '../lib/app-navigation'
+export type { AppShellConfig } from '../lib/app-shell-config'
 
 function useMedia(query: string) {
   const [matches,setMatches]=useState(()=>typeof window!=='undefined'&&matchMedia(query).matches)
@@ -18,10 +18,9 @@ function useMedia(query: string) {
 const preferenceKey=(id:string)=>`idrl-sidebar:${id}:collapsed`
 function readCollapsed(id:string){try{return localStorage.getItem(preferenceKey(id))==='true'}catch{return false}}
 
-export function AppShell({ t,active,children,config: supplied,breadcrumbs,headerActions }: {
-  t:Translate; active:string; children:ReactNode; config?:AppShellConfig; breadcrumbs?:BreadcrumbItem[]; headerActions?:ReactNode
+export function AppShell({ t,active,children,config,breadcrumbs,headerActions }: {
+  t:Translate; active:string; children:ReactNode; config:AppShellConfig; breadcrumbs?:BreadcrumbItem[]; headerActions?:ReactNode
 }) {
-  const config=supplied??idrlAppConfig(t)
   const tools=useContext(AppToolsContext)
   const mobile=useMedia('(max-width: 767px)')
   const desktop=useMedia('(min-width: 1024px)')

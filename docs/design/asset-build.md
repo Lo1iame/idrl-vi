@@ -29,7 +29,7 @@ npm run deck:check
 npm run deck:build
 ```
 
-需要当前 Codex bundled artifact-tool、Python（含 PIL / pypdf）和 presentations 技能。脚本从当前用户的 runtime 目录及 CODEX_HOME 下的技能缓存发现安装，按版本排序选择文件完整的 presentations 技能，不固定个人用户名或某个旧技能版本。
+需要当前 Codex bundled artifact-tool、Python（含 PIL / pypdf / reportlab）和 presentations 技能。脚本从当前用户的 runtime 目录及 CODEX_HOME 下的技能缓存发现安装，按版本排序选择文件完整的 presentations 技能，不固定个人用户名或某个旧技能版本。
 
 迁移时可设置：
 
@@ -64,3 +64,7 @@ npm test
 ## v4 的 PDF 与检查摘要
 
 构建器从最终 PPTX 重新导入并渲染预览，再通过 export-deck-preview.py 合成为同名 PDF，供免安装字体的版式审核。PDF 为栅格预览，不是可编辑或矢量印刷版本。当前版本校验摘要自动写入 output/research-template/validation-current.json；每次构建使用独立 run-* 临时目录，保留历史收据并避免缓存冲突。
+
+## UI 接入的一致性检查
+
+npm run vi:check 仅需 Python 标准库，会调用 build-tokens.py --check，核对生成 CSS、shadcn aliases、对比度报告、当前资产索引、PPT 校验和、现行文档链接与源码导出依赖。更新 token 后先运行 scripts/build-tokens.py；不需重建品牌或 PPT。npm run vi:export 生成独立接入快照，默认不包含科研二进制材料。

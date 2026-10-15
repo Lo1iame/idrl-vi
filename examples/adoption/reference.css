@@ -1,0 +1,12 @@
+/* Reference only: global resets and showcase selectors. Audit before merging into an existing app. */
+@import '../../src/styles.css';
+@import '../../src/design-refresh.css';
+@import '../../src/app-shell.css';
+@import '../../assets/brand/shadcn-aliases.css';
+@font-face {
+  font-family: Inter;
+  src: url('../../assets/brand/fonts/InterVariable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+}
+/* Dynamic Chinese uses the token's system fallback; showcase subsets are intentionally excluded. */

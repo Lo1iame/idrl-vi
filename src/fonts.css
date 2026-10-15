@@ -1,0 +1,22 @@
+/* Showcase fonts: Chinese subsets cover this site only. Do not copy into dynamic applications. */
+@font-face{
+  font-family:Inter;
+  src:url('../assets/brand/fonts/InterVariable.woff2') format('woff2');
+  font-weight:100 900;
+  font-display:swap
+}
+
+@font-face{
+  font-family:'Noto Sans CJK SC';
+  src:url('../assets/brand/fonts/NotoSansCJKsc-Regular-web.woff2') format('woff2');
+  font-weight:400;
+  font-display:swap
+}
+
+@font-face{
+  font-family:'Noto Sans CJK SC';
+  src:url('../assets/brand/fonts/NotoSansCJKsc-Bold-web.woff2') format('woff2');
+  font-weight:700;
+  font-display:swap
+}
+

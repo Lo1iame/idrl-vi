@@ -1,14 +1,9 @@
-import { FlaskConical, PanelsTopLeft, Sparkles, History, type LucideIcon } from 'lucide-react'
-import type { ReactNode } from 'react'
+import { FlaskConical, PanelsTopLeft, Sparkles, History } from 'lucide-react'
 import { Brand } from '../components/brand'
 import { Badge } from '../components/ui/badge'
 import type { Translate } from './types'
-export type AppNavItem = { id: string; label: string; href: string; icon: LucideIcon }
-export type AppShellConfig = {
-  id: string; name: string; description?: string; logo: ReactNode; compactLogo: ReactNode; homeHref: string
-  groups: { id: string; label: string; items: AppNavItem[] }[]
-  status?: ReactNode; footer?: ReactNode
-}
+import type { AppShellConfig } from './app-shell-config'
+export type { AppNavItem, AppShellConfig } from './app-shell-config'
 export function idrlAppConfig(t: Translate): AppShellConfig {
   return {
     id:'idrl-vi',name:'IDRL Research',description:t('团队空间 · 演示','Team space · Demo'),logo:<Brand/>,compactLogo:<Brand compact/>,homeHref:'#website',

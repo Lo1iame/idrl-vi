@@ -3,6 +3,11 @@ export type Release = { version: string; date: string; title: LocalizedText; com
 
 // Published history only. Add the new release after its changes are committed.
 export const releases:Release[] = [
+  {version:'0.2.2',date:'2026-10-15',commit:'f0d4b14461d7349538cc53c69445ae267ffd2a6c',title:{zh:'应用框架、共享控件与分层汇报',en:'Application shell, shared controls and layered presentations'},changes:[
+    {type:'added',text:{zh:'提供可配置应用框架、响应式侧栏、更新日志、客户端数据表格及共享表单选择控件。',en:'Added a configurable application shell, responsive navigation, changelog, local data tables and shared form controls.'}},
+    {type:'improved',text:{zh:'科研模板更新至 v4，增加分层版式和 PDF 审核预览，保留原生表格与图表编辑性。',en:'Updated the research deck to v4 with layered layouts and a PDF review, preserving native tables and charts.'}},
+    {type:'fixed',text:{zh:'修复表格排序提交表单、详情焦点恢复、窄屏布局与资产构建流程。',en:'Fixed table buttons submitting forms, detail focus restoration, narrow layouts and asset builds.'}},
+  ]},
   {version:'0.2.1',date:'2026-10-14',commit:'745beb042a49d5000be9233fde6c7160f14c0581',title:{zh:'官网品牌动效与接入修复',en:'Brand motion and integration fixes'},changes:[
     {type:'added',text:{zh:'加入可重播标志动画、响应式网格反馈、分区入场与工具使用引导。',en:'Added replayable logo assembly, reactive grid feedback, section entry, and tool guidance.'}},
     {type:'fixed',text:{zh:'修复字体变量默认值、深色状态文字及中文字体子集的输入校验。',en:'Fixed font variable fallbacks, dark status text, and font subset input validation.'}},

@@ -1,15 +1,15 @@
 # IDRL 应用框架接入
 
-2026-10-15，第一批实现。提供源码和页面模板，当前在 Vite / React 应用验证；不表示已经发布 npm 包或经过所有 SSR 框架验证。
+2026-10-15，现行源码接入。完整入口见 [adoption.md](adoption.md)，能力边界见 [component-inventory.md](component-inventory.md)。提供源码和页面模板，当前在 Vite / React 应用验证；不表示已经发布 npm 包或经过所有 SSR 框架验证。
 
 ## 文件与依赖
 
 - `src/components/app-shell.tsx`：应用骨架。
-- `src/lib/app-navigation.tsx`：配置类型及本项目配置工厂；下游创建自己的配置，不直接修改公共框架。
+- `src/lib/app-shell-config.ts`：独立配置类型；`src/lib/app-navigation.tsx` 仅为本展示站配置工厂，默认接入快照不包含它。AppShell 必须显式接收 config，下游创建自己的配置。
 - `src/app-shell.css`：导航、Tooltip、Sheet、Breadcrumb 及日志样式。
 - `src/components/ui/{button,tooltip,sheet,breadcrumb}.tsx`：公共交互组件。
 - 框架依赖 React、Lucide、Radix Dialog / Tooltip；Button 另用 Radix Slot、class-variance-authority 和项目 `cn` 工具。依赖版本以 package-lock.json 为准。
-- 复制时带上品牌变量、字体与 Brand 组件。本项目还使用 styles.css / design-refresh.css 中的按钮和公共样式；只复制布局文件不会得到完整样式。
+- 复制时带上品牌变量、字体与 Brand 组件。本项目还使用 styles.css / design-refresh.css 中的按钮和公共样式；只复制布局文件不会得到完整样式。全局参考样式不可直接覆盖已有应用的 globals.css；详见接入指南。
 
 ## 配置与调用
 
@@ -68,7 +68,7 @@ const appConfig: AppShellConfig = {
 - `Breadcrumb`：items 中每项有 label 和可选 href；最后一项为当前页文本。
 - 更新日志模板为 `src/pages/changelog.tsx`，接受 entries、repositoryUrl、config 和 t。数据类型 `Release` 位于 `src/lib/releases.ts`，条目含 version、ISO 日期、本地化标题、分类变更及可选 commit。
 - 记录按最新在前维护；新增条目前核对 Git 提交，不虚构版本。下游传入自己的 entries / repositoryUrl；不得将其他产品动态写入本仓库的日志。
-- 本项目首批历史版本号沿用 tokens 的 0.1.0 / 0.2.0 / 0.2.1，不等于独立组件包发布或 GitHub Release。
+- 首批历史日志沿用 tokens 的 0.1.0 / 0.2.0 / 0.2.1；0.2.2 记录截至 f0d4b14 已提交的框架、控件、审计修复和 PPT v4。日志标签不等于 token 版本、独立组件包发布或 GitHub Release。
 
 ## 数据表格接入
 
