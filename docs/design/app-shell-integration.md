@@ -70,6 +70,22 @@ const appConfig: AppShellConfig = {
 - 记录按最新在前维护；新增条目前核对 Git 提交，不虚构版本。下游传入自己的 entries / repositoryUrl；不得将其他产品动态写入本仓库的日志。
 - 本项目首批历史版本号沿用 tokens 的 0.1.0 / 0.2.0 / 0.2.1，不等于独立组件包发布或 GitHub Release。
 
+## 数据表格接入
+
+`src/components/ui/data-table.tsx` 与同目录 CSS 可以连同 Button、field、utils、Translate 和品牌 tokens 复制到下游应用；React / Lucide 使用项目已有依赖。
+
+```tsx
+const columns: DataColumn<Experiment>[] = [
+  { id: 'name', header: '名称', cell: row => row.name, sortValue: row => row.name },
+  { id: 'score', header: '得分', cell: row => row.score ?? '—', sortValue: row => row.score, numeric: true },
+]
+// 用 useMemo 计算并稳定 filteredRows；搜索和业务筛选保留在页面层。
+<DataTable rows={filteredRows} columns={columns} rowKey={row => row.id}
+  caption="实验记录" t={t} empty={<p>没有匹配的记录</p>} />
+```
+
+这段代码展示接入形态，Experiment、filteredRows 和 t 由应用提供。每行 ID 必须唯一。表格自行管理排序和分页；新集合、排序和每页条数变更会返回第一页。导出应使用 filteredRows 全集合，不从可见 DOM 抽取当前页。远程分页应另行实现服务端排序 / 筛选契约。
+
 ## 验收命令
 
 ```sh

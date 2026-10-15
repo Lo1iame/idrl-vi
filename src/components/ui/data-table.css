@@ -1,0 +1,21 @@
+.data-table { min-width: 0; }
+.data-table .table-scroll:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
+.data-table table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.data-table th, .data-table td { padding: 14px 16px; border-bottom: 1px solid var(--border); text-align: left; }
+.data-table th { color: var(--muted-foreground); font-weight: 400; white-space: nowrap; }
+.data-table .numeric { font-variant-numeric: tabular-nums; }
+.table-sort { display: inline-flex; align-items: center; gap: 8px; min-height: 32px; color: inherit; font: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+.table-sort:hover { color: var(--foreground); }
+.table-sort:focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; border-radius: 2px; }
+.data-table-pagination { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; padding: 16px; font-size: 12px; color: var(--muted-foreground); }
+.data-table-pagination > span { margin-right: auto; }
+.data-table-size, .data-table-pages { display: flex; align-items: center; gap: 8px; }
+.data-table-pagination .ui-input { width: 68px; min-height: 36px; padding: 4px 8px; }
+.data-table-pages > span { min-width: 76px; text-align: center; font-variant-numeric: tabular-nums; }
+.data-specimen .table-scroll { overflow-x: auto; }
+.data-specimen table { min-width: 500px; }
+@media (max-width: 767px) {
+  .data-table-pagination { gap: 12px; }
+  .data-table-pages { margin-left: auto; }
+  .table-sort { min-height: 44px; }
+}

@@ -62,7 +62,7 @@
 - AI 助手以对话为主画布，来源与模拟控制作为轻量侧栏；输入区和待确认操作保持清晰边界。已有流式、停止、失败、确认与下载流程必须保留。
 - 本次继续使用已确认的 Inter / Noto Sans CJK SC 和品牌颜色。沿用 Lucide 作为已安装的图标体系，不额外混入其他图标库。
 - 品牌辅助图 `assets/brand/images/research-form.webp` 为 AI 生成的蓝色折叠平面概念图，不替代 logo，也不表示实际研究成果。生成说明见同目录 README。
-- 审美布局规则位于 `src/design-refresh.css`，基础控件状态位于 `src/styles.css`；颜色仍来自已有语义 tokens。手机在 768px 以下折叠官网图文，应用布局在 1024px 以下通过顶部完整页面导航切换功能。
+- 审美布局规则位于 `src/design-refresh.css`，基础控件状态位于 `src/styles.css`；颜色仍来自已有语义 tokens。手机在 768px 以下折叠官网图文，应用布局在 768–1023px 使用图标轨道，768px 以下通过模态导航抽屉切换功能。
 - 官网界面最大宽度 1376px（内容净宽 1280px、两侧 48px）；手机两侧 24px。应用与组件页面手机两侧 16px。
 
 - 技术方向：React、TypeScript、Tailwind、shadcn 源码体系；配套 IDRL registry 和 Storybook。版本在组件阶段锁定。
@@ -96,7 +96,7 @@
 - ≥1024px 默认展开、可折叠为 72px 图标轨道；768–1023px 默认轨道，可临时展开；<768px 使用模态抽屉。桌面偏好按应用 ID 保存，断点变化和平板 / 手机交互不覆盖该偏好。
 - 折叠导航保留可访问名称、当前项和 Tooltip；抽屉支持焦点约束、Esc / 遮罩关闭和焦点恢复。高密度应用不继承官网装饰动效。
 - 更新日志数据来自 src/lib/releases.ts，按版本 / 日期 / 新增 / 改进 / 修复记录已提交变更；下游复用模板并维护独立数据。
-- 首批新增 Tooltip、Sheet 和 Breadcrumb，组件页提供交互示例；接入说明见 docs/design/app-shell-integration.md。完整数据表格和其他表单控件在后续批次推进。
+- 首批新增 Tooltip、Sheet 和 Breadcrumb，组件页提供交互示例；接入说明见 docs/design/app-shell-integration.md。第二批新增客户端 DataTable：支持列排序、分页、每页条数与空状态，工作台和组件页共享；其他表单控件在后续批次推进。
 
 ### 设计稿落地与交互增强
 
@@ -150,3 +150,11 @@
 - shadcn MCP：https://ui.shadcn.com/docs/mcp
 - Tailwind theme variables：https://tailwindcss.com/docs/theme
 
+
+### 数据表格
+
+- `src/components/ui/data-table.tsx` 为小规模本地数据集合提供客户端排序和分页。调用方传入完整筛选结果 `rows`、稳定行标识 `rowKey`、列定义 `columns`、表格名称 `caption`、空状态 `empty` 与翻译函数 `t`。复制组件时同时带上 data-table.css、Button、Select、utils 和品牌 tokens。
+- 列定义使用 `cell` 渲染；只有提供 `sortValue` 的列可排序。得分按数值比较，缺失值使用 null，升降序均置后。列标题按钮支持键盘，表头使用 aria-sort 通知方向。
+- 每页 5 / 10 / 20 条；数据集合变更、切换排序与每页条数返回第一页。调用方须用 useMemo 保持 rows 引用稳定，避免无关重渲染重置页码。
+- 搜索和业务筛选由页面持有；工作台导出完整筛选结果，与当前分页无关。手机允许表格内部横向滚动，不扩大页面。
+- 当前不包含服务端分页、行选择、列显隐、虚拟化和加载 / 错误请求状态；大数据或远程数据应用应单独设计请求与状态契约，不对单页远程结果进行客户端全局排序。
