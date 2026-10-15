@@ -6,9 +6,10 @@ import { AppToolsContext } from './components/app-shell'
 import { Workspace } from './pages/workspace'
 import { Assistant } from './pages/assistant'
 import { Website } from './pages/website'
+import { Changelog } from './pages/changelog'
 import type { Translate } from './lib/types'
-export type View='website'|'workspace'|'assistant'|'components'
-const views:View[]=['website','workspace','assistant','components']
+export type View='website'|'workspace'|'assistant'|'components'|'changelog'
+const views:View[]=['website','workspace','assistant','components','changelog']
 const readView=():View=>views.includes(location.hash.slice(1) as View)?location.hash.slice(1) as View:'website'
 function readPreference(key:string,fallback:string){try{return localStorage.getItem(key)||fallback}catch{return fallback}}
 export default function App(){
@@ -19,5 +20,5 @@ export default function App(){
  useEffect(()=>{document.title=`IDRL · ${t('品牌界面示例','Brand interface examples')}`},[lang])
  useEffect(()=>{window.scrollTo(0,0)},[view])
  return <AppToolsContext.Provider value={<div className="review-tools"><Button variant="ghost" size="icon" aria-label={t('切换语言','Switch language')} onClick={()=>setLang(lang==='zh'?'en':'zh')}><Languages size={17}/></Button><Button variant="ghost" size="icon" aria-label={theme==='light'?t('切换深色主题','Switch to dark theme'):t('切换浅色主题','Switch to light theme')} onClick={()=>setTheme(theme==='light'?'dark':'light')}>{theme==='light'?<Moon size={17}/>:<Sun size={17}/>}</Button></div>}><a href="#main" className="skip-link" onClick={e=>{e.preventDefault();document.getElementById('main')?.focus();document.getElementById('main')?.scrollIntoView()}}>{t('跳至主要内容','Skip to content')}</a>
- <main id="main" tabIndex={-1}>{view==='website'?<Website t={t}/>:view==='workspace'?<Workspace t={t}/>:view==='assistant'?<Assistant t={t}/>:<Components t={t}/>}</main></AppToolsContext.Provider>
+ <main id="main" tabIndex={-1}>{view==='website'?<Website t={t}/>:view==='workspace'?<Workspace t={t}/>:view==='assistant'?<Assistant t={t}/>:view==='changelog'?<Changelog t={t}/>:<Components t={t}/>}</main></AppToolsContext.Provider>
 }

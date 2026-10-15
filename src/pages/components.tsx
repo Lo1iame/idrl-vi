@@ -1,6 +1,7 @@
 import { useState, type FormEvent, type KeyboardEvent } from 'react'
 import { ArrowUpRight, Check, Copy, Plus, RotateCcw, CheckCircle2, Info } from 'lucide-react'
 import { AppShell } from '../components/app-shell'
+import { FrameworkSpecimen } from '../components/framework-specimen'
 import { Button } from '../components/ui/button'
 import { Badge } from '../components/ui/badge'
 import { Input, Select } from '../components/ui/field'
@@ -52,6 +53,7 @@ export function Components({ t }: { t: Translate }) {
       <div className="library-notice" role="status">{notice && <><CheckCircle2 size={16} /><span>{notice}</span></>}</div>
       {tab === 'preview' ? <div id="panel-preview" role="tabpanel" aria-labelledby="tab-preview" tabIndex={0} className="library-grid">
         <div className="library-main">
+          <FrameworkSpecimen t={t}/>
           <section className="specimen"><h2>{t('按钮与操作层级', 'Buttons & hierarchy')}</h2><p className="muted">{t('主操作打开确认弹窗，次要操作恢复表单初始状态。', 'The primary action opens a dialog; the secondary action resets the form.')}</p>
             <div className="specimen-stage"><div className="component-row"><Button id="component-primary-action" onClick={() => setDialogOpen(true)}>{t('主操作', 'Primary')}</Button><Button variant="secondary" onClick={reset}>{t('次要操作', 'Secondary')}</Button><Button variant="ghost" onClick={() => { setTab('guide'); requestAnimationFrame(() => document.getElementById('tab-guide')?.focus()) }}>{t('文字操作', 'Ghost')}</Button><Button disabled>{t('不可用', 'Disabled')}</Button></div>
               <div className="component-row specimen-secondary"><Button variant="secondary" className="focus-example" onClick={() => setNotice(t('使用 Tab 移动焦点，Enter 或空格执行操作。', 'Use Tab to move focus; Enter or Space to activate.'))}>{t('键盘焦点', 'Keyboard focus')}</Button><Button variant="secondary" size="icon" aria-label={t('打开新增示例', 'Open add example')} onClick={() => setDialogOpen(true)}><Plus size={20} /></Button><span className="muted">{t('图标操作', 'Icon action')}</span></div>

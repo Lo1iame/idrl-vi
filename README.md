@@ -29,6 +29,7 @@ npm run dev
 | `/#workspace` | 演示实验、筛选、表单与导出 |
 | `/#assistant` | 流式输出、确认、模拟工具与报告下载 |
 | `/#components` | 当前共用的基础组件 |
+| `/#changelog` | 设计系统版本、日期与分类变更 |
 
 ```sh
 npm run build
@@ -46,6 +47,8 @@ python tests/test_font_build.py
 测试默认使用本机 Edge。其他环境可设置 BROWSER_CHANNEL 为已安装的 Chrome，或安装 Playwright Chromium 并调整配置。截图输出到 output/ui/。
 
 ## 内容与资产
+
+应用框架现已支持桌面折叠、平板图标轨道和手机抽屉导航；通过 `AppShellConfig` 配置应用名称、导航和品牌节点。复制接入步骤见 `docs/design/app-shell-integration.md`，本轮决策与验收范围见 `docs/design/workbench-evolution.md`。
 
 - `logo/`：历史源文件，保留原样。新材料使用 `assets/brand/logo/`。
 - `assets/brand/tokens.json`：变量源；用 `scripts/build-tokens.py` 生成 CSS。
