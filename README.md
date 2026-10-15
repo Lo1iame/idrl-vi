@@ -2,6 +2,26 @@
 
 Intelligent Design and Robust Learning 的视觉识别与 UI 参考体系，为团队官网、科研工具和内部应用提供一致的设计约定与可复制源码。
 
+## 界面预览
+
+浅色主题：
+
+| 官网品牌与动效 | 实验工作台 |
+| --- | --- |
+| ![官网品牌与动效](output/ui/website-light-desktop.png) | ![实验工作台](output/ui/workspace-light-desktop.png) |
+
+| 研究助手 | 设计组件 |
+| --- | --- |
+| ![研究助手](output/ui/assistant-light-desktop.png) | ![设计组件](output/ui/components-light-desktop.png) |
+
+深色主题：
+
+| 实验工作台 | 设计组件 |
+| --- | --- |
+| ![深色实验工作台](output/ui/workspace-dark-desktop.png) | ![深色设计组件](output/ui/components-dark-desktop.png) |
+
+更多截图（移动端、深色全套与动效瞬间）见 [output/ui](output/ui/) 目录。
+
 ## 其他应用从这里开始
 
 1. 阅读 [DESIGN.md](DESIGN.md) 与 [CONTEXT.md](CONTEXT.md)：品牌规则与名称。
