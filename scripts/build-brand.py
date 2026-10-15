@@ -3,6 +3,7 @@ from pathlib import Path
 from urllib.request import urlretrieve
 from html import escape
 import json
+import runpy
 from pypdf import PdfReader
 from pypdf.generic import ContentStream
 from fontTools.ttLib import TTFont
@@ -80,4 +81,5 @@ save('lockup-bilingual',850,180,bi,zh+' / '+en)
 reverse_bi=fit(reverse_symbol,sw,sh,24,26,228)+outline(zh,'NotoSansCJKsc-Bold.otf',42,290,91,'#ffffff')+outline(en,'InterVariable.ttf',22,290,132,'#ffffff')
 save('lockup-bilingual-reverse',850,180,reverse_bi,zh+' / '+en)
 save('lockup-stacked',560,380,fit(symbol,sw,sh,160,20,240)+fit(word,ww,wh,198,193,164)+outline(zh,'NotoSansCJKsc-Bold.otf',29,149,298)+outline(en,'InterVariable.ttf',20,98,340),zh+' / '+en)
+runpy.run_path(str(ROOT / 'scripts/build-favicon.py'),run_name='__main__')
 print(json.dumps({'logos':len(list(LOGOS.glob('*.svg'))),'source':'AI page 1, first 11 filled paths','symbol':[sw,sh],'wordmark':[ww,wh]},ensure_ascii=False))

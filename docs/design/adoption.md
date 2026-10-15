@@ -48,6 +48,8 @@ body { font-family: var(--font-sans); }
 
 shadcn / Tailwind v4 详见 [shadcn-mapping.md](shadcn-mapping.md)。token 接入不会自动校准圆角、字号、状态和信息层次。
 
+浏览器标签图标引用 assets/brand/logo/favicon.svg：透明底，按浏览器深浅配色自动适配；不跟随应用内主题按钮。favicon-tile.svg 只用于需要固定底色的应用图标。若旧标签仍显示方底，确认 link 引用后重新打开标签，以排除旧 favicon 缓存。
+
 ## 3. 接框架与组件
 
 接入包保留 src/、assets/ 相对路径；公共组件不依赖 @ 别名。AppShell 显式传入自有 config；`examples/adoption/app.tsx` 是实际参与类型检查的示例。API 见 [组件清单](component-inventory.md) 与 [框架接入](app-shell-integration.md)。

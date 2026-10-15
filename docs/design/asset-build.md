@@ -68,3 +68,5 @@ npm test
 ## UI 接入的一致性检查
 
 npm run vi:check 仅需 Python 标准库，会调用 build-tokens.py --check，核对生成 CSS、shadcn aliases、对比度报告、当前资产索引、PPT 校验和、现行文档链接与源码导出依赖。更新 token 后先运行 scripts/build-tokens.py；不需重建品牌或 PPT。npm run vi:export 生成独立接入快照，默认不包含科研二进制材料。
+
+默认浏览器 favicon 为透明自适应 favicon.svg；favicon-tile.svg 保留为固定底色应用图标。只更新这两个图标可运行 `.venv-assets/Scripts/python.exe scripts/build-favicon.py`（标准库）；brand:build 也会重建。静态 PNG 不携带 SVG 媒体查询能力。

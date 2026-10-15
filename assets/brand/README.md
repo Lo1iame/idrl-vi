@@ -15,7 +15,8 @@
 | `lockup-bilingual.svg` | 双语横向组合 |
 | `lockup-bilingual-reverse.svg` | 双语深色背景组合 |
 | `lockup-stacked.svg` | 图形、IDRL、中文及英文上下组合 |
-| `favicon-tile.svg` | 品牌 favicon / 应用图标方块（navy 底 + reverse 图形）。裸 reverse SVG 为透明底，白色字母在浅色浏览器标签栏不可见，故 favicon 一律使用此 tile；PNG 各尺寸由应用按需栅格化 |
+| `favicon.svg` | 默认浏览器 favicon：透明正方形画布，按浏览器 prefers-color-scheme 将 navy 图块切换为 navyOnDark，无背景块 |
+| `favicon-tile.svg` | navy 方底应用图标 / 快捷方式，可按需栅格化；不作为默认浏览器 favicon |
 
 全部 SVG 文字为轮廓，无外部字体依赖。新组合不包含 Laboratory。
 图形与 IDRL 字标由历史 AI 文件第一页提取，保留 Bézier 曲线；数字颜色使用当前统一提案，未作印刷 ICC 匹配。
@@ -45,3 +46,5 @@ node scripts/render-brand.cjs
 ## 可移交源码快照
 
 npm run vi:check 验证生成文件、依赖闭包及当前路径；npm run vi:export 输出到 output/adoption-kit/ 独立目录，附来源和 SHA-256。默认不带展示站中文子集、演示数据与第三方官网动效。详见接入指南。
+
+图标由 `scripts/build-favicon.py` 从原始 symbol-color.svg 生成，不修改路径几何；品牌总构建也调用该脚本。默认 favicon.svg 不能栅格化后继续声称自动适配；需要 PNG / ICO 时单独选择固定配色并实测。

@@ -13,6 +13,8 @@
   "tokenCss": "assets/brand/tokens-values.css",
   "shadcnAliases": "assets/brand/shadcn-aliases.css",
   "logoDirectory": "assets/brand/logo",
+  "favicon": "assets/brand/logo/favicon.svg",
+  "applicationIcon": "assets/brand/logo/favicon-tile.svg",
   "presentation": "output/research-template/idrl-research-template-v4.pptx",
   "presentationPreview": "output/research-template/idrl-research-template-v4.pdf",
   "presentationValidation": "output/research-template/validation-current.json",

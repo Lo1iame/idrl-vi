@@ -22,7 +22,7 @@
 - 仅使用 `assets/brand/logo/`；`logo/` 为保留原样的历史来源。
 - 浅底用彩色；深底用 symbol-color-reverse.svg、lockup-idrl-reverse.svg 或 lockup-bilingual-reverse.svg。原 navy 图块映射为 brand.navyOnDark（#8fb8dc），文字保持白色；禁止滤镜整体变白。
 - Brand 默认随 data-theme 切换；固定 navy 面板显式 dark。背景而非整页主题决定使用哪个版本。
-- 导航用横向字标，对外用双语组合，封面用上下组合。仅图形用于完整身份已出现的场合；favicon 用 favicon-tile.svg。
+- 导航用横向字标，对外用双语组合，封面用上下组合。仅图形用于完整身份已出现的场合；浏览器 favicon 使用透明、正方形画布的 favicon.svg，内部按 prefers-color-scheme 切换原 navy 图块为 navyOnDark，不增加底色；它跟随浏览器系统配色，不跟随页面主题按钮。favicon-tile.svg 仅用于需要固定底色的应用图标 / 快捷方式，不再作为默认浏览器 favicon。
 - 保留原几何，不拉伸、旋转、加描边、自行重绘字标；不把 logo 当操作图标。
 - 图形净空至少为高度 1/4；建议最小宽屏幕 32px、印刷 10mm。完整名称最小文字至少屏幕 12px、印刷 7pt；SVG 内部留白不代替外部净空。
 - 辅助图形延续既有斜向与六边形语言。research-form.webp 为 AI 生成的品牌概念图，不是 logo 或研究结果。

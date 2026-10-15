@@ -26,7 +26,7 @@ export function kitFiles(manifest=json('assets/brand/reuse-manifest.json')) {
 export function check() {
   const manifest=json('assets/brand/reuse-manifest.json'), tokens=json(manifest.tokens)
   if(manifest.tokenVersion!==tokens.version) throw new Error('Manifest token version differs from tokens.json')
-  for(const key of ['contract','glossary','adoptionGuide','componentInventory','tokens','tokenCss','shadcnAliases','logoDirectory','presentation','presentationPreview','presentationValidation','foundationPreview']) {
+  for(const key of ['contract','glossary','adoptionGuide','componentInventory','tokens','tokenCss','shadcnAliases','logoDirectory','favicon','applicationIcon','presentation','presentationPreview','presentationValidation','foundationPreview']) {
     if(!existsSync(safe(manifest[key]))) throw new Error(`Missing ${key}: ${manifest[key]}`)
   }
   const deck=json(manifest.presentationValidation)
@@ -55,6 +55,9 @@ export function check() {
   const result=spawnSync(runtime.pythonExecutable(),['scripts/build-tokens.py','--check'],{cwd:root,encoding:'utf8',windowsHide:true})
   if(result.error||result.status!==0) throw new Error(result.error?.message||result.stdout+result.stderr)
   console.log(result.stdout.trim())
+  const icons=spawnSync(runtime.pythonExecutable(),['scripts/build-favicon.py','--check'],{cwd:root,encoding:'utf8',windowsHide:true})
+  if(icons.error||icons.status!==0) throw new Error(icons.error?.message||icons.stdout+icons.stderr)
+  console.log(icons.stdout.trim())
   console.log(`VI contract, current assets and ${kitFiles(manifest).length} export inputs verified`)
   return manifest
 }
