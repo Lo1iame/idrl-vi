@@ -7,8 +7,9 @@ const {execFileSync}=require('node:child_process');
 const {pythonExecutable}=require('./asset-runtime.cjs');
 const root=path.resolve(__dirname,'..');
 (async()=>{
- const python=pythonExecutable(['reportlab']);
  const out=path.join(root,'output/brand'); await fs.mkdir(out,{recursive:true});
+ if (process.argv.includes('--review')) {
+ const python=pythonExecutable(['reportlab']);
  const channel=process.env.BROWSER_CHANNEL||(process.platform==='win32'?'msedge':undefined);
  const browser=await chromium.launch({headless:true,...(channel?{channel}:{})});
  try {
@@ -32,10 +33,11 @@ const root=path.resolve(__dirname,'..');
   const overflows=await page.evaluate(()=>Array.from(document.querySelectorAll('.page')).filter(p=>p.scrollHeight>p.clientHeight || (p.id!=='brand'&&p.scrollWidth>p.clientWidth)).map(p=>p.id));
   if(overflows.length)throw new Error('Page overflow: '+overflows.join(','));
   execFileSync(python,[path.join(root,'scripts/export-review.py')],{stdio:'inherit',windowsHide:true});
+ } finally {await browser.close()}
+ }
   const logos=path.join(root,'assets/brand/logo');
   for(const name of (await fs.readdir(logos)).filter(x=>x.endsWith('.svg'))){
    await sharp(path.join(logos,name),{density:216}).resize({width:name.startsWith('symbol')?1024:2400}).png().toFile(path.join(out,name.replace('.svg','.png')));
   }
-  console.log('Rendered 5 review pages, PDF, and transparent logo PNGs.');
- } finally {await browser.close()}
+  console.log(process.argv.includes('--review')?'Rendered historical review pages, PDF, and logo PNGs.':'Rendered current logo PNGs; historical foundation review preserved.');
 })().catch(e=>{console.error(e);process.exit(1)});

@@ -1,0 +1,34 @@
+/* Opt-in typography/reset. No html/body, universal host reset, or Tailwind preflight. */
+:where(.idrl-ui, .button, .badge, .ui-input, .field-group, .ui-choice, .ui-breadcrumb, .ui-tooltip) {
+  box-sizing: border-box;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+}
+:where(.idrl-ui *, .button *, .badge *, .field-group *, .ui-choice *, .ui-breadcrumb *, .ui-tooltip *) {
+  box-sizing: border-box;
+}
+:where(.idrl-ui) { color: var(--foreground); }
+:where(.idrl-ui) :where(h1,h2,h3,p,ol,ul) { margin: 0; }
+:where(.idrl-ui) :where(h1,h2,h3) { font-weight: 700; line-height: 1.3; letter-spacing: -.025em; }
+:where(.idrl-ui) h1 { font-size: 32px; }
+:where(.idrl-ui) h2 { font-size: 20px; }
+:where(.idrl-ui) h3 { font-size: 18px; }
+:where(.idrl-ui) :where(a), :where(a.button) { color: inherit; text-decoration: none; }
+:where(.idrl-ui) :where(button,input,select,textarea) { font: inherit; }
+:where(.idrl-ui) :where(button,a,input,select,textarea), .button, .ui-input { -webkit-tap-highlight-color: transparent; }
+:where(.idrl-ui) button, .button { cursor: pointer; }
+:where(.idrl-ui) button:disabled, .button:disabled { cursor: not-allowed; opacity: .55; }
+:where(.idrl-ui) svg, .button svg, .ui-breadcrumb svg { flex-shrink: 0; }
+:where(.idrl-ui) :where(button,a,input,select,textarea,summary):focus-visible,
+.button:focus-visible, .ui-input:focus-visible, .ui-breadcrumb a:focus-visible {
+  outline: 2px solid var(--focus); outline-offset: 3px;
+}
+:where(.idrl-ui) .muted { color: var(--muted-foreground); }
+:where(.idrl-ui) .sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+@media(prefers-reduced-motion:reduce) {
+  :where(.idrl-ui, .idrl-ui *, .button, .ui-choice *) { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

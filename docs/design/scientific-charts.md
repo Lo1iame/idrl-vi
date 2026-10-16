@@ -48,7 +48,7 @@
 
 - `output/research-template/idrl-research-template-v4.pptx`：16 页可编辑汇报模板，含 3 张原生图表、4 张原生表格。
 - `output/research-template/illustrative-data.json`：PPT 图表的完整合成数据。
-- `assets/brand/charts/idrl.mplstyle`：Matplotlib 样式。
+- `assets/brand/charts/idrl.mplstyle`：由 `scripts/brand-styles.py` 从 tokens.json 生成的 Matplotlib 样式；修改配色应修改 token 后重新生成。
 - `scripts/build-scientific-charts.py`：导出比较柱图、学习曲线、鲁棒性曲线与重复运行误差图；输出到 `output/scientific-charts/`。
 - 误差图采用独立的合成重复数据，展示均值 ± 样本标准差（n=5），不与 PPT 的单组展示值混用。
 

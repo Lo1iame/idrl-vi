@@ -1,3 +1,17 @@
+@import './ui-base.css';
+@import './components/ui/primitives.css';
+.shell-layout .shell-sidebar { flex-direction: column; border-right: 1px solid var(--border); }
+.shell-layout .sidebar-brand { display: block; }
+.shell-layout .space-label { display: flex; align-items: center; gap: 12px; padding: 0 10px 24px; border-bottom: 1px solid var(--border); }
+.shell-layout .space-label strong { display: block; font-size: 13px; }
+.shell-layout .space-label span { font-size: 12px; color: var(--muted-foreground); }
+.shell-nav-group .nav-label { color: var(--muted-foreground); }
+.shell-layout .sidebar-foot { margin-top: auto; padding: 36px 10px 0; font-size: 12px; line-height: 1.8; color: var(--muted-foreground); }
+.shell-layout .sidebar-foot p { font-size: 12px; margin-top: 8px; }
+.shell-layout .mini-status { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--success); margin-right: 8px; }
+.shell-layout .app-body { min-width: 0; background: var(--surface); }
+.shell-layout .shell-topline { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); color: var(--muted-foreground); font-size: 12px; }
+.shell-layout .app-tools { display: flex; align-items: center; gap: 24px; }
 /* AppShell uses its own selectors so page styles cannot change its breakpoints. */
 .app-layout.shell-layout { display: grid; grid-template-columns: 240px minmax(0,1fr); min-height: 100dvh; }
 .app-layout.shell-layout[data-sidebar=rail] { grid-template-columns: 72px minmax(0,1fr); }
@@ -7,8 +21,9 @@
 .shell-layout .space-label { margin-bottom: 24px; }
 .shell-layout .shell-navigation { display: flex; flex-direction: column; gap: 28px; }
 .shell-nav-group { display: grid; gap: 6px; }
+.ui-sheet .shell-navigation { display: grid; gap: 28px; }
 .shell-nav-group .nav-label { margin: 0 12px 6px; font-size: 12px; }
-.shell-navigation a { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 10px 12px; border-radius: 6px; font-size: 14px; color: var(--muted-foreground); }
+.shell-navigation a { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 12px; border-radius: 6px; font-size: 14px; color: var(--muted-foreground); }
 .shell-navigation a svg { flex-shrink: 0; }
 .shell-navigation a:hover { background: var(--surface-subtle); color: var(--foreground); }
 .shell-navigation a[aria-current=page] { background: var(--surface); color: var(--foreground); box-shadow: inset 3px 0 var(--primary); font-weight: 700; }
@@ -21,53 +36,10 @@
 .shell-heading { display: flex; align-items: center; gap: 16px; min-width: 0; }
 .shell-heading > .button { flex-shrink: 0; width: 40px; height: 40px; }
 .shell-layout .app-tools { flex-shrink: 0; }
-.ui-breadcrumb { min-width: 0; }
-.ui-breadcrumb ol { display: flex; gap: 10px; align-items: center; padding: 0; list-style: none; font-size: 13px; color: var(--muted-foreground); }
-.ui-breadcrumb li { min-width: 0; }
-.ui-breadcrumb li:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--foreground); }
-.breadcrumb-divider { display: flex; flex-shrink: 0; }
-.ui-breadcrumb a:hover { color: var(--primary); }
-.ui-tooltip { max-width: min(280px,calc(100vw - 24px)); z-index: 100; padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--foreground); font-size: 13px; box-shadow: 0 4px 16px #00000014; }
-.ui-tooltip-arrow { fill: var(--surface); }
-.sheet-overlay { position: fixed; inset: 0; z-index: 80; background: #00000066; }
-.ui-sheet { position: fixed; inset: 0 auto 0 0; z-index: 81; width: min(320px,calc(100vw - 40px)); height: 100dvh; overflow-y: auto; padding: 24px; background: var(--surface); color: var(--foreground); border-right: 1px solid var(--border); animation: sheet-enter .18s ease-out; }
-.sheet-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-.sheet-heading h2 { font-size: 18px; }
-.sheet-description { font-size: 12px; color: var(--muted-foreground); margin: 12px 0 24px; }
-.sheet-brand { display: inline-block; margin-bottom: 28px; }
-.ui-sheet .shell-navigation { display: grid; gap: 28px; }
-@keyframes sheet-enter { from { transform: translateX(-100%); } to { transform: translateX(0); } }
 @media(max-width:767px) {
   .shell-layout .shell-topline { height: 64px; padding: 0 16px; gap: 8px; }
   .shell-heading { gap: 8px; }
   .shell-topline .ui-breadcrumb li:not(:last-child) { display: none; }
   .shell-layout .app-tools { gap: 4px; }
   .shell-layout .app-tools > .badge { display: none; }
-}
-@media(prefers-reduced-motion:reduce) { .ui-sheet { animation: none; } }
-
-/* Version history is content, never a set of decorative metric cards. */
-.changelog-page { max-width: 1040px; padding: 40px; margin: auto; }
-.changelog-heading { padding-bottom: 32px; border-bottom: 1px solid var(--border); }
-.changelog-heading h1 { font-size: 32px; margin-bottom: 14px; }
-.changelog-heading p { color: var(--muted-foreground); line-height: 1.7; max-width: 680px; }
-.release-list { list-style: none; padding: 0; }
-.release { display: grid; grid-template-columns: 170px minmax(0,1fr); gap: 32px; padding: 36px 0; border-bottom: 1px solid var(--border); }
-.release-meta h2 { font: 700 23px/1.4 Inter,sans-serif; }
-.release-meta time { display: block; margin-top: 10px; color: var(--muted-foreground); font-size: 13px; }
-.release-meta a { display: inline-block; margin-top: 16px; font-size: 12px; color: var(--primary); }
-.release-content h3 { font-size: 20px; margin-bottom: 20px; }
-.release-change { display: grid; grid-template-columns: 58px minmax(0,1fr); gap: 14px; margin-block: 14px; align-items: start; }
-.release-change p { font-size: 14px; line-height: 1.7; }
-.release-type { font-size: 12px; color: var(--primary-text); background: color-mix(in srgb,var(--primary) 12%,var(--surface)); padding: 3px 8px; border-radius: 4px; text-align: center; }
-.shell-specimen { padding: 24px; border: 1px solid var(--border); border-radius: 12px; margin-top: 24px; background: var(--surface); }
-.shell-specimen h2 { font-size: 22px; margin-bottom: 12px; }
-.shell-demo-actions { display: flex; flex-wrap: wrap; gap: 16px; margin-block: 24px; align-items: center; }
-.shell-usage-code { padding: 20px; border-radius: 6px; background: var(--surface-subtle); font-size: 13px; overflow-x: auto; margin-top: 20px; }
-@media(max-width:767px) {
-  .changelog-page { padding: 28px 20px; }
-  .release { grid-template-columns: 1fr; gap: 20px; padding-block: 28px; }
-  .release-meta { display: flex; gap: 14px; align-items: baseline; flex-wrap: wrap; }
-  .release-meta time,.release-meta a { margin-top: 0; }
-  .release-change { gap: 10px; }
 }

@@ -1,4 +1,11 @@
+@import '../../ui-base.css';
 .data-table { min-width: 0; }
+.data-table .table-scroll { position: relative; overflow-x: auto; }
+.data-table table { white-space: nowrap; text-align: left; }
+.data-table th { background: var(--surface-subtle); font-size: 12px; border-top: 1px solid var(--border); }
+.data-table td { font-size: 14px; }
+.data-table tr:last-child td { border-bottom: 0; }
+.data-table tbody tr:hover { background: var(--background); }
 .data-table .table-scroll:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
 .data-table table { width: 100%; border-collapse: collapse; font-size: 14px; }
 .data-table th, .data-table td { padding: 14px 16px; border-bottom: 1px solid var(--border); text-align: left; }
@@ -12,8 +19,6 @@
 .data-table-size, .data-table-pages { display: flex; align-items: center; gap: 8px; }
 .data-table-pagination .ui-input { width: 68px; min-height: 36px; padding: 4px 8px; }
 .data-table-pages > span { min-width: 76px; text-align: center; font-variant-numeric: tabular-nums; }
-.data-specimen .table-scroll { overflow-x: auto; }
-.data-specimen table { min-width: 500px; }
 @media (max-width: 767px) {
   .data-table-pagination { gap: 12px; }
   .data-table-pages { margin-left: auto; }

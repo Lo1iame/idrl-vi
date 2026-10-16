@@ -11,6 +11,12 @@ import { Button } from '../components/ui/button'
 import type { Translate } from '../lib/types'
 import researchForm from '../../assets/brand/images/research-form.webp'
 
+const GITHUB_URL = 'https://github.com/zweien/idrl-vi'
+
+function GithubMark() {
+  return <svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A8.013 8.013 0 0 1 0 8c0-4.42 3.58-8 8-8Z" /></svg>
+}
+
 function jump(event: MouseEvent<HTMLAnchorElement>, id: string) {
   event.preventDefault()
   document.getElementById(id)?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })
@@ -24,6 +30,7 @@ export function Website({ t }: { t: Translate }) {
       <nav aria-label={t('官网导航', 'Website navigation')}>
         <a href="#research" onClick={e => jump(e, 'research')}>{t('研究方向', 'Research')}</a>
         <a href="#approach" onClick={e => jump(e, 'approach')}>{t('我们的方式', 'Our approach')}</a>
+        <a className="github-link" href={GITHUB_URL} target="_blank" rel="noreferrer" aria-label={t('GitHub 仓库', 'GitHub repository')}><GithubMark /></a>
         <Button variant="secondary" asChild><a href="#workspace">{t('探索工作台', 'Explore workspace')}<ArrowUpRight size={16} /></a></Button>
       </nav>{tools}
     </header>
@@ -37,6 +44,7 @@ export function Website({ t }: { t: Translate }) {
         <p className="identity-description">{t('以设计探索可能，以学习构建可靠。', 'Explore through design. Build reliability through learning.')}</p>
         <div className="identity-actions">
           <Button asChild><a href="#assistant">{t('体验研究助手', 'Try the research assistant')}<ArrowUpRight size={17} /></a></Button>
+          <Button variant="secondary" asChild><a href="#foundation">{t('品牌基础', 'Brand foundation')}<ArrowUpRight size={17}/></a></Button>
           <a className="quiet-link" href="#workspace">{t('查看实验示例', 'Explore experiments')}<ArrowRight size={17} /></a>
         </div>
       </AnimatedContent>
@@ -81,6 +89,6 @@ export function Website({ t }: { t: Translate }) {
     </section>
 
     <section className="website-closing"><AnimatedContent className="closing-copy" distance={48} duration={.9}><h2>{t('继续探索。','Keep exploring.')}</h2><p>{t('从研究想法，到可用工具。','From research ideas to useful tools.')}</p></AnimatedContent><AnimatedContent className="closing-action" distance={32} delay={.12}><a className="tools-link" href="#workspace">{t('打开工作台','Open workspace')}<ArrowUpRight size={28}/></a></AnimatedContent></section>
-    <footer className="identity-footer"><div><Brand /><p>智能设计与鲁棒学习<br/><span lang="en">Intelligent Design and Robust Learning</span></p></div><div><span>{t('本地品牌界面示例', 'Local brand interface concept')}</span><a href="#components">{t('探索设计组件', 'Explore design components')}<ArrowUpRight size={15} /></a></div></footer>
+    <footer className="identity-footer"><div><Brand /><p>智能设计与鲁棒学习<br/><span lang="en">Intelligent Design and Robust Learning</span></p></div><div><span>{t('本地品牌界面示例', 'Local brand interface concept')}</span><a href="#foundation">{t('查看品牌基础', 'Explore brand foundation')}<ArrowUpRight size={15} /></a><a href="#components">{t('探索设计组件', 'Explore design components')}<ArrowUpRight size={15} /></a><a href={GITHUB_URL} target="_blank" rel="noreferrer">{t('GitHub 仓库', 'GitHub repository')}<ArrowUpRight size={15} /></a></div></footer>
   </div>
 }

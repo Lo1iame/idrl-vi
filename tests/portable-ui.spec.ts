@@ -1,0 +1,31 @@
+import { test, expect } from '@playwright/test'
+import AxeBuilder from '@axe-core/playwright'
+
+for (const theme of ['light','dark']) test(`portable UI owns its styles without resetting the host (${theme})`, async ({page}) => {
+  await page.addInitScript(value=>document.addEventListener('DOMContentLoaded',()=>document.documentElement.dataset.theme=value),theme)
+  await page.goto('/tests/fixtures/portable-ui.html')
+  const imported = await page.locator('style[data-vite-dev-id]').evaluateAll(nodes=>nodes.map(node=>node.getAttribute('data-vite-dev-id')))
+  expect(imported.some(name=>/\/(styles|design-refresh)\.css$/.test(name!))).toBe(false)
+  await expect(page.locator('body')).toHaveCSS('margin','8px')
+  await expect(page.locator('#host h2')).toHaveCSS('font-size','24px')
+  await expect(page.locator('#host p')).toHaveCSS('margin-top','16px')
+  await expect(page.locator('#host td')).toHaveCSS('border-bottom-width','0px')
+  await expect(page.locator('#host td')).toHaveCSS('padding','1px')
+  await expect(page.getByRole('button',{name:'打开弹窗',exact:true})).toHaveCSS('height','42px')
+  await expect(page.getByRole('button',{name:'小按钮',exact:true})).toHaveCSS('height','34px')
+  await expect(page.getByRole('button',{name:'图标按钮',exact:true})).toHaveCSS('height','36px')
+  await expect(page.getByLabel('独立输入',{exact:true})).toHaveCSS('height','44px')
+  await expect(page.locator(`.brand-theme-${theme}`)).toBeVisible()
+  await expect(page.locator('.data-table th')).toHaveCSS('font-size','12px')
+  await expect(page.locator('.data-table td').first()).toHaveCSS('font-size','14px')
+  const trigger=page.getByRole('button',{name:'打开弹窗',exact:true})
+  await trigger.focus()
+  await expect(trigger).toHaveCSS('outline-width','2px')
+  await trigger.click()
+  await expect(page.getByRole('dialog')).toHaveCSS('box-sizing','border-box')
+  await expect(page.getByRole('heading',{name:'独立弹窗'})).toHaveCSS('font-size','22px')
+  await page.keyboard.press('Escape')
+  await expect(trigger).toBeFocused()
+  // Host uses browser defaults; audit just the explicitly adopted surface.
+  expect((await new AxeBuilder({page}).include('main').withTags(['wcag2a','wcag2aa','wcag21aa']).analyze()).violations).toEqual([])
+})

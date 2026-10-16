@@ -18,9 +18,9 @@ macOS / Linux 的虚拟环境 Python 路径为 `.venv-assets/bin/python`，并�
 
 Python 查找顺序：显式 IDRL_PYTHON / PYTHON_BIN → 项目 .venv-assets → 当前用户的 Codex bundled Python → 系统 python3 / python。显式覆盖不可用时直接失败，避免悄悄使用另一套环境。支持通过 BROWSER_CHANNEL 指定已安装的浏览器。
 
-`brand:check` 只做环境检查。`brand:build` 依次生成 SVG、token CSS / 对比度报告、审核页 PNG / PDF 和透明 logo PNG（含 favicon-tile.png）。单独运行 `node scripts/render-brand.cjs` 只重新渲染审核稿和 PNG，不重建 SVG / token。
+`brand:check` 只做环境检查。`brand:build` 依次生成 SVG、token CSS / 对比度报告、科研图表样式和透明 logo PNG（含 favicon-tile.png）。单独运行 `node scripts/render-brand.cjs` 只重新渲染 logo PNG。历史视觉基础审核稿默认保留；仅在明确修订历史稿时使用 `node scripts/render-brand.cjs --review` 重建审核页 PNG / PDF。
 
-字体原文件已随仓库保存；build-brand.py 仅在原文件缺失时按 sources.json 的来源下载。界面新增文案仍需另运行 `scripts/build-web-fonts.py`，本命令不自动覆盖 UI 字体子集。科研 Matplotlib 图表是另一个构建入口，需要其自身的 numpy / matplotlib 环境，不包含在此最小依赖文件中。
+字体原文件已随仓库保存；build-brand.py 仅在原文件缺失时按 sources.json 的来源下载。界面新增文案仍需另运行 `scripts/build-web-fonts.py`，本命令不自动覆盖 UI 字体子集。科研 Matplotlib 图表是另一个构建入口，需要其自身的 numpy / matplotlib 环境，已锁定在 requirements-assets.txt 中。
 
 ## PPT 环境
 
@@ -70,3 +70,17 @@ npm test
 npm run vi:check 仅需 Python 标准库，会调用 build-tokens.py --check，核对生成 CSS、shadcn aliases、对比度报告、当前资产索引、PPT 校验和、现行文档链接与源码导出依赖。更新 token 后先运行 scripts/build-tokens.py；不需重建品牌或 PPT。npm run vi:export 生成独立接入快照，默认不包含科研二进制材料。
 
 默认浏览器 favicon 为透明自适应 favicon.svg；favicon-tile.svg 保留为固定底色应用图标。只更新这两个图标可运行 `.venv-assets/Scripts/python.exe scripts/build-favicon.py`（标准库）；brand:build 也会重建。静态 PNG 不携带 SVG 媒体查询能力。
+
+## 配色来源与隔离验证
+
+当前 logo、PPT 调色板、Matplotlib 图表和导出样式都读取 `assets/brand/tokens.json`。字体、版式与仅用于特定媒介的装饰色仍由各自生成器定义。修改 token 不会自动改写历史审核稿或已发布的 PPT；新版资产需重新构建和检查。
+
+- `build-brand.py --check` 校验当前 SVG；`--tokens <文件> --output <目录>` 可隔离生成配色变体。
+- `brand-styles.py --check` 校验生成的 `idrl.mplstyle`，不要直接编辑该文件。
+- `build-scientific-charts.py --tokens <文件> --output <目录>` 隔离生成科研图表示例。
+- PPT 调色板支持 `IDRL_TOKEN_FILE`，输出支持 `IDRL_DECK_OUTPUT_DIR`；页眉仍引用当前已生成的 logo PNG，更新品牌色时需先重建品牌资产。通过 `npm run deck:build` 运行，已有文件仍拒绝覆盖。
+- `vi:check:ui` / `vi:export` 只检查 UI 接入输入；`vi:check` 保留全仓库审计，`vi:verify -- <目录>` 验证导出副本字节。
+
+## 架构调整验证（2026-10-16）
+
+主应用与独立接入示例构建通过；52 项浏览器测试、6 项接入快照测试、3 项资源运行时 / PPT 配色测试及 10 项 Python 测试通过。完整品牌构建前后历史审核稿哈希不变；logo 配色变体测试确认几何路径不变。科研图表在临时目录导出 4 组、每组 3 种格式；PPT 在临时目录完成 16 页重导入渲染及结构校验（4 张原生表格、3 张原生图表），没有替换现行 v4。此验证不包含 PowerPoint / Google Slides 实机编辑验收。

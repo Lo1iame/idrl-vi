@@ -1,3 +1,4 @@
+import './changelog.css'
 import { idrlAppConfig } from '../lib/app-navigation'
 import { AppShell, type AppShellConfig } from '../components/app-shell'
 import { releases, type LocalizedText, type Release } from '../lib/releases'

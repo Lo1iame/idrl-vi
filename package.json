@@ -1,6 +1,6 @@
 {
   "name": "idrl-design-system",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -18,7 +18,9 @@
     "brand:build": "node scripts/build-brand.cjs",
     "deck:check": "node scripts/asset-runtime.cjs deck",
     "deck:build": "node scripts/build-deck.cjs",
-    "test:assets": "node --test tests/asset-runtime.test.cjs"
+    "test:assets": "node --test tests/asset-runtime.test.cjs tests/presentation-palette.test.mjs",
+    "vi:check:ui": "node scripts/vi-kit.mjs check-ui",
+    "vi:verify": "node scripts/vi-kit.mjs verify"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "1.3.0",

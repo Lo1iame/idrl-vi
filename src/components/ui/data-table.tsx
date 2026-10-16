@@ -14,22 +14,27 @@ export type DataColumn<T> = {
 }
 
 /** Client-side table for small local collections. Pass the complete filtered data set. */
-export function DataTable<T>({ rows, columns, rowKey, caption, empty, t }: {
+export function DataTable<T>({ rows, columns, rowKey, caption, empty, t, filterKey }: {
   rows: readonly T[]
   columns: readonly DataColumn<T>[]
   rowKey: (row: T) => string
   caption: string
   empty: ReactNode
   t: Translate
+  /** Stable value describing the active filters, including filters yielding the same records. */
+  filterKey?: string
 }) {
   const id = useId()
   const [sort, setSort] = useState<{ id: string; descending: boolean } | null>(null)
   const [size, setSize] = useState(5)
-  const [pagination, setPagination] = useState({ rows, page: 0 })
-  // A new filtered collection starts at page one, including when records are added.
-  if (pagination.rows !== rows) setPagination({ rows, page: 0 })
+  const keys = rows.map(rowKey)
+  const [pagination, setPagination] = useState({ keys, filterKey, page: 0 })
+  // Array identity is not an instruction. Reset only for membership/order or filter changes.
+  const datasetChanged = pagination.filterKey !== filterKey || pagination.keys.length !== keys.length ||
+    keys.some((key, index) => key !== pagination.keys[index])
+  if (datasetChanged) setPagination({ keys, filterKey, page: 0 })
   const pageCount = Math.max(1, Math.ceil(rows.length / size))
-  const page = pagination.rows === rows ? Math.min(pagination.page, pageCount - 1) : 0
+  const page = datasetChanged ? 0 : Math.min(pagination.page, pageCount - 1)
   const sorted = useMemo(() => {
     const accessor = columns.find(column => column.id === sort?.id)?.sortValue
     if (!accessor || !sort) return rows
@@ -45,9 +50,9 @@ export function DataTable<T>({ rows, columns, rowKey, caption, empty, t }: {
   }, [rows, columns, sort])
   function changeSort(columnId: string) {
     setSort(previous => ({ id: columnId, descending: previous?.id === columnId ? !previous.descending : false }))
-    setPagination({ rows, page: 0 })
+    setPagination({ keys, filterKey, page: 0 })
   }
-  return <div className="data-table">
+  return <div className="idrl-ui data-table">
     <div className="table-scroll" role="region" aria-label={caption} tabIndex={0}>
       <table><caption className="sr-only">{caption}</caption>
         <thead><tr>{columns.map(column => <th key={column.id} scope="col" className={column.numeric ? 'numeric' : undefined}
@@ -63,11 +68,11 @@ export function DataTable<T>({ rows, columns, rowKey, caption, empty, t }: {
     {!rows.length && empty}
     <div className="data-table-pagination">
       <span role="status" aria-label={t('表格分页状态', 'Table pagination status')}>{rows.length ? t(`${page * size + 1}–${Math.min((page + 1) * size, rows.length)} / 共 ${rows.length} 条`, `${page * size + 1}–${Math.min((page + 1) * size, rows.length)} of ${rows.length} records`) : t('共 0 条', '0 records')}</span>
-      <div className="data-table-size"><label htmlFor={id}>{t('每页', 'Rows per page')}</label><Select id={id} value={size} onChange={event => { setSize(Number(event.target.value)); setPagination({ rows, page: 0 }) }}>{[5, 10, 20].map(value => <option key={value} value={value}>{value}</option>)}</Select></div>
+      <div className="data-table-size"><label htmlFor={id}>{t('每页', 'Rows per page')}</label><Select id={id} value={size} onChange={event => { setSize(Number(event.target.value)); setPagination({ keys, filterKey, page: 0 }) }}>{[5, 10, 20].map(value => <option key={value} value={value}>{value}</option>)}</Select></div>
       <div className="data-table-pages">
-        <Button variant="secondary" size="icon" aria-label={t('上一页', 'Previous page')} disabled={page === 0} onClick={() => setPagination({ rows, page: page - 1 })}><ChevronLeft size={16}/></Button>
+        <Button variant="secondary" size="icon" aria-label={t('上一页', 'Previous page')} disabled={page === 0} onClick={() => setPagination({ keys, filterKey, page: page - 1 })}><ChevronLeft size={16}/></Button>
         <span>{t(`第 ${page + 1} / ${pageCount} 页`, `Page ${page + 1} of ${pageCount}`)}</span>
-        <Button variant="secondary" size="icon" aria-label={t('下一页', 'Next page')} disabled={page + 1 >= pageCount} onClick={() => setPagination({ rows, page: page + 1 })}><ChevronRight size={16}/></Button>
+        <Button variant="secondary" size="icon" aria-label={t('下一页', 'Next page')} disabled={page + 1 >= pageCount} onClick={() => setPagination({ keys, filterKey, page: page + 1 })}><ChevronRight size={16}/></Button>
       </div>
     </div>
   </div>

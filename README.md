@@ -1,5 +1,7 @@
 # IDRL · 智能设计与鲁棒学习
 
+当前项目版本 **v0.3.0** · token **0.2.1** · 科研汇报模板 **v4**。更新记录见 [releases.ts](src/lib/releases.ts)。
+
 Intelligent Design and Robust Learning 的视觉识别与 UI 参考体系，为团队官网、科研工具和内部应用提供一致的设计约定与可复制源码。
 
 ## 界面预览
@@ -59,6 +61,7 @@ npm run dev
 | /#workspace | 表格、筛选、创建与导出 |
 | /#assistant | 流式、停止、确认、失败重试及报告下载 |
 | /#components | 公共组件预览及接入文档 |
+| /#foundation | 五页历史品牌审核稿、放大查看与 PDF 预览下载 |
 | /#changelog | 本设计系统已提交更新 |
 | /examples/adoption/ | 不依赖展示站页面的接入验证示例 |
 
@@ -79,7 +82,7 @@ vi:check 仅额外需要 Python 标准库；可自动发现 .venv-assets 或设�
 
 - tokens.json 是唯一变量源；修改后运行 scripts/build-tokens.py，再做 vi:check。CSS 与 shadcn aliases 均自动生成。
 - 颜色数值变化升级 token 版本；组件 / 文档更新按 commit 同步，不混用 package 版本或 PPT 修订号。
-- src/fonts.css 只为本展示站加载中文子集；styles.css / design-refresh.css 为完整参考样式，含全局规则。
+- src/ui.css 是可复用公共样式入口；src/fonts.css、styles.css / design-refresh.css 只服务展示站，不进入 UI 接入快照。
 - 新资产在 assets/brand/logo/；logo/ 是历史源文件。字体与许可保留在 assets/brand/fonts/。
 - 历史验证见 docs/design/phase-2-validation.md；当前一致性检查范围见 [本轮报告](docs/design/reuse-consistency-2026-10-15.md)。
 

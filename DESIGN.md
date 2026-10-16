@@ -1,6 +1,6 @@
 # IDRL Design
 
-现行设计契约，更新于 2026-10-15。视觉基础 v0.1 已审核；UI 为源码复用阶段，尚未整体通过最终视觉与无障碍人工验收。token 版本 **0.2.1** 与 package 版本、PPT 修订号分别管理。本次整理未改变品牌数值。
+现行设计契约，更新于 2026-10-16。视觉基础 v0.1 已审核；UI 为源码复用阶段，尚未整体通过最终视觉与无障碍人工验收。项目版本 **0.3.0**；token 版本 **0.2.1** 与 package 版本、PPT 修订号分别管理。本次整理未改变品牌数值。
 
 ## 事实来源与阅读顺序
 
@@ -49,13 +49,14 @@
 ## 应用框架与组件
 
 - 默认 React / TypeScript 源码接入，依赖以 package-lock.json 为准；展示站 Vite + Tailwind v4。不要求现有应用换框架；Next.js / SSR 须验证客户端边界与路由。
+- 公共样式入口为 src/ui.css，控件与框架不依赖展示站 CSS 或 Tailwind preflight。idrl-ui 是显式采用内容排版的范围；宿主负责文档 reset、字体文件与配套主题背景，不覆盖目标应用 globals.css。
 - AppShell **必须显式传 AppShellConfig**：应用 ID、身份、真实链接、导航分组由宿主提供。公共组件不引入演示配置；类型位于 src/lib/app-shell-config.ts。
 - ≥1024px 为 240px 展开栏，可折为 72px；768–1023px 默认轨道、临时展开；<768px 模态抽屉。桌面偏好按应用 ID 隔离，其他断点不覆盖。
 - 轨道保留可访问名称、当前项与 Tooltip；抽屉支持焦点约束、Esc / 遮罩关闭、焦点恢复和跨断点清理。
 - Button：default / secondary / ghost / destructive，default / sm / icon；链接用 asChild，图标提供名称。一屏主任务通常一个主操作。
 - FormField 提供 label / description / error / required，将 render prop 展开到唯一原生控件。提交后给具体错误并聚焦首个错误；保留业务校验。
 - Checkbox 是原生 input；Switch 是受控 button，不自动进入 FormData。Textarea 可纵向调整。
-- DataTable 仅处理小规模完整本地集合排序 / 分页；页面持有筛选，rows 用 useMemo 稳定引用，rowKey 唯一。缺失值 null 始终置后；导出完整筛选集合。远程表格保留服务端排序 / 筛选 / 分页。
+- DataTable 仅处理小规模完整本地集合排序 / 分页；页面持有筛选，rowKey 唯一且稳定；相同行 ID / 顺序的等价数组和数值更新保留页码，增删 / 重排返回首页；页面传入稳定字符串 filterKey，使筛选改变即使结果相同也返回首页。缺失值 null 始终置后；导出完整筛选集合。远程表格保留服务端排序 / 筛选 / 分页。
 - Dialog / Sheet 基于 Radix；受控 Dialog 提供实际入口 ref / ID 恢复焦点；排序按钮 type="button"。
 - 控件需要可访问名称、键盘、焦点、禁用态及适用的 loading / empty / error / success；公共组件没有自动提供所有业务请求状态。
 - 当前**没有已发布 npm 包、registry、Storybook 或完整组件库**；shadcn 映射不表示支持 shadcn CLI 安装。
@@ -82,3 +83,9 @@
 - npm run build 验证构建，npm test 验证交互，npm run test:assets 与 Python 回归验证资产；重建见 [asset-build.md](docs/design/asset-build.md)。
 - 至少检查中英文、深浅主题、320 / 390 / 768 / 1024 / 1440px、导航、键盘 / 焦点、减少动画、长文案、业务异常、数据导出；保留同数据前后截图及测试证据。
 - 自动 axe / 对比度检查不代替屏幕阅读器和跨浏览器人工验收。历史记录保留在 docs/design/，本轮证据见接入一致性报告。
+
+## 品牌基础展示
+
+- /#foundation 提供五页 v0.1 审核稿画廊与 PDF 预览下载，入口在侧栏、官网首屏操作区和页脚。标注为历史材料，不把原稿中的阶段计划、数量或日期当成当前事实。
+- 原稿保持原始语言和配色；界面可中英文 / 深浅主题切换。现行 DESIGN.md、设计组件与应用接入指南始终可访问。
+- 展示约定见 [brand-foundation-page.md](docs/design/brand-foundation-page.md)；默认 UI 接入快照不包含该页面与审核二进制材料。

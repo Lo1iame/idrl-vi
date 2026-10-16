@@ -4,24 +4,25 @@
 
 | 能力 | 源码 | 依赖 / 样式 | 范围与限制 |
 | --- | --- | --- | --- |
-| 品牌节点 | `src/components/brand.tsx` | 4 个 logo SVG、基础 CSS | data-theme 切换或 dark 显式指定；不提供路由 |
-| 应用框架 | `src/components/app-shell.tsx` | app-shell-config、types、Button、Tooltip、Sheet、Breadcrumb、app-shell.css 及基础样式 | 显式 config，分组单层导航；无认证、权限、多层菜单 |
-| 操作 | `src/components/ui/button.tsx` | Radix Slot、CVA、utils、基础 CSS | 原生属性 / ref、asChild；loading 由宿主提供 |
-| 状态 | `src/components/ui/badge.tsx` | 基础 CSS | neutral / success / warning / danger / info；须有文字 |
+| 品牌节点 | `src/components/brand.tsx` | 4 个 logo SVG、brand.css、ui-base.css | data-theme 切换或 dark 显式指定；不提供路由 |
+| 应用框架 | `src/components/app-shell.tsx` | app-shell-config、types、Button、Tooltip、Sheet、Breadcrumb、app-shell.css、ui-base.css | 显式 config，分组单层导航；无认证、权限、多层菜单 |
+| 操作 | `src/components/ui/button.tsx` | Radix Slot、CVA、utils、primitives.css | 原生属性 / ref、asChild；loading 由宿主提供 |
+| 状态 | `src/components/ui/badge.tsx` | primitives.css | neutral / success / warning / danger / info；须有文字 |
 | 输入与字段 | `src/components/ui/field.tsx` | field.css、utils | Input / Select / Textarea / FormField；不内置校验库或保存 |
 | 选择控件 | `src/components/ui/choice.tsx` | choice.css、utils | Checkbox / Switch；Switch 受控，不参与 FormData |
 | 数据表 | `src/components/ui/data-table.tsx` | data-table.css、Button、Select、Translate、Lucide | 本地集合排序 / 分页 / 空态；无远程分页、虚拟化、列显隐、行选择 |
-| 对话框 | `src/components/ui/dialog.tsx` | Radix Dialog、Lucide、基础 CSS | 受控、说明与焦点恢复；业务确认由调用者完成 |
-| 抽屉 | `src/components/ui/sheet.tsx` | Radix Dialog、Button、Lucide、app-shell.css | 受控、触发器与焦点恢复 |
-| 提示 | `src/components/ui/tooltip.tsx` | Radix Tooltip、app-shell.css | label / side / enabled；单一可接收 ref 的触发元素 |
-| 面包屑 | `src/components/ui/breadcrumb.tsx` | Lucide、app-shell.css | 最后一项当前页，其他项标准链接 |
+| 对话框 | `src/components/ui/dialog.tsx` | Radix Dialog、Lucide、primitives.css | 受控、说明与焦点恢复；业务确认由调用者完成 |
+| 抽屉 | `src/components/ui/sheet.tsx` | Radix Dialog、Lucide、sheet.css、primitives.css | 受控、触发器与焦点恢复 |
+| 提示 | `src/components/ui/tooltip.tsx` | Radix Tooltip、tooltip.css | label / side / enabled；单一可接收 ref 的触发元素 |
+| 面包屑 | `src/components/ui/breadcrumb.tsx` | Lucide、breadcrumb.css | 最后一项当前页，其他项标准链接 |
 
-`src/lib/utils.ts` 的 cn 依赖 clsx、tailwind-merge。公共类型为 `src/lib/types.ts` / `app-shell-config.ts`。组件除各自导入的 CSS 外仍依赖全局基础规则，不能只复制 TSX。接入包提供 styles.css / design-refresh.css 完整参考快照，含全局 reset、表格、示例页面选择器，**不得直接覆盖已有 globals.css**。已有组件体系优先接 token / logo，再迁移选定样式。
+`src/lib/utils.ts` 的 cn 依赖 clsx、tailwind-merge。公共类型为 `src/lib/types.ts` / `app-shell-config.ts`。公共样式入口是 `src/ui.css`；各模块导入自己的 CSS 与 `ui-base.css`，复制时保留递归依赖。接入包不含展示站 styles.css / design-refresh.css，也不导入 Tailwind preflight。宿主负责字体、页面背景与 html/body reset；`idrl-ui` 是显式采用 IDRL 内容排版的范围，普通范围外元素保持宿主样式。已有组件体系可继续仅接 token / logo。
 
 ## 示例与产品代码
 
 | 来源 | 使用方式 |
 | --- | --- |
+| `src/pages/foundation.tsx` | 历史品牌审核画廊与 PDF；不作为实时 VI 手册，默认接入包不包含 |
 | `src/pages/workspace.tsx` | 筛选、创建 / 导出交互参考；替换演示数据，保留目标 API |
 | `src/pages/assistant.tsx` | AI 状态与确认模式；不是模型 SDK、真实工具或后端 |
 | `src/pages/components.tsx` | 组件交互与状态预览 |
